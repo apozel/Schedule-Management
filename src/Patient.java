@@ -23,7 +23,7 @@ public class Patient {
     public Point2D getLieuDeVie() {
         return lieuDeVie;
     }
-
+ 
     public void setLieuDeVie(Point2D lieuDeVie) {
         this.lieuDeVie = lieuDeVie;
     }

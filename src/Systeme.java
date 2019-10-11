@@ -10,9 +10,10 @@ public class Systeme {
     // position et celle de l'heure
     // pour pouvoir faire plus tard une simulation ou le docteur pourra ce deplacer
     // en temps reel dans la simulation
-    //cest aussi elle qui contient notre partie du projet representer par EmploiDuTemps
+    // cest aussi elle qui contient notre partie du projet representer par
+    // EmploiDuTemps
 
-    public EmploiDuTemps schedule = new EmploiDuTemps();
+    public EmploiDuTemps schedule = new EmploiDuTemps(this);
     public Docteur doc;
     public List<Patient> malades = new ArrayList<Patient>();
     private LocalDateTime DateHeureActuel;
@@ -20,6 +21,8 @@ public class Systeme {
     public Systeme() {
 
         this.doc = new Docteur("doc", "gros", "mentoniste");
+        this.addPatient(new Patient(new Point2D.Double(0, 0), "krusty", "le clown", this));
+        this.DateHeureActuel = LocalDateTime.now();
     }
 
     public void addPatient(Patient nouveauxPatient) {
@@ -32,6 +35,38 @@ public class Systeme {
 
     private int donnerCriti() {
         return 1;
+    }
+
+    public EmploiDuTemps getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(EmploiDuTemps schedule) {
+        this.schedule = schedule;
+    }
+
+    public Docteur getDoc() {
+        return doc;
+    }
+
+    public void setDoc(Docteur doc) {
+        this.doc = doc;
+    }
+
+    public List<Patient> getMalades() {
+        return malades;
+    }
+
+    public void setMalades(List<Patient> malades) {
+        this.malades = malades;
+    }
+
+    public LocalDateTime getDateHeureActuel() {
+        return DateHeureActuel;
+    }
+
+    public void setDateHeureActuel(LocalDateTime dateHeureActuel) {
+        DateHeureActuel = dateHeureActuel;
     }
 
 }
