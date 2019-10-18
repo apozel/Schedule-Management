@@ -1,4 +1,5 @@
-import java.awt.geom.Point2D;
+package base;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
@@ -17,7 +18,7 @@ public class EmploiDuTemps {
         this.abonnementService = sys;
     }
 
-    void ajouterRendezVous(Patient malade, int criticite, Point2D lieu) {
+    void ajouterRendezVous(Patient malade, int criticite, Position lieu) {
         int choixDoc = 0;
         LocalDateTime heureDeDebut = abonnementService.getDateHeureActuel();
         LocalDateTime heureDeFin = heureDeDebut.plusHours(1);
@@ -39,5 +40,7 @@ public class EmploiDuTemps {
         for (int i = 0; i < listetampon.size(); i++) {
             
         }
+        //return par default
+        return listeretour;
     }
 }

@@ -1,49 +1,37 @@
-import java.awt.geom.Point2D;
+package base;
 
 /**
  * docteur
  */
 public class Docteur {
 
-    private Point2D lieu;
-    private String nom, prenom, special;
+  private int DocteurID;
+  private Position Pos;
+  
+  /**
+   * 
+   * @param DocteurID
+   * @param Pos
+   */
+  public Docteur(int DocteurID,Position Pos) {
+    this.DocteurID = DocteurID;
+    this.Pos = Pos;
+  }
 
-    public Docteur(String nom, String prenom, String special) {
-        this.nom = nom;
-        this.prenom = prenom;
-        this.special = special;
-    }
+  public int getDocteurID() {
+    return DocteurID;
+  }
 
-    public Point2D getLieu() {
-        return lieu;
-    }
+  public void setDocteurID(int docteurID) {
+    DocteurID = docteurID;
+  }
 
-    public void setLieu(Point2D lieu) {
-        this.lieu = lieu;
-    }
+  public Position getPos() {
+    return Pos;
+  }
 
-    public String getNom() {
-        return nom;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    public String getPrenom() {
-        return prenom;
-    }
-
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
-    }
-
-    public String getSpecial() {
-        return special;
-    }
-
-    public void setSpecial(String special) {
-        this.special = special;
-    }
+  public void setPos(Position pos) {
+    Pos = pos;
+  }
 
 }

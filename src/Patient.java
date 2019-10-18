@@ -1,48 +1,59 @@
-import java.awt.geom.Point2D;
+package base;
 
 /**
  * Patient
  */
 public class Patient {
+  
+  private int PatientID;
+  private Position LieuRDZ;
+  private int Criticité;
+  private String Description;
 
-    private Point2D lieuDeVie;
-    private String nom, prenom;
-    private Systeme abonnementService;
+  /**
+   * 
+   * @param PatientID
+   * @param LieuRDZ
+   * @param Criticité
+   * @param Description
+   */
+  public Patient(int PatientID,Position LieuRDZ,int Criticité,String Description) {
+    this.PatientID = PatientID;
+    this.LieuRDZ = LieuRDZ;
+    this.Criticité = Criticité;
+    this.Description = Description;
+  }
 
-    public Patient(Point2D lieuDeVie, String nom, String prenom, Systeme abonnementService) {
-        this.lieuDeVie = lieuDeVie;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.abonnementService = abonnementService;
-    }
+  public int getPatientID() {
+    return PatientID;
+  }
 
-    public void demandeDeRDV(){
-        this.abonnementService.ajouterNouveauRDV(this);
-    }
+  public void setPatientID(int patientID) {
+    PatientID = patientID;
+  }
 
-    public Point2D getLieuDeVie() {
-        return lieuDeVie;
-    }
- 
-    public void setLieuDeVie(Point2D lieuDeVie) {
-        this.lieuDeVie = lieuDeVie;
-    }
+  public Position getLieuRDZ() {
+    return LieuRDZ;
+  }
 
-    public String getNom() {
-        return nom;
-    }
+  public void setLieuRDZ(Position lieuRDZ) {
+    LieuRDZ = lieuRDZ;
+  }
 
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
+  public int getCriticité() {
+    return Criticité;
+  }
 
-    public String getPrenom() {
-        return prenom;
-    }
+  public void setCriticité(int criticité) {
+    Criticité = criticité;
+  }
 
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
-    }
+  public String getDescription() {
+    return Description;
+  }
 
-    
+  public void setDescription(String description) {
+    Description = description;
+  }
+  
 }

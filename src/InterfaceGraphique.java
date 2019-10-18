@@ -1,3 +1,5 @@
+package base;
+
 import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -31,7 +33,6 @@ public class InterfaceGraphique extends JFrame {
         this.setFocusable(true);
 
         this.setVisible(true);
-       )
 
         // mise en forme fenetre 
 

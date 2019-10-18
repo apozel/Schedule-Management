@@ -1,7 +1,8 @@
+package base;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import java.awt.geom.Point2D;
 import java.time.LocalDateTime;
 
 public class Systeme {
@@ -21,7 +22,7 @@ public class Systeme {
     public Systeme() {
 
         this.doc = new Docteur("doc", "gros", "mentoniste");
-        this.addPatient(new Patient(new Point2D.Double(0, 0), "krusty", "le clown", this));
+        this.addPatient(new Patient(new Position(0,0), "krusty", "le clown", this));
         this.DateHeureActuel = LocalDateTime.now();
     }
 

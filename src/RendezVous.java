@@ -1,4 +1,5 @@
-import java.awt.geom.Point2D;
+package base;
+
 import java.time.LocalDateTime;
 
 /**
@@ -8,7 +9,7 @@ public class RendezVous {
 
     private LocalDateTime dateDebut;
     private LocalDateTime dateFin;
-    private Point2D lieu;
+    private Position lieu;
     private Docteur medecinAffecte;
     private Patient malade;
 
@@ -35,11 +36,11 @@ public class RendezVous {
         this.dateFin = dateFin;
     }
 
-    public Point2D getLieu() {
+    public Position getLieu() {
         return lieu;
     }
 
-    public void setLieu(Point2D lieu) {
+    public void setLieu(Position lieu) {
         this.lieu = lieu;
     }
 
