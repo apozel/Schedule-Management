@@ -14,15 +14,15 @@ public class Systeme {
     // EmploiDuTemps
 
     public EmploiDuTemps schedule = new EmploiDuTemps(this);
-    public Docteur doc;
+    public List<Docteur> docList = new ArrayList<Docteur>();
     public List<Patient> malades = new ArrayList<Patient>();
     private LocalDateTime DateHeureActuel;
 
     public Systeme() {
 
-        this.doc = new Docteur("doc", "gros", "mentoniste");
+        this.docList.add(new Docteur("doc", "gros", "mentoniste")); 
         this.addPatient(new Patient(new Point2D.Double(0, 0), "krusty", "le clown", this));
-        this.DateHeureActuel = LocalDateTime.now();
+        this.DateHeureActuel = LocalDateTime.now(); 
     }
 
     public void addPatient(Patient nouveauxPatient) {
@@ -45,12 +45,12 @@ public class Systeme {
         this.schedule = schedule;
     }
 
-    public Docteur getDoc() {
-        return doc;
+    public List<Docteur> getDoc() {
+        return docList;
     }
 
-    public void setDoc(Docteur doc) {
-        this.doc = doc;
+    public void addDoc(Docteur doc) {
+        this.docList.add(doc);
     }
 
     public List<Patient> getMalades() {

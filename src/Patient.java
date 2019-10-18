@@ -16,14 +16,14 @@ public class Patient {
         this.abonnementService = abonnementService;
     }
 
-    public void demandeDeRDV(){
+    public void demandeDeRDV() {
         this.abonnementService.ajouterNouveauRDV(this);
     }
 
     public Point2D getLieuDeVie() {
         return lieuDeVie;
     }
- 
+
     public void setLieuDeVie(Point2D lieuDeVie) {
         this.lieuDeVie = lieuDeVie;
     }
@@ -44,5 +44,4 @@ public class Patient {
         this.prenom = prenom;
     }
 
-    
 }

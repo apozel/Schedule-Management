@@ -12,7 +12,7 @@ public class RendezVous {
     private Docteur medecinAffecte;
     private Patient malade;
 
-    RendezVous(LocalDateTime debut, LocalDateTime fin,Patient malade,Docteur doc) {
+    RendezVous(LocalDateTime debut, LocalDateTime fin, Patient malade, Docteur doc) {
         this.dateDebut = debut;
         this.dateFin = fin;
         this.lieu = malade.getLieuDeVie();
@@ -59,4 +59,4 @@ public class RendezVous {
         this.malade = malade;
     }
 
-} 
+}

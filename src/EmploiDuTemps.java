@@ -37,7 +37,25 @@ public class EmploiDuTemps {
         }
         RendezVous[] listeretour = new RendezVous[listetampon.size()];
         for (int i = 0; i < listetampon.size(); i++) {
-            
+            listeretour[i] = listetampon.get(i);
         }
+        return listeretour;
+
+    }
+
+    public List<RendezVous> getRendezVousList() {
+        return RendezVousList;
+    }
+
+    public void setRendezVousList(List<RendezVous> rendezVousList) {
+        RendezVousList = rendezVousList;
+    }
+
+    public List<Docteur> getDocteursList() {
+        return docteursList;
+    }
+
+    public void setDocteursList(List<Docteur> docteursList) {
+        this.docteursList = docteursList;
     }
 }
