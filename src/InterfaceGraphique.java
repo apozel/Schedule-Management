@@ -36,7 +36,7 @@ public class InterfaceGraphique extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        this.setSize(800, 800);
+        this.setSize(800, 500);
         this.setTitle("interface graphique");
         this.setFocusable(true);
 
