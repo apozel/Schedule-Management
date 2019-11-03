@@ -1,94 +1,30 @@
-package base;
+
 
 /**
- * 
- * @author Arnaud.VDR
- * @date 18 oct. 2019
- * @project ISEN_Schedule_Management
- * @package base
- *
+ * Position
  */
 public class Position {
-  /**
-   * X
-   */
-  private int X;
-  /*
-   * Y
-   */
-  private int Y;
-  /*
-   * Adresse
-   */
-  private String Adresse;
-  /*
-   * CodePostale
-   */
-  private String CodePostale;
-  /*
-   * Ville
-   */
-  private String Ville;
-  
-  /**
-   * 
-   * @param X
-   * @param Y
-   */
-  public Position(int X, int Y) {
-    this.X = X;
-    this.Y = Y;
-  }
-  
-  /**
-   * 
-   * @param Adresse
-   * @param CodePostale
-   * @param Ville
-   */
-  public Position(String Adresse, String CodePostale, String Ville) {
-    this.Adresse = Adresse;
-    this.CodePostale = CodePostale;
-    this.Ville = Ville;
-  }
 
-  public int getX() {
-    return X;
-  }
+    private int x,y;
 
-  public void setX(int x) {
-    X = x;
-  }
+    public Position(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
 
-  public int getY() {
-    return Y;
-  }
+    public int getX() {
+        return x;
+    }
 
-  public void setY(int y) {
-    Y = y;
-  }
+    public void setX(int x) {
+        this.x = x;
+    }
 
-  public String getAdresse() {
-    return Adresse;
-  }
+    public int getY() {
+        return y;
+    }
 
-  public void setAdresse(String adresse) {
-    Adresse = adresse;
-  }
-
-  public String getCodePostale() {
-    return CodePostale;
-  }
-
-  public void setCodePostale(String codePostale) {
-    CodePostale = codePostale;
-  }
-
-  public String getVille() {
-    return Ville;
-  }
-
-  public void setVille(String ville) {
-    Ville = ville;
-  }
+    public void setY(int y) {
+        this.y = y;
+    }
 }
