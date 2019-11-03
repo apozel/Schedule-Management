@@ -1,14 +1,21 @@
 package base;
 
 import java.awt.BorderLayout;
+<<<<<<< Updated upstream
+=======
+import java.awt.Choice;
+import java.awt.Color;
+>>>>>>> Stashed changes
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Color;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 /**
  * InterfaceGraphique
@@ -28,7 +35,7 @@ public class InterfaceGraphique extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        this.setSize(500, 500);
+        this.setSize(800, 800);
         this.setTitle("interface graphique");
         this.setFocusable(true);
 
@@ -73,12 +80,105 @@ public class InterfaceGraphique extends JFrame {
          */
         private static final long serialVersionUID = 1L;
 
+<<<<<<< Updated upstream
         private JTextArea affichageDonnees = new JTextArea();
         private JButton optioButton = new JButton("bouton 1");
 
         optionJpanelDroite() {
             this.add(affichageDonnees);
             this.add(optioButton);
+=======
+        private int criticiteMax = 5;
+        private JComboBox<Docteur> choixDocteurBox = new JComboBox<Docteur>();
+        private JComboBox<Patient> creationNouvelleDemandePatientComboBox = new JComboBox<Patient>();
+        private JTextArea affichageDonnees = new JTextArea();
+        private JButton optioButton = new JButton("bouton 1");
+        private JTabbedPane tabbedPane = new JTabbedPane();
+        private JPanel affichageJPanel = new JPanel();
+        private JPanel ajoutJPanel = new JPanel();
+        private JPanel ajoutDemandeJPanel = new JPanel();
+        private JLabel ajoutCriticiteDemandLabel = new JLabel("Criticite :");
+        private Choice ajoutCriticiteDemande = new Choice();
+        private JLabel ajoutDescriptionJLabel = new JLabel("Description :");
+        private JTextField ajoutDescriptionJTexteField = new JTextField();
+        private JButton confirmationCreationDemandeButton = new JButton("confirmer");
+
+        optionJpanelDroite() {
+            creerInterfaceGraphique();
+        }
+
+        public void creerInterfaceGraphique() {
+            BoxLayout boxlayout = new BoxLayout(this, BoxLayout.Y_AXIS);
+            this.setLayout(boxlayout);
+
+            BoxLayout affichageLayout = new BoxLayout(affichageJPanel, BoxLayout.Y_AXIS);
+            affichageJPanel.setLayout(affichageLayout);
+
+            BoxLayout ajoutLayout = new BoxLayout(ajoutJPanel, BoxLayout.Y_AXIS);
+            ajoutJPanel.setLayout(ajoutLayout);
+
+            BoxLayout ajoutLayoutDemande = new BoxLayout(ajoutDemandeJPanel, boxlayout.Y_AXIS);
+            ajoutDemandeJPanel.setLayout(ajoutLayoutDemande);
+
+            MAJdesBarres();
+
+            for (int i = 0; i < criticiteMax; i++) {
+                ajoutCriticiteDemande.add(Integer.toString(i));
+            }
+
+            choixDocteurBox.addActionListener(this);
+
+            tabbedPane.addTab("Affichage", affichageJPanel);
+            tabbedPane.addTab("Ajout", ajoutJPanel);
+
+            affichageJPanel.add(choixDocteurBox);
+            affichageJPanel.add(affichageDonnees);
+            affichageJPanel.add(optioButton);
+
+            ajoutJPanel.add(ajoutDemandeJPanel);
+
+            ajoutDemandeJPanel.add(creationNouvelleDemandePatientComboBox);
+            ajoutDemandeJPanel.add(ajoutCriticiteDemandLabel);
+            ajoutDemandeJPanel.add(ajoutCriticiteDemande);
+            ajoutDemandeJPanel.add(ajoutDescriptionJLabel);
+            ajoutDemandeJPanel.add(ajoutDescriptionJTexteField);
+            ajoutDemandeJPanel.add(confirmationCreationDemandeButton);
+            confirmationCreationDemandeButton.addActionListener(this);
+
+            this.add(tabbedPane);
+        }
+
+        public void MAJdesBarres() {
+
+            choixDocteurBox.removeAllItems();
+            creationNouvelleDemandePatientComboBox.removeAllItems();
+
+            for (Docteur var : resteDuProjet.getDoc()) {
+                choixDocteurBox.addItem(var);
+            }
+
+            for (Patient Pati : resteDuProjet.getMalades()) {
+                creationNouvelleDemandePatientComboBox.addItem(Pati);
+            }
+        }
+
+        public void recuperationPourDemande() {
+            resteDuProjet.nouveauDiagnostic(Integer.parseInt(ajoutCriticiteDemande.getSelectedItem()),
+                    ajoutDescriptionJTexteField.getText(),
+                    ((Patient) creationNouvelleDemandePatientComboBox.getSelectedItem()).getIDPatient());
+            ajoutCriticiteDemande.select(0);
+            ajoutDescriptionJTexteField.setText("");
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == confirmationCreationDemandeButton) {
+                recuperationPourDemande();
+            } else if (e.getSource() == choixDocteurBox) {
+                docteurChoisit = (Docteur) choixDocteurBox.getSelectedItem();
+                affichageDonnees.setText(resteDuProjet.retourStringDesRDV(docteurChoisit));
+            }
+
+>>>>>>> Stashed changes
         }
     }
 
