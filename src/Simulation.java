@@ -1,10 +1,10 @@
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.awt.geom.Point2D;
-import java.time.LocalDateTime;
+import java.awt.Graphics;
 
-public class Systeme {
+public class Simulation {
     // cette partie sert a simuler le fonctionnement du reste de la plateforme
     // donc il faut qu'il contienne (simule) toute les fonctions comme la demande de
     // position et celle de l'heure
@@ -13,37 +13,23 @@ public class Systeme {
     // cest aussi elle qui contient notre partie du projet representer par
     // EmploiDuTemps
 
-    public EmploiDuTemps schedule = new EmploiDuTemps(this);
+    public JunctionInformation schedule = new JunctionInformation(this);
     public List<Docteur> docList = new ArrayList<Docteur>();
     public List<Patient> malades = new ArrayList<Patient>();
+    public List<RendezVous> listRDV = new ArrayList<RendezVous>();
     private LocalDateTime DateHeureActuel;
 
-    public Systeme() {
+    public Simulation() {
 
-        this.docList.add(new Docteur("doc", "gros", "mentoniste")); 
-        this.addPatient(new Patient(new Point2D.Double(0, 0), "krusty", "le clown", this));
-        this.DateHeureActuel = LocalDateTime.now(); 
+        this.docList.add(new Docteur("doc", "gyneco", "mentoniste",new Position(10, 10)));
+        this.addPatient(new Patient(new Position(11, 3), "krusty", "le clown"));
+        this.DateHeureActuel = LocalDateTime.now();
     }
 
     public void addPatient(Patient nouveauxPatient) {
         this.malades.add(nouveauxPatient);
     }
 
-    public void ajouterNouveauRDV(Patient demandePatient) {
-        schedule.ajouterRendezVous(demandePatient, this.donnerCriti(), demandePatient.getLieuDeVie());
-    }
-
-    private int donnerCriti() {
-        return 1;
-    }
-
-    public EmploiDuTemps getSchedule() {
-        return schedule;
-    }
-
-    public void setSchedule(EmploiDuTemps schedule) {
-        this.schedule = schedule;
-    }
 
     public List<Docteur> getDoc() {
         return docList;
@@ -67,6 +53,32 @@ public class Systeme {
 
     public void setDateHeureActuel(LocalDateTime dateHeureActuel) {
         DateHeureActuel = dateHeureActuel;
+    }
+
+    public List<RendezVous> getListRDV() {
+        return listRDV;
+    }
+
+    public void setListRDV(List<RendezVous> listRDV) {
+        this.listRDV = listRDV;
+    }
+
+    public void montrerScheduleSelonDocteur(Docteur docteurChoisit,Graphics g){
+        for (RendezVous rdv : listRDV) {
+            if (rdv.getMedecinAffecte().equals(docteurChoisit))  {
+                g.fillOval(rdv.getLieu().getX(),rdv.getLieu().getY(),10,10);
+            }
+        }
+    }
+
+    public String retourStringDesRDV(Docteur docteurChoisit){
+        String result = " ";
+        for (RendezVous rdv : listRDV) {
+            if (rdv.getMedecinAffecte().equals(docteurChoisit))  {
+               result += rdv.toString() + "\n";
+            }
+        }
+        return result;
     }
 
 }

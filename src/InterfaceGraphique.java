@@ -1,12 +1,16 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 
 /**
@@ -19,9 +23,10 @@ public class InterfaceGraphique extends JFrame {
      */
     private static final long serialVersionUID = 1L;
 
-    private Systeme resteDuProjet = new Systeme();
+    private Simulation resteDuProjet = new Simulation();
     private optionJpanelDroite optionDroite = new optionJpanelDroite();
     private affichageMap map = new affichageMap();
+    private Docteur docteurChoisit;
 
     public InterfaceGraphique() {
         // initialisation fenetre
@@ -63,11 +68,13 @@ public class InterfaceGraphique extends JFrame {
             g.fillRect(0, 0, this.getWidth(), this.getHeight());
             Graphics2D g2d = (Graphics2D) g;
             g2d.translate(this.getWidth() / 2, this.getHeight() / 2);
+            resteDuProjet.montrerScheduleSelonDocteur(docteurChoisit, g2d);
+
         }
 
     }
 
-    private class optionJpanelDroite extends JPanel {
+    private class optionJpanelDroite extends JPanel implements ActionListener {
 
         /**
          *
@@ -75,17 +82,54 @@ public class InterfaceGraphique extends JFrame {
         private static final long serialVersionUID = 1L;
 
         private JComboBox<Docteur> choixDocteurBox = new JComboBox<Docteur>();
+        private JComboBox<Patient> creationNouvelleDemande = new JComboBox<Patient>();
         private JTextArea affichageDonnees = new JTextArea();
         private JButton optioButton = new JButton("bouton 1");
+        private JTabbedPane tabbedPane = new JTabbedPane();
+        private JPanel affichageJPanel = new JPanel();
+        private JPanel ajoutJPanel = new JPanel();
+        private JPanel ajoutDemandeJPanel = new JPanel();
+        private JButton confirmationCreationDemandeButton = new JButton("confirmer");
+
 
         optionJpanelDroite() {
-            for (Docteur var : resteDuProjet.getSchedule().getDocteursList()) {
+
+            BoxLayout boxlayout = new BoxLayout(this, BoxLayout.Y_AXIS);
+            this.setLayout(boxlayout);
+
+            BoxLayout affichageLayout = new BoxLayout(affichageJPanel, BoxLayout.Y_AXIS);
+            affichageJPanel.setLayout(affichageLayout);
+
+             BoxLayout ajoutLayout = new BoxLayout(ajoutJPanel, BoxLayout.Y_AXIS);
+            ajoutJPanel.setLayout(ajoutLayout);
+
+
+            for (Docteur var : resteDuProjet.getDoc()) {
                 choixDocteurBox.addItem(var);
             }
 
-            this.add(choixDocteurBox);
-            this.add(affichageDonnees);
-            this.add(optioButton);
+            for (Patient Pati : resteDuProjet.getMalades()) {
+                creationNouvelleDemande.addItem(Pati);
+            }
+
+            choixDocteurBox.addActionListener(this);
+
+            tabbedPane.addTab("Affichage", affichageJPanel);
+            tabbedPane.addTab("Ajout", ajoutJPanel);
+
+            affichageJPanel.add(choixDocteurBox);
+            affichageJPanel.add(affichageDonnees);
+            affichageJPanel.add(optioButton);
+
+            ajoutDemandeJPanel.add(creationNouvelleDemande);
+
+
+            this.add(tabbedPane);
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            docteurChoisit = (Docteur) choixDocteurBox.getSelectedItem();
+            affichageDonnees.setText(resteDuProjet.retourStringDesRDV(docteurChoisit));
         }
     }
 
