@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -91,6 +92,10 @@ public class InterfaceGraphique extends JFrame {
         private JButton optioButton = new JButton("bouton 1");
         private JTabbedPane tabbedPane = new JTabbedPane();
         private JPanel affichageJPanel = new JPanel();
+        private LocalDate jourChoisit = LocalDate.now();
+        private JTextField affichageDateJLabel = new JTextField();
+        private JButton affichageDateJButton = new JButton("Date");
+        private JPanel affichageDateJPanel = new JPanel();
         private JPanel ajoutJPanel = new JPanel();
         private JPanel ajoutDemandeJPanel = new JPanel();
         private JLabel ajoutCriticiteDemandLabel = new JLabel("Criticite :");
@@ -116,6 +121,9 @@ public class InterfaceGraphique extends JFrame {
             BoxLayout ajoutLayoutDemande = new BoxLayout(ajoutDemandeJPanel, boxlayout.Y_AXIS);
             ajoutDemandeJPanel.setLayout(ajoutLayoutDemande);
 
+            BoxLayout affichageDateLayout = new BoxLayout(affichageDateJPanel, boxlayout.X_AXIS);
+            affichageDateJPanel.setLayout(affichageDateLayout);
+
             MAJdesBarres();
 
             for (int i = 0; i < criticiteMax; i++) {
@@ -127,7 +135,11 @@ public class InterfaceGraphique extends JFrame {
             tabbedPane.addTab("Affichage", affichageJPanel);
             tabbedPane.addTab("Ajout", ajoutJPanel);
 
+            affichageDateJPanel.add(affichageDateJLabel);
+            affichageDateJPanel.add(affichageDateJButton);
+
             affichageJPanel.add(choixDocteurBox);
+            affichageJPanel.add(affichageDateJPanel);
             affichageJPanel.add(affichageDonnees);
             affichageJPanel.add(optioButton);
 
@@ -142,12 +154,15 @@ public class InterfaceGraphique extends JFrame {
             confirmationCreationDemandeButton.addActionListener(this);
 
             this.add(tabbedPane);
+
         }
 
         public void MAJdesBarres() {
 
             choixDocteurBox.removeAllItems();
             creationNouvelleDemandePatientComboBox.removeAllItems();
+
+            affichageDateJLabel.setText(jourChoisit.toString());
 
             for (Docteur var : resteDuProjet.getDoc()) {
                 choixDocteurBox.addItem(var);
