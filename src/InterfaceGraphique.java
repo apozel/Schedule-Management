@@ -1,3 +1,6 @@
+import static javax.swing.BoxLayout.X_AXIS;
+import static javax.swing.BoxLayout.Y_AXIS;
+
 import java.awt.BorderLayout;
 import java.awt.Choice;
 import java.awt.Color;
@@ -53,7 +56,8 @@ public class InterfaceGraphique extends JFrame {
     }
 
     public static void main(String[] args) {
-        InterfaceGraphique p = new InterfaceGraphique();
+        new InterfaceGraphique();
+
     }
 
     /**
@@ -67,13 +71,18 @@ public class InterfaceGraphique extends JFrame {
         private static final long serialVersionUID = 1L;
 
         public void paintComponent(Graphics g) {
+            System.out.println("par ici");
             g.setColor(Color.BLACK);
             // On le dessine de sorte qu'il occupe toute la surface
             g.fillRect(0, 0, this.getWidth(), this.getHeight());
             Graphics2D g2d = (Graphics2D) g;
             g2d.translate(this.getWidth() / 2, this.getHeight() / 2);
+            
             resteDuProjet.montrerScheduleSelonDocteur(docteurChoisit, g2d);
 
+        }
+        public void MAJdeLaMap(){
+            this.repaint();
         }
 
     }
@@ -103,6 +112,14 @@ public class InterfaceGraphique extends JFrame {
         private JLabel ajoutDescriptionJLabel = new JLabel("Description :");
         private JTextField ajoutDescriptionJTexteField = new JTextField();
         private JButton confirmationCreationDemandeButton = new JButton("confirmer");
+        private JPanel ajoutPatientJPanel = new JPanel();
+        private JLabel ajoutPatientNomJLabel = new JLabel("nom :");
+        private JTextField ajoutPatientNomJTextField = new JTextField();
+        private JLabel ajoutPatientPrenomJLabel = new JLabel("prenom :");
+        private JTextField ajoutPatientPrenomJTextField = new JTextField();
+        private JLabel ajoutPatientPositionJLabel = new JLabel("position :");
+        private JTextField ajoutPatientPositionJTextField = new JTextField();
+        private JButton confirmationCreationPatientJButton = new JButton("confirmer");
 
         optionJpanelDroite() {
             creerInterfaceGraphique();
@@ -118,10 +135,13 @@ public class InterfaceGraphique extends JFrame {
             BoxLayout ajoutLayout = new BoxLayout(ajoutJPanel, BoxLayout.Y_AXIS);
             ajoutJPanel.setLayout(ajoutLayout);
 
-            BoxLayout ajoutLayoutDemande = new BoxLayout(ajoutDemandeJPanel, boxlayout.Y_AXIS);
+            BoxLayout ajoutLayoutDemande = new BoxLayout(ajoutDemandeJPanel, Y_AXIS);
             ajoutDemandeJPanel.setLayout(ajoutLayoutDemande);
 
-            BoxLayout affichageDateLayout = new BoxLayout(affichageDateJPanel, boxlayout.X_AXIS);
+            BoxLayout ajoutLayoutPatient = new BoxLayout(ajoutPatientJPanel, Y_AXIS);
+            ajoutPatientJPanel.setLayout(ajoutLayoutPatient);
+
+            BoxLayout affichageDateLayout = new BoxLayout(affichageDateJPanel, X_AXIS);
             affichageDateJPanel.setLayout(affichageDateLayout);
 
             MAJdesBarres();
@@ -142,8 +162,10 @@ public class InterfaceGraphique extends JFrame {
             affichageJPanel.add(affichageDateJPanel);
             affichageJPanel.add(affichageDonnees);
             affichageJPanel.add(optioButton);
+            optioButton.addActionListener(this);
 
             ajoutJPanel.add(ajoutDemandeJPanel);
+            ajoutJPanel.add(ajoutPatientJPanel);
 
             ajoutDemandeJPanel.add(creationNouvelleDemandePatientComboBox);
             ajoutDemandeJPanel.add(ajoutCriticiteDemandLabel);
@@ -152,6 +174,15 @@ public class InterfaceGraphique extends JFrame {
             ajoutDemandeJPanel.add(ajoutDescriptionJTexteField);
             ajoutDemandeJPanel.add(confirmationCreationDemandeButton);
             confirmationCreationDemandeButton.addActionListener(this);
+
+            ajoutPatientJPanel.add(ajoutPatientNomJLabel);
+            ajoutPatientJPanel.add(ajoutPatientNomJTextField);
+            ajoutPatientJPanel.add(ajoutPatientPrenomJLabel);
+            ajoutPatientJPanel.add(ajoutPatientPrenomJTextField);
+            ajoutPatientJPanel.add(ajoutPatientPositionJLabel);
+            ajoutPatientJPanel.add(ajoutPatientPositionJTextField);
+            ajoutPatientJPanel.add(confirmationCreationPatientJButton);
+            confirmationCreationPatientJButton.addActionListener(this);
 
             this.add(tabbedPane);
 
@@ -171,6 +202,8 @@ public class InterfaceGraphique extends JFrame {
             for (Patient Pati : resteDuProjet.getMalades()) {
                 creationNouvelleDemandePatientComboBox.addItem(Pati);
             }
+
+           
         }
 
         public void recuperationPourDemande() {
@@ -179,14 +212,31 @@ public class InterfaceGraphique extends JFrame {
                     ((Patient) creationNouvelleDemandePatientComboBox.getSelectedItem()).getIDPatient());
             ajoutCriticiteDemande.select(0);
             ajoutDescriptionJTexteField.setText("");
+            MAJdesBarres();
+        }
+
+        public void recuperationPourPatient() {
+            if (ajoutPatientNomJTextField.getText() != "" && ajoutPatientPrenomJTextField.getText() != "") {
+                int positionCarre = Integer.parseInt(ajoutPatientPositionJTextField.getText());
+                Position prochainePositionPatient = new Position(positionCarre, positionCarre);
+                resteDuProjet.addPatient(new Patient(prochainePositionPatient, ajoutPatientNomJTextField.getText(),
+                        ajoutPatientPrenomJTextField.getText()));
+            }
+            ajoutPatientNomJTextField.setText("");
+            ajoutPatientPrenomJTextField.setText("");
+            ajoutPatientPositionJTextField.setText("");
+            MAJdesBarres();
         }
 
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == confirmationCreationDemandeButton) {
                 recuperationPourDemande();
-            } else if (e.getSource() == choixDocteurBox) {
+            } else if (e.getSource() == choixDocteurBox || e.getSource() == optioButton) {
                 docteurChoisit = (Docteur) choixDocteurBox.getSelectedItem();
                 affichageDonnees.setText(resteDuProjet.retourStringDesRDV(docteurChoisit));
+                System.out.println(resteDuProjet.retourStringDesRDV(docteurChoisit));
+            } else if (e.getSource() == confirmationCreationPatientJButton) {
+                recuperationPourPatient();
             }
 
         }

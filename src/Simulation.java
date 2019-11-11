@@ -1,8 +1,8 @@
+import java.awt.Graphics;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import java.awt.Graphics;
 
 public class Simulation {
     // cette partie sert a simuler le fonctionnement du reste de la plateforme
@@ -20,16 +20,29 @@ public class Simulation {
     private LocalDateTime DateHeureActuel;
 
     public Simulation() {
-
-        this.docList.add(new Docteur("doc", "gyneco", "mentoniste",new Position(10, 10)));
-        this.addPatient(new Patient(new Position(11, 3), "krusty", "le clown"));
+        
         this.DateHeureActuel = LocalDateTime.now();
+
+        Docteur papa = new Docteur("doc", "gyneco", "mentoniste",new Position(10, 10));
+        Patient fils = new Patient(new Position(11, 3), "krusty", "le clown");
+        RendezVous papafils = new RendezVous(DateHeureActuel.toLocalDate(), papa.getHoraires(0),  Duration.ofMinutes(45), papa, new Diagnostic(1, "prout", fils));
+
+        this.docList.add(papa);
+        this.addPatient(fils);
+        this.listRDV.add(papafils);
+
+        if (papafils.getMedecinAffecte().equals(papa)) {
+            System.out.println("c'est ca ");
+        } else {
+            System.out.println("c'est ca ");
+        }
+        
+        
     }
 
     public void addPatient(Patient nouveauxPatient) {
         this.malades.add(nouveauxPatient);
     }
-
 
     public List<Docteur> getDoc() {
         return docList;
@@ -63,26 +76,28 @@ public class Simulation {
         this.listRDV = listRDV;
     }
 
-    public void montrerScheduleSelonDocteur(Docteur docteurChoisit,Graphics g){
+    public void montrerScheduleSelonDocteur(Docteur docteurChoisit, Graphics g) {
         for (RendezVous rdv : listRDV) {
-            if (rdv.getMedecinAffecte().equals(docteurChoisit))  {
-                g.fillOval(rdv.getLieu().getX(),rdv.getLieu().getY(),10,10);
+
+            if (rdv.getMedecinAffecte().equals(docteurChoisit)) {
+                System.out.println("affichage : " + rdv);
+                g.fillOval(rdv.getLieu().getX(), rdv.getLieu().getY(), 10, 10);
             }
         }
     }
 
-    public String retourStringDesRDV(Docteur docteurChoisit){
+    public String retourStringDesRDV(Docteur docteurChoisit) {
         String result = " ";
         for (RendezVous rdv : listRDV) {
-            if (rdv.getMedecinAffecte().equals(docteurChoisit))  {
-               result += rdv.toString() + "\n";
+            if (rdv.getMedecinAffecte().equals(docteurChoisit)) {
+                result += rdv.toString() + "\n";
             }
         }
         return result;
     }
 
-    public Patient retourPatientSelonID(String idPatient){
-        
+    public Patient retourPatientSelonID(String idPatient) {
+
         for (Patient pat : malades) {
             if (pat.getIDPatient() == idPatient) {
                 return pat;
@@ -91,8 +106,17 @@ public class Simulation {
         return null;
     }
 
-    public void nouveauDiagnostic(int crit,String descript,String patientid){
+    public void nouveauDiagnostic(int crit, String descript, String patientid) {
         schedule.recuperationNouveauxDiagnostic(crit, descript, patientid);
+    }
+
+    public void addRdv(List<RendezVous> listeTriee) {
+        for (RendezVous rendezVous : listeTriee) {
+            System.out.println(rendezVous);
+            listRDV.add(rendezVous);
+            System.out.println(retourStringDesRDV(rendezVous.getMedecinAffecte()));
+        }
+
     }
 
 }

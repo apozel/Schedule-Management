@@ -5,7 +5,7 @@
 public class Demande {
 
     private Diagnostic diag;
-    private Patient patientConsernee;
+    private Patient patientConsernee; 
 
     public Demande(Diagnostic diag, Patient patientConsernee) {
         this.diag = diag;

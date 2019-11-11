@@ -25,10 +25,10 @@ public class JunctionInformation {
         return simu.getListRDV();
     }
 
-    public List<RendezVous> getRendezVousDuJour(LocalDate jourChoisit) {
+    public List<RendezVous> getRendezVousDuJour(LocalDate jourChoisit,Docteur docteurChoisit) {
         List<RendezVous> rdvDuJour = new ArrayList<RendezVous>();
         for (RendezVous var : this.getPrecedentRendezVous()) {
-            if (var.getDate() == jourChoisit) {
+            if (var.getDate() == jourChoisit && var.getMedecinAffecte().equals(docteurChoisit)) {
                 rdvDuJour.add(var);
             }
         }
@@ -63,7 +63,7 @@ public class JunctionInformation {
     // regarde s'il y a des cahgement ou des nouveaute si c'est le cas les applique
     // a la bdd
     public void comparaisonEtStockageRDV(List<RendezVous> listeTriee) {
-
+        simu.addRdv(listeTriee);
     }
 
     public Patient trouverLePatientAvecSonID(String patientID) {

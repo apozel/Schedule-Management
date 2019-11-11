@@ -1,8 +1,8 @@
-import java.awt.geom.Point2D;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * emploiDuTemps cette algorithme prend les rendez vous dont il a besoin pour
@@ -17,6 +17,7 @@ public class Algorithme {
     private JunctionInformation AccesStockageInformation;
 
     public Algorithme(JunctionInformation lienAvecBdd) {
+
         this.AccesStockageInformation = lienAvecBdd;
     }
 
@@ -29,11 +30,26 @@ public class Algorithme {
         // rendez vous de la jounee suivante et ainsi de suite jusqu'a tomber sur une
         // journee libre l"algorithme devra donc les trier et renvoyer cette meme
         // journee au junctioninformation
+
         System.out.println("j'ai recu la notif");
+        List<RendezVous> rdvReturn = new ArrayList<RendezVous>();
+        LocalDateTime jourOuOnRegarde = getDateEtHeure();
+        List<Docteur> docteurs = avoirLesDocteurDisponible();
+        for (Docteur docChoisit : docteurs) {
+            List<RendezVous> rdvDuJour = avoirLesRendezVousDejaDonnee(jourOuOnRegarde.toLocalDate(), docChoisit);
+            if (rdvDuJour.size() == 0) {
+                rdvReturn.add(new RendezVous(jourOuOnRegarde.toLocalDate(), docChoisit.getHoraires(0),
+                        Duration.ofMinutes(45), docChoisit, nouvelleDemandeATraiter.getPatientConsernee(),
+                        nouvelleDemandeATraiter.getDiag()));
+            }
+            renvoyeListeTrieeRendezVousStockage(rdvReturn);
+
+        }
+
     }
 
-    public List<RendezVous> avoirLesRendezVousDejaDonnee(LocalDate dateDemander) {
-        return AccesStockageInformation.getRendezVousDuJour(dateDemander);
+    public List<RendezVous> avoirLesRendezVousDejaDonnee(LocalDate dateDemander, Docteur docteurChoisit) {
+        return AccesStockageInformation.getRendezVousDuJour(dateDemander, docteurChoisit);
     }
 
     public List<Docteur> avoirLesDocteurDisponible() {

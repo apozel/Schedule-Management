@@ -1,6 +1,6 @@
 import java.time.Duration;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 import java.time.LocalTime;
 import java.util.UUID;
 
@@ -29,7 +29,8 @@ public class RendezVous {
         this.lieu = malade.getLieuDeVie();
     }
 
-    public RendezVous(LocalDate date, LocalTime heureDebut, Duration dureeConsultation,Docteur docteur, Diagnostic diag) {
+    public RendezVous(LocalDate date, LocalTime heureDebut, Duration dureeConsultation, Docteur docteur,
+            Diagnostic diag) {
         this.date = date;
         this.heureDebut = heureDebut;
         this.dureeConsultation = dureeConsultation;
