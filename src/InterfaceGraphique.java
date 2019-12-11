@@ -77,11 +77,12 @@ public class InterfaceGraphique extends JFrame {
             g.fillRect(0, 0, this.getWidth(), this.getHeight());
             Graphics2D g2d = (Graphics2D) g;
             g2d.translate(this.getWidth() / 2, this.getHeight() / 2);
-            
+
             resteDuProjet.montrerScheduleSelonDocteur(docteurChoisit, g2d);
 
         }
-        public void MAJdeLaMap(){
+
+        public void MAJdeLaMap() {
             this.repaint();
         }
 
@@ -98,7 +99,7 @@ public class InterfaceGraphique extends JFrame {
         private JComboBox<Docteur> choixDocteurBox = new JComboBox<Docteur>();
         private JComboBox<Patient> creationNouvelleDemandePatientComboBox = new JComboBox<Patient>();
         private JTextArea affichageDonnees = new JTextArea();
-        private JButton optioButton = new JButton("bouton 1");
+        private JButton selectionDateDocteurButton = new JButton("selection Date");
         private JTabbedPane tabbedPane = new JTabbedPane();
         private JPanel affichageJPanel = new JPanel();
         private LocalDate jourChoisit = LocalDate.now();
@@ -161,8 +162,8 @@ public class InterfaceGraphique extends JFrame {
             affichageJPanel.add(choixDocteurBox);
             affichageJPanel.add(affichageDateJPanel);
             affichageJPanel.add(affichageDonnees);
-            affichageJPanel.add(optioButton);
-            optioButton.addActionListener(this);
+            affichageJPanel.add(selectionDateDocteurButton);
+            selectionDateDocteurButton.addActionListener(this);
 
             ajoutJPanel.add(ajoutDemandeJPanel);
             ajoutJPanel.add(ajoutPatientJPanel);
@@ -203,7 +204,6 @@ public class InterfaceGraphique extends JFrame {
                 creationNouvelleDemandePatientComboBox.addItem(Pati);
             }
 
-           
         }
 
         public void recuperationPourDemande() {
@@ -221,21 +221,27 @@ public class InterfaceGraphique extends JFrame {
                 Position prochainePositionPatient = new Position(positionCarre, positionCarre);
                 resteDuProjet.addPatient(new Patient(prochainePositionPatient, ajoutPatientNomJTextField.getText(),
                         ajoutPatientPrenomJTextField.getText()));
+                MAJdesBarres();
+            } else {
+                System.out.println("mauvaise saisie patient");
             }
             ajoutPatientNomJTextField.setText("");
             ajoutPatientPrenomJTextField.setText("");
             ajoutPatientPositionJTextField.setText("");
-            MAJdesBarres();
+
         }
 
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == confirmationCreationDemandeButton) {
+                System.out.println("bouton demande");
                 recuperationPourDemande();
-            } else if (e.getSource() == choixDocteurBox || e.getSource() == optioButton) {
+            } else if (e.getSource() == choixDocteurBox || e.getSource() == selectionDateDocteurButton) {
+                System.out.println("selection date ou docteur");
                 docteurChoisit = (Docteur) choixDocteurBox.getSelectedItem();
                 affichageDonnees.setText(resteDuProjet.retourStringDesRDV(docteurChoisit));
                 System.out.println(resteDuProjet.retourStringDesRDV(docteurChoisit));
             } else if (e.getSource() == confirmationCreationPatientJButton) {
+                System.out.println("bouton patient");
                 recuperationPourPatient();
             }
 

@@ -112,7 +112,8 @@ public class Simulation {
 
     public void addRdv(List<RendezVous> listeTriee) {
         for (RendezVous rendezVous : listeTriee) {
-            System.out.println(rendezVous);
+            
+            System.out.println("simulation.java : "+rendezVous);
             listRDV.add(rendezVous);
             System.out.println(retourStringDesRDV(rendezVous.getMedecinAffecte()));
         }
