@@ -30,13 +30,6 @@ public class Simulation {
         this.docList.add(papa);
         this.addPatient(fils);
         this.listRDV.add(papafils);
-
-        if (papafils.getMedecinAffecte().equals(papa)) {
-            System.out.println("c'est ca ");
-        } else {
-            System.out.println("c'est ca ");
-        }
-        
         
     }
 
@@ -80,7 +73,7 @@ public class Simulation {
         for (RendezVous rdv : listRDV) {
 
             if (rdv.getMedecinAffecte().equals(docteurChoisit)) {
-                System.out.println("affichage : " + rdv);
+                System.out.println("simultaion : montrerScheduleSelonDocteur() : affichage : " + rdv);
                 g.fillOval(rdv.getLieu().getX(), rdv.getLieu().getY(), 10, 10);
             }
         }
@@ -113,9 +106,9 @@ public class Simulation {
     public void addRdv(List<RendezVous> listeTriee) {
         for (RendezVous rendezVous : listeTriee) {
             
-            System.out.println("simulation.java : "+rendezVous);
+            System.out.println("simulation : addRdv() : "+rendezVous);
             listRDV.add(rendezVous);
-            System.out.println(retourStringDesRDV(rendezVous.getMedecinAffecte()));
+            System.out.println("simulation : addRdv() : "+retourStringDesRDV(rendezVous.getMedecinAffecte()));
         }
 
     }

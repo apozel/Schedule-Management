@@ -71,7 +71,7 @@ public class InterfaceGraphique extends JFrame {
         private static final long serialVersionUID = 1L;
 
         public void paintComponent(Graphics g) {
-            System.out.println("par ici");
+            System.out.println("interfacegraphique : affichagemap : paintComponent()");
             g.setColor(Color.BLACK);
             // On le dessine de sorte qu'il occupe toute la surface
             g.fillRect(0, 0, this.getWidth(), this.getHeight());
@@ -96,16 +96,20 @@ public class InterfaceGraphique extends JFrame {
         private static final long serialVersionUID = 1L;
 
         private int criticiteMax = 5;
+
+        private JTabbedPane tabbedPane = new JTabbedPane();
+
         private JComboBox<Docteur> choixDocteurBox = new JComboBox<Docteur>();
         private JComboBox<Patient> creationNouvelleDemandePatientComboBox = new JComboBox<Patient>();
         private JTextArea affichageDonnees = new JTextArea();
         private JButton selectionDateDocteurButton = new JButton("selection Date");
-        private JTabbedPane tabbedPane = new JTabbedPane();
+
         private JPanel affichageJPanel = new JPanel();
         private LocalDate jourChoisit = LocalDate.now();
         private JTextField affichageDateJLabel = new JTextField();
         private JButton affichageDateJButton = new JButton("Date");
         private JPanel affichageDateJPanel = new JPanel();
+
         private JPanel ajoutJPanel = new JPanel();
         private JPanel ajoutDemandeJPanel = new JPanel();
         private JLabel ajoutCriticiteDemandLabel = new JLabel("Criticite :");
@@ -113,6 +117,7 @@ public class InterfaceGraphique extends JFrame {
         private JLabel ajoutDescriptionJLabel = new JLabel("Description :");
         private JTextField ajoutDescriptionJTexteField = new JTextField();
         private JButton confirmationCreationDemandeButton = new JButton("confirmer");
+
         private JPanel ajoutPatientJPanel = new JPanel();
         private JLabel ajoutPatientNomJLabel = new JLabel("nom :");
         private JTextField ajoutPatientNomJTextField = new JTextField();
@@ -216,15 +221,20 @@ public class InterfaceGraphique extends JFrame {
         }
 
         public void recuperationPourPatient() {
-            if (ajoutPatientNomJTextField.getText() != "" && ajoutPatientPrenomJTextField.getText() != "") {
-                int positionCarre = Integer.parseInt(ajoutPatientPositionJTextField.getText());
-                Position prochainePositionPatient = new Position(positionCarre, positionCarre);
-                resteDuProjet.addPatient(new Patient(prochainePositionPatient, ajoutPatientNomJTextField.getText(),
-                        ajoutPatientPrenomJTextField.getText()));
-                MAJdesBarres();
-            } else {
-                System.out.println("mauvaise saisie patient");
+            try {
+                if (ajoutPatientNomJTextField.getText() != "" && ajoutPatientPrenomJTextField.getText() != "") {
+                    int positionCarre = Integer.parseInt(ajoutPatientPositionJTextField.getText());
+                    Position prochainePositionPatient = new Position(positionCarre, positionCarre);
+                    resteDuProjet.addPatient(new Patient(prochainePositionPatient, ajoutPatientNomJTextField.getText(),
+                            ajoutPatientPrenomJTextField.getText()));
+                    MAJdesBarres();
+                } else {
+                    System.out.println("interfaceGraphique : optionJpanelDroite : recuperationPourPatient() mauvaise saisie patient");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("interfaceGraphique : optionJpanelDroite : recuperationPourPatient() (erreur) : la position du patient entree est pas correcte");
             }
+
             ajoutPatientNomJTextField.setText("");
             ajoutPatientPrenomJTextField.setText("");
             ajoutPatientPositionJTextField.setText("");
@@ -233,15 +243,16 @@ public class InterfaceGraphique extends JFrame {
 
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == confirmationCreationDemandeButton) {
-                System.out.println("bouton demande");
+                System.out.println("interfaceGraphique : optionJpanelDroite : actionPerformed() bouton demande");
                 recuperationPourDemande();
-            } else if (e.getSource() == choixDocteurBox || e.getSource() == selectionDateDocteurButton) {
-                System.out.println("selection date ou docteur");
+            } else if (e.getSource() == selectionDateDocteurButton) {
+                System.out.println("interfaceGraphique : optionJpanelDroite : actionPerformed() : selection date ou docteur");
                 docteurChoisit = (Docteur) choixDocteurBox.getSelectedItem();
                 affichageDonnees.setText(resteDuProjet.retourStringDesRDV(docteurChoisit));
-                System.out.println(resteDuProjet.retourStringDesRDV(docteurChoisit));
+                System.out.println("interfaceGraphique : optionJpanelDroite : actionPerformed() : "
+                        + resteDuProjet.retourStringDesRDV(docteurChoisit));
             } else if (e.getSource() == confirmationCreationPatientJButton) {
-                System.out.println("bouton patient");
+                System.out.println("interfaceGraphique : optionJpanelDroite : actionPerformed() : bouton patient");
                 recuperationPourPatient();
             }
 

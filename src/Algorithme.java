@@ -31,7 +31,7 @@ public class Algorithme {
         // journee libre l"algorithme devra donc les trier et renvoyer cette meme
         // journee au junctioninformation
 
-        System.out.println("j'ai recu la notif");
+        System.out.println(" Algorithme : ajouterRendezVous() : j'ai recu la notif");
         List<RendezVous> rdvReturn = new ArrayList<RendezVous>();
         LocalDateTime jourOuOnRegarde = getDateEtHeure();
         List<Docteur> docteurs = avoirLesDocteurDisponible();
