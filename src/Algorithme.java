@@ -36,12 +36,13 @@ public class Algorithme {
         LocalDateTime jourOuOnRegarde = getDateEtHeure();
         List<Docteur> docteurs = avoirLesDocteurDisponible();
         for (Docteur docChoisit : docteurs) {
+            @SuppressWarnings("unused")
             List<RendezVous> rdvDuJour = avoirLesRendezVousDejaDonnee(jourOuOnRegarde.toLocalDate(), docChoisit);
-            
-                rdvReturn.add(new RendezVous(jourOuOnRegarde.toLocalDate(), docChoisit.getHoraires(0),
-                        Duration.ofMinutes(45), docChoisit, nouvelleDemandeATraiter.getPatientConsernee(),
-                        nouvelleDemandeATraiter.getDiag()));
-            
+
+            rdvReturn.add(new RendezVous(jourOuOnRegarde.toLocalDate(), docChoisit.getHoraires(0),
+                    Duration.ofMinutes(45), docChoisit, nouvelleDemandeATraiter.getPatientConsernee(),
+                    nouvelleDemandeATraiter.getDiag()));
+
             this.renvoyeListeTrieeRendezVousStockage(rdvReturn);
             System.out.println(" Algorithme : ajouterRendezVous() : rendezvous enregistrer");
 

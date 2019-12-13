@@ -9,6 +9,7 @@ import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -125,7 +126,7 @@ public class InterfaceGraphique extends JFrame {
         private JLabel ajoutDescriptionJLabel = new JLabel("Description :");
         private JTextField ajoutDescriptionJTexteField = new JTextField();
         private JButton confirmationCreationDemandeButton = new JButton("confirmer");
-        
+
         private TitledBorder titreAjoutPatient;
         private JPanel ajoutPatientJPanel = new JPanel();
         private JLabel ajoutPatientNomJLabel = new JLabel("nom :");
@@ -160,7 +161,6 @@ public class InterfaceGraphique extends JFrame {
             ajoutPatientJPanel.setLayout(ajoutLayoutPatient);
             ajoutPatientJPanel.setBorder(titreAjoutPatient);
 
-            
             BoxLayout affichageDateLayout = new BoxLayout(affichageDateJPanel, X_AXIS);
             affichageDateJPanel.setLayout(affichageDateLayout);
 
@@ -177,6 +177,7 @@ public class InterfaceGraphique extends JFrame {
 
             affichageDateJPanel.add(affichageDateJLabel);
             affichageDateJPanel.add(affichageDateJButton);
+            affichageDateJButton.addActionListener(this);
 
             affichageJPanel.add(choixDocteurBox);
             affichageJPanel.add(affichageDateJPanel);
@@ -257,21 +258,34 @@ public class InterfaceGraphique extends JFrame {
 
         }
 
+        public void changementDateAffichage() {
+            DateTimeFormatter formatDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate date = LocalDate.parse( new DatePicker().setPickedDate(), formatDate);
+            this.jourChoisit = date;
+            MAJdesBarres();
+        }
+
+        public void chargementInfoEnfonctionDateDocteur() {
+            docteurChoisit = (Docteur) choixDocteurBox.getSelectedItem();
+            affichageDonnees.setText(resteDuProjet.retourStringRdvSelonDateDocteur(docteurChoisit,jourChoisit));
+            map.MAJdeLaMap();
+            System.out.println("interfaceGraphique : optionJpanelDroite : actionPerformed() : "
+                    + resteDuProjet.retourStringDesRdvSelonDocteur(docteurChoisit));
+        }
+
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == confirmationCreationDemandeButton) {
                 System.out.println("interfaceGraphique : optionJpanelDroite : actionPerformed() bouton demande");
                 recuperationPourDemande();
             } else if (e.getSource() == selectionDateDocteurButton) {
                 System.out.println(
-                        "interfaceGraphique : optionJpanelDroite : actionPerformed() : selection date ou docteur");
-                docteurChoisit = (Docteur) choixDocteurBox.getSelectedItem();
-                affichageDonnees.setText(resteDuProjet.retourStringDesRDV(docteurChoisit));
-                map.MAJdeLaMap();
-                System.out.println("interfaceGraphique : optionJpanelDroite : actionPerformed() : "
-                        + resteDuProjet.retourStringDesRDV(docteurChoisit));
+                        "interfaceGraphique : optionJpanelDroite : actionPerformed() : changement date ou docteur");
+                chargementInfoEnfonctionDateDocteur();
             } else if (e.getSource() == confirmationCreationPatientJButton) {
                 System.out.println("interfaceGraphique : optionJpanelDroite : actionPerformed() : bouton patient");
                 recuperationPourPatient();
+            } else if (e.getSource() == affichageDateJButton) {
+                changementDateAffichage();
             }
 
         }

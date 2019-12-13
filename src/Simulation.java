@@ -1,5 +1,6 @@
 import java.awt.Graphics;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +26,8 @@ public class Simulation {
 
         Docteur papa = new Docteur("doc", "gyneco", "mentoniste", new Position(10, 10));
         Patient fils = new Patient(new Position(11, 3), "krusty", "le clown");
-        RendezVous papafils = new RendezVous(DateHeureActuel.toLocalDate(), papa.getHoraires(0).of(10,0), Duration.ofMinutes(45),
-                papa, new Diagnostic(1, "gastro", fils));
+        RendezVous papafils = new RendezVous(DateHeureActuel.toLocalDate(), papa.getHoraires(0).of(10, 0),
+                Duration.ofMinutes(45), papa, new Diagnostic(1, "gastro", fils));
 
         this.docList.add(papa);
         this.addPatient(fils);
@@ -76,20 +77,35 @@ public class Simulation {
             for (RendezVous rdv : listRDV) {
 
                 if (rdv.getMedecinAffecte().equals(docteurChoisit)) {
-                    System.out.println("simultaion : montrerScheduleSelonDocteur() : affichage : " + rdv);
+                    System.out.println("simulation : montrerScheduleSelonDocteur() : affichage : " + rdv);
                     ListePositionRendezVous.add(rdv.getLieu());
-                    
+
                 }
             }
         }
         return ListePositionRendezVous;
     }
 
-    public String retourStringDesRDV(Docteur docteurChoisit) {
+    public String retourStringDesRdvSelonDocteur(Docteur docteurChoisit) {
         String result = " ";
         for (RendezVous rdv : listRDV) {
             if (rdv.getMedecinAffecte().equals(docteurChoisit)) {
                 result += rdv.toString() + "\n";
+            }
+        }
+        return result;
+    }
+
+    public String retourStringRdvSelonDateDocteur(Docteur docteurChoisit, LocalDate jourChoisit) {
+        String result = " ";
+        for (RendezVous rdv : listRDV) {
+            System.out.println("Simulation : retourStringRdvSelonDateDocteur : rendez vous du jour " + rdv.toString()
+                    + "\n la date choisie est : " + jourChoisit.toString());
+            if (rdv.getMedecinAffecte().equals(docteurChoisit) && jourChoisit.isEqual(rdv.getDate())) {
+
+                System.out.println("Simulation : retourStringRdvSelonDateDocteur : la date coincide");
+                result += rdv.toString() + "\n";
+
             }
         }
         return result;
@@ -114,7 +130,8 @@ public class Simulation {
 
             System.out.println("simulation : addRdv() : " + rendezVous);
             listRDV.add(rendezVous);
-            System.out.println("simulation : addRdv() : " + retourStringDesRDV(rendezVous.getMedecinAffecte()));
+            System.out.println(
+                    "simulation : addRdv() : " + retourStringDesRdvSelonDocteur(rendezVous.getMedecinAffecte()));
         }
 
     }
