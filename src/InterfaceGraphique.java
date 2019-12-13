@@ -84,7 +84,7 @@ public class InterfaceGraphique extends JFrame {
             if (resteDuProjet.montrerScheduleSelonDocteur(docteurChoisit) != null) {
                 for (Position positionRdv : resteDuProjet.montrerScheduleSelonDocteur(docteurChoisit)) {
                     System.out.println("interfaceGraphique : affichageMap : paintComponent() : " + positionRdv);
-                    g.fillOval(positionRdv.getX(), positionRdv.getY(), 10, 10);
+                    g.fillOval((int) positionRdv.getX(), (int) positionRdv.getY(), 10, 10);
                 }
             }
         }
@@ -260,14 +260,14 @@ public class InterfaceGraphique extends JFrame {
 
         public void changementDateAffichage() {
             DateTimeFormatter formatDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            LocalDate date = LocalDate.parse( new DatePicker().setPickedDate(), formatDate);
+            LocalDate date = LocalDate.parse(new DatePicker().setPickedDate(), formatDate);
             this.jourChoisit = date;
             MAJdesBarres();
         }
 
         public void chargementInfoEnfonctionDateDocteur() {
             docteurChoisit = (Docteur) choixDocteurBox.getSelectedItem();
-            affichageDonnees.setText(resteDuProjet.retourStringRdvSelonDateDocteur(docteurChoisit,jourChoisit));
+            affichageDonnees.setText(resteDuProjet.retourStringRdvSelonDateDocteur(docteurChoisit, jourChoisit));
             map.MAJdeLaMap();
             System.out.println("interfaceGraphique : optionJpanelDroite : actionPerformed() : "
                     + resteDuProjet.retourStringDesRdvSelonDocteur(docteurChoisit));
