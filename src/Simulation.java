@@ -25,8 +25,8 @@ public class Simulation {
 
         Docteur papa = new Docteur("doc", "gyneco", "mentoniste", new Position(10, 10));
         Patient fils = new Patient(new Position(11, 3), "krusty", "le clown");
-        RendezVous papafils = new RendezVous(DateHeureActuel.toLocalDate(), papa.getHoraires(0), Duration.ofMinutes(45),
-                papa, new Diagnostic(1, "prout", fils));
+        RendezVous papafils = new RendezVous(DateHeureActuel.toLocalDate(), papa.getHoraires(0).of(10,0), Duration.ofMinutes(45),
+                papa, new Diagnostic(1, "gastro", fils));
 
         this.docList.add(papa);
         this.addPatient(fils);

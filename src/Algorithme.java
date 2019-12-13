@@ -37,11 +37,11 @@ public class Algorithme {
         List<Docteur> docteurs = avoirLesDocteurDisponible();
         for (Docteur docChoisit : docteurs) {
             List<RendezVous> rdvDuJour = avoirLesRendezVousDejaDonnee(jourOuOnRegarde.toLocalDate(), docChoisit);
-            if (rdvDuJour.size() == 0) {
+            
                 rdvReturn.add(new RendezVous(jourOuOnRegarde.toLocalDate(), docChoisit.getHoraires(0),
                         Duration.ofMinutes(45), docChoisit, nouvelleDemandeATraiter.getPatientConsernee(),
                         nouvelleDemandeATraiter.getDiag()));
-            }
+            
             this.renvoyeListeTrieeRendezVousStockage(rdvReturn);
             System.out.println(" Algorithme : ajouterRendezVous() : rendezvous enregistrer");
 
