@@ -19,7 +19,6 @@ import Schedule.utilities.RendezVous;
  */
 public class Algorithme {
 
-    private List<RendezVous> RendezVousList = new ArrayList<RendezVous>();
     private JunctionInformation AccesStockageInformation;
 
     public Algorithme(JunctionInformation lienAvecBdd) {
