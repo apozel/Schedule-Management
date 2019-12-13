@@ -1,9 +1,16 @@
-import java.awt.Graphics;
+package Schedule.moteur;
+
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import Schedule.utilities.Diagnostic;
+import Schedule.utilities.Docteur;
+import Schedule.utilities.Patient;
+import Schedule.utilities.Position;
+import Schedule.utilities.RendezVous;
 
 public class Simulation {
     // cette partie sert a simuler le fonctionnement du reste de la plateforme

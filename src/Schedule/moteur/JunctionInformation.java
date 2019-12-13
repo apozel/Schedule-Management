@@ -1,8 +1,15 @@
+package Schedule.moteur;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import Schedule.utilities.Diagnostic;
+import Schedule.utilities.Demande;
+import Schedule.utilities.Docteur;
+import Schedule.utilities.Patient;
+import Schedule.utilities.RendezVous;
 
 /**
  * ReachInformation cette class sert a faire la junction entre lalgorithme et la
@@ -25,7 +32,7 @@ public class JunctionInformation {
         return simu.getListRDV();
     }
 
-    public List<RendezVous> getRendezVousDuJour(LocalDate jourChoisit,Docteur docteurChoisit) {
+    public List<RendezVous> getRendezVousDuJour(LocalDate jourChoisit, Docteur docteurChoisit) {
         List<RendezVous> rdvDuJour = new ArrayList<RendezVous>();
         for (RendezVous var : this.getPrecedentRendezVous()) {
             if (var.getDate() == jourChoisit && var.getMedecinAffecte().equals(docteurChoisit)) {

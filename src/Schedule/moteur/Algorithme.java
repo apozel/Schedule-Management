@@ -1,8 +1,14 @@
+package Schedule.moteur;
+
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import Schedule.utilities.Demande;
+import Schedule.utilities.Docteur;
+import Schedule.utilities.RendezVous;
 
 /**
  * emploiDuTemps cette algorithme prend les rendez vous dont il a besoin pour

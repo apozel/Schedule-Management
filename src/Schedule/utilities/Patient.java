@@ -1,3 +1,5 @@
+package Schedule.utilities;
+
 import java.util.UUID;
 
 /**
@@ -7,7 +9,7 @@ public class Patient {
 
     private Position lieuDeVie;
     private String nom, prenom;
-     private final String IDPatient = UUID.randomUUID().toString();
+    private final String IDPatient = UUID.randomUUID().toString();
 
     public Patient(Position lieuDeVie, String nom, String prenom) {
         this.lieuDeVie = lieuDeVie;
@@ -67,7 +69,7 @@ public class Patient {
 
     @Override
     public String toString() {
-        return  nom + " " + prenom ;
+        return nom + " " + prenom;
     }
 
     public String getIDPatient() {

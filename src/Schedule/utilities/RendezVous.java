@@ -1,3 +1,5 @@
+package Schedule.utilities;
+
 import java.time.Duration;
 import java.time.LocalDate;
 

@@ -1,3 +1,5 @@
+package Schedule.Interface;
+
 import static javax.swing.BoxLayout.X_AXIS;
 import static javax.swing.BoxLayout.Y_AXIS;
 
@@ -22,6 +24,11 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
+
+import Schedule.moteur.Simulation;
+import Schedule.utilities.Docteur;
+import Schedule.utilities.Patient;
+import Schedule.utilities.Position;
 
 /**
  * InterfaceGraphique

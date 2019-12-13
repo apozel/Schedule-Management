@@ -1,10 +1,12 @@
+package Schedule.utilities;
+
 import java.util.UUID;
 
 /**
  * Diagnostic
  */
 public class Diagnostic {
- 
+
     private final String diagnosticId = UUID.randomUUID().toString();;
     private int criticite;
     private String description;

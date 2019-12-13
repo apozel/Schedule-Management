@@ -1,3 +1,5 @@
+package Schedule.utilities;
+
 import java.awt.geom.Point2D;
 import java.time.LocalTime;
 
@@ -99,7 +101,7 @@ public class Docteur {
     }
 
     public LocalTime getHoraires(int index) {
-        
+
         return horaires[index];
     }
 
