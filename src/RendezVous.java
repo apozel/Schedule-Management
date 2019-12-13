@@ -124,8 +124,8 @@ public class RendezVous {
 
     @Override
     public String toString() {
-        return "IDRendezVous=" + IDRendezVous + ", date=" + date + ", diag=" + diag + ", dureeConsultation="
-                + dureeConsultation + ", heureDebut=" + heureDebut + ", malade=" + malade + "]";
+        return "IDRendezVous = " + IDRendezVous + ",\n date=" + date + ",\n diag=" + diag + ",\n dureeConsultation="
+                + dureeConsultation + ",\n heureDebut=" + heureDebut + ",\n malade=" + malade + "\n";
     }
 
 }

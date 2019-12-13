@@ -63,6 +63,7 @@ public class JunctionInformation {
     // regarde s'il y a des cahgement ou des nouveaute si c'est le cas les applique
     // a la bdd
     public void comparaisonEtStockageRDV(List<RendezVous> listeTriee) {
+        System.out.println("junctionInformation : comparaisonEtStockageRDV() : notif enregistrement");
         simu.addRdv(listeTriee);
     }
 

@@ -42,7 +42,8 @@ public class Algorithme {
                         Duration.ofMinutes(45), docChoisit, nouvelleDemandeATraiter.getPatientConsernee(),
                         nouvelleDemandeATraiter.getDiag()));
             }
-            renvoyeListeTrieeRendezVousStockage(rdvReturn);
+            this.renvoyeListeTrieeRendezVousStockage(rdvReturn);
+            System.out.println(" Algorithme : ajouterRendezVous() : rendezvous enregistrer");
 
         }
 
@@ -61,6 +62,7 @@ public class Algorithme {
     }
 
     public void renvoyeListeTrieeRendezVousStockage(List<RendezVous> listeTriee) {
+        System.out.println(" Algorithme : renvoyerListeTrieeRendezVousStockage() : notif enregistrement ");
         AccesStockageInformation.comparaisonEtStockageRDV(listeTriee);
     }
 }

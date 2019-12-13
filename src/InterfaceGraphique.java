@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -19,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
 
 /**
  * InterfaceGraphique
@@ -40,7 +42,7 @@ public class InterfaceGraphique extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        this.setSize(800, 500);
+        this.setSize(800, 800);
         this.setTitle("interface graphique");
         this.setFocusable(true);
 
@@ -77,9 +79,13 @@ public class InterfaceGraphique extends JFrame {
             g.fillRect(0, 0, this.getWidth(), this.getHeight());
             Graphics2D g2d = (Graphics2D) g;
             g2d.translate(this.getWidth() / 2, this.getHeight() / 2);
-
-            resteDuProjet.montrerScheduleSelonDocteur(docteurChoisit, g2d);
-
+            g.setColor(Color.WHITE);
+            if (resteDuProjet.montrerScheduleSelonDocteur(docteurChoisit) != null) {
+                for (Position positionRdv : resteDuProjet.montrerScheduleSelonDocteur(docteurChoisit)) {
+                    System.out.println("interfaceGraphique : affichageMap : paintComponent() : " + positionRdv);
+                    g.fillOval(positionRdv.getX(), positionRdv.getY(), 10, 10);
+                }
+            }
         }
 
         public void MAJdeLaMap() {
@@ -111,13 +117,16 @@ public class InterfaceGraphique extends JFrame {
         private JPanel affichageDateJPanel = new JPanel();
 
         private JPanel ajoutJPanel = new JPanel();
+
+        private TitledBorder titreAjoutDemande;
         private JPanel ajoutDemandeJPanel = new JPanel();
         private JLabel ajoutCriticiteDemandLabel = new JLabel("Criticite :");
         private Choice ajoutCriticiteDemande = new Choice();
         private JLabel ajoutDescriptionJLabel = new JLabel("Description :");
         private JTextField ajoutDescriptionJTexteField = new JTextField();
         private JButton confirmationCreationDemandeButton = new JButton("confirmer");
-
+        
+        private TitledBorder titreAjoutPatient;
         private JPanel ajoutPatientJPanel = new JPanel();
         private JLabel ajoutPatientNomJLabel = new JLabel("nom :");
         private JTextField ajoutPatientNomJTextField = new JTextField();
@@ -141,12 +150,17 @@ public class InterfaceGraphique extends JFrame {
             BoxLayout ajoutLayout = new BoxLayout(ajoutJPanel, BoxLayout.Y_AXIS);
             ajoutJPanel.setLayout(ajoutLayout);
 
+            titreAjoutDemande = BorderFactory.createTitledBorder("Ajout Demande");
             BoxLayout ajoutLayoutDemande = new BoxLayout(ajoutDemandeJPanel, Y_AXIS);
             ajoutDemandeJPanel.setLayout(ajoutLayoutDemande);
+            ajoutDemandeJPanel.setBorder(titreAjoutDemande);
 
+            titreAjoutPatient = BorderFactory.createTitledBorder("Ajout Patient");
             BoxLayout ajoutLayoutPatient = new BoxLayout(ajoutPatientJPanel, Y_AXIS);
             ajoutPatientJPanel.setLayout(ajoutLayoutPatient);
+            ajoutPatientJPanel.setBorder(titreAjoutPatient);
 
+            
             BoxLayout affichageDateLayout = new BoxLayout(affichageDateJPanel, X_AXIS);
             affichageDateJPanel.setLayout(affichageDateLayout);
 
@@ -159,7 +173,7 @@ public class InterfaceGraphique extends JFrame {
             choixDocteurBox.addActionListener(this);
 
             tabbedPane.addTab("Affichage", affichageJPanel);
-            tabbedPane.addTab("Ajout", ajoutJPanel);
+            tabbedPane.addTab("Patient", ajoutJPanel);
 
             affichageDateJPanel.add(affichageDateJLabel);
             affichageDateJPanel.add(affichageDateJButton);
@@ -229,10 +243,12 @@ public class InterfaceGraphique extends JFrame {
                             ajoutPatientPrenomJTextField.getText()));
                     MAJdesBarres();
                 } else {
-                    System.out.println("interfaceGraphique : optionJpanelDroite : recuperationPourPatient() mauvaise saisie patient");
+                    System.out.println(
+                            "interfaceGraphique : optionJpanelDroite : recuperationPourPatient() mauvaise saisie patient");
                 }
             } catch (NumberFormatException e) {
-                System.out.println("interfaceGraphique : optionJpanelDroite : recuperationPourPatient() (erreur) : la position du patient entree est pas correcte");
+                System.out.println(
+                        "interfaceGraphique : optionJpanelDroite : recuperationPourPatient() (erreur) : la position du patient entree est pas correcte");
             }
 
             ajoutPatientNomJTextField.setText("");
@@ -246,9 +262,11 @@ public class InterfaceGraphique extends JFrame {
                 System.out.println("interfaceGraphique : optionJpanelDroite : actionPerformed() bouton demande");
                 recuperationPourDemande();
             } else if (e.getSource() == selectionDateDocteurButton) {
-                System.out.println("interfaceGraphique : optionJpanelDroite : actionPerformed() : selection date ou docteur");
+                System.out.println(
+                        "interfaceGraphique : optionJpanelDroite : actionPerformed() : selection date ou docteur");
                 docteurChoisit = (Docteur) choixDocteurBox.getSelectedItem();
                 affichageDonnees.setText(resteDuProjet.retourStringDesRDV(docteurChoisit));
+                map.MAJdeLaMap();
                 System.out.println("interfaceGraphique : optionJpanelDroite : actionPerformed() : "
                         + resteDuProjet.retourStringDesRDV(docteurChoisit));
             } else if (e.getSource() == confirmationCreationPatientJButton) {

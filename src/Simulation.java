@@ -20,17 +20,18 @@ public class Simulation {
     private LocalDateTime DateHeureActuel;
 
     public Simulation() {
-        
+
         this.DateHeureActuel = LocalDateTime.now();
 
-        Docteur papa = new Docteur("doc", "gyneco", "mentoniste",new Position(10, 10));
+        Docteur papa = new Docteur("doc", "gyneco", "mentoniste", new Position(10, 10));
         Patient fils = new Patient(new Position(11, 3), "krusty", "le clown");
-        RendezVous papafils = new RendezVous(DateHeureActuel.toLocalDate(), papa.getHoraires(0),  Duration.ofMinutes(45), papa, new Diagnostic(1, "prout", fils));
+        RendezVous papafils = new RendezVous(DateHeureActuel.toLocalDate(), papa.getHoraires(0), Duration.ofMinutes(45),
+                papa, new Diagnostic(1, "prout", fils));
 
         this.docList.add(papa);
         this.addPatient(fils);
         this.listRDV.add(papafils);
-        
+
     }
 
     public void addPatient(Patient nouveauxPatient) {
@@ -69,14 +70,19 @@ public class Simulation {
         this.listRDV = listRDV;
     }
 
-    public void montrerScheduleSelonDocteur(Docteur docteurChoisit, Graphics g) {
-        for (RendezVous rdv : listRDV) {
+    public ArrayList<Position> montrerScheduleSelonDocteur(Docteur docteurChoisit) {
+        ArrayList<Position> ListePositionRendezVous = new ArrayList<Position>();
+        if (listRDV.size() > 0) {
+            for (RendezVous rdv : listRDV) {
 
-            if (rdv.getMedecinAffecte().equals(docteurChoisit)) {
-                System.out.println("simultaion : montrerScheduleSelonDocteur() : affichage : " + rdv);
-                g.fillOval(rdv.getLieu().getX(), rdv.getLieu().getY(), 10, 10);
+                if (rdv.getMedecinAffecte().equals(docteurChoisit)) {
+                    System.out.println("simultaion : montrerScheduleSelonDocteur() : affichage : " + rdv);
+                    ListePositionRendezVous.add(rdv.getLieu());
+                    
+                }
             }
         }
+        return ListePositionRendezVous;
     }
 
     public String retourStringDesRDV(Docteur docteurChoisit) {
@@ -105,10 +111,10 @@ public class Simulation {
 
     public void addRdv(List<RendezVous> listeTriee) {
         for (RendezVous rendezVous : listeTriee) {
-            
-            System.out.println("simulation : addRdv() : "+rendezVous);
+
+            System.out.println("simulation : addRdv() : " + rendezVous);
             listRDV.add(rendezVous);
-            System.out.println("simulation : addRdv() : "+retourStringDesRDV(rendezVous.getMedecinAffecte()));
+            System.out.println("simulation : addRdv() : " + retourStringDesRDV(rendezVous.getMedecinAffecte()));
         }
 
     }
