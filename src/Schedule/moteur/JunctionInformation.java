@@ -36,7 +36,7 @@ public class JunctionInformation {
         List<RendezVous> rdvDuJour = new ArrayList<RendezVous>();
         for (RendezVous var : this.getPrecedentRendezVous()) {
             if (var.getDate() == jourChoisit && var.getMedecinAffecte().equals(docteurChoisit)) {
-                rdvDuJour.add(var);
+                rdvDuJour.add(new RendezVous(var));
             }
         }
         return rdvDuJour;
@@ -67,9 +67,12 @@ public class JunctionInformation {
     }
 
     // recupere les rdv de la meme journee que ceux dans la liste en parametre
-    // regarde s'il y a des cahgement ou des nouveaute si c'est le cas les applique
+    // regarde s'il y a des changement ou des nouveaute si c'est le cas les applique
     // a la bdd
     public void comparaisonEtStockageRDV(List<RendezVous> listeTriee) {
+        for (RendezVous rendezVous : listeTriee) {
+            this.simu.suppressRendezvousSelonID(rendezVous);
+        }
         this.simu.addRdv(listeTriee);
         System.out.println("junctionInformation : comparaisonEtStockageRDV() : notif enregistrement");
     }

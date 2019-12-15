@@ -89,9 +89,15 @@ public class InterfaceGraphique extends JFrame {
             g2d.translate(this.getWidth() / 2, this.getHeight() / 2);
             g.setColor(Color.WHITE);
             if (resteDuProjet.montrerScheduleSelonDocteur(docteurChoisit) != null) {
+                Position precedentPosition = null;
                 for (Position positionRdv : resteDuProjet.montrerScheduleSelonDocteur(docteurChoisit)) {
                     System.out.println("interfaceGraphique : affichageMap : paintComponent() : " + positionRdv);
                     g.fillOval((int) positionRdv.getX(), (int) positionRdv.getY(), 10, 10);
+                    if (precedentPosition != null) {
+                        g.drawLine((int) precedentPosition.getX(), (int) precedentPosition.getY(),
+                                (int) positionRdv.getX(), (int) positionRdv.getY());
+                    }
+                    precedentPosition = positionRdv;
                 }
             }
         }

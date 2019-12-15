@@ -31,14 +31,14 @@ public class Simulation {
 
         this.DateHeureActuel = LocalDateTime.now();
 
-        Docteur papa = new Docteur("doc", "gyneco", "mentoniste", new Position(10, 10));
-        Patient fils = new Patient(new Position(11, 3), "krusty", "le clown");
-        RendezVous papafils = new RendezVous(DateHeureActuel.toLocalDate(), papa.getHoraires(0).of(10, 0),
-                Duration.ofMinutes(45), papa, new Diagnostic(1, "gastro", fils));
+        Docteur testDocteur = new Docteur("arthur", "saucisson", "mentoniste", new Position(10, 10));
+        Patient testPatient = new Patient(new Position(11, 3), "Rafael", "le clown");
+        RendezVous testRendezVous = new RendezVous(DateHeureActuel.toLocalDate(), testDocteur.getHoraires(0).of(10, 0),
+                Duration.ofMinutes(45), testDocteur, new Diagnostic(1, "gastro", testPatient));
 
-        this.docList.add(papa);
-        this.addPatient(fils);
-        this.listRDV.add(papafils);
+        this.docList.add(testDocteur);
+        this.addPatient(testPatient);
+        this.listRDV.add(testRendezVous);
 
     }
 
@@ -76,6 +76,15 @@ public class Simulation {
 
     public void setListRDV(List<RendezVous> listRDV) {
         this.listRDV = listRDV;
+    }
+
+    public void suppressRendezvousSelonID(RendezVous ref){    
+        for (int i = 0; i < listRDV.size(); i++) {
+            if (listRDV.get(i).equals(ref)) {
+                System.out.println("Simulation : suppressRendezVousSelonID() : supprimer");
+                listRDV.remove(i);
+            }
+        }
     }
 
     public ArrayList<Position> montrerScheduleSelonDocteur(Docteur docteurChoisit) {

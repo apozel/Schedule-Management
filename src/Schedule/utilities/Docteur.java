@@ -109,4 +109,12 @@ public class Docteur {
         this.horaires = horaires;
     }
 
+    public Position getLieuDeDepart() {
+        return lieuDeDepart;
+    }
+
+    public void setLieuDeDepart(Position lieuDeDepart) {
+        this.lieuDeDepart = lieuDeDepart;
+    }
+
 }

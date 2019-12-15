@@ -4,6 +4,8 @@
     // Pour plus d'informations, visitez : https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
+
         {
             "type": "java",
             "name": "Debug (Launch) - Current File",
@@ -14,7 +16,7 @@
             "type": "java",
             "name": "Debug (Launch)-InterfaceGraphique<Schedule-Management_14522a3a>",
             "request": "launch",
-            "mainClass": "InterfaceGraphique",
+            "mainClass": "Schedule.Interface.InterfaceGraphique",
             "projectName": "Schedule-Management_14522a3a"
         },
         {

@@ -6,11 +6,11 @@ package Schedule.utilities;
 public class Demande {
 
     private Diagnostic diag;
-    private Patient patientConsernee; 
+    private Patient malade; 
 
-    public Demande(Diagnostic diag, Patient patientConsernee) {
+    public Demande(Diagnostic diag, Patient malade) {
         this.diag = diag;
-        this.patientConsernee = patientConsernee;
+        this.malade = malade;
     }
 
     public Diagnostic getDiag() {
@@ -21,12 +21,17 @@ public class Demande {
         this.diag = diag;
     }
 
-    public Patient getPatientConsernee() {
-        return patientConsernee;
+    public Patient getMalade() {
+        return malade;
     }
 
-    public void setPatientConsernee(Patient patientConsernee) {
-        this.patientConsernee = patientConsernee;
+    public void setMalade(Patient patientConsernee) {
+        this.malade = patientConsernee;
+    }
+
+    @Override
+    public String toString() {
+        return "Demande [diag=" + diag + ", malade=" + malade + "]";
     }
 
     
