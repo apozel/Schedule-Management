@@ -6,7 +6,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import Common.Calcul;
+import Marchant.Moteur.Calcul;
 import Marchant.Moteur.Noeud;
 import Schedule.utilities.Demande;
 import Schedule.utilities.Docteur;
