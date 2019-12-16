@@ -35,8 +35,7 @@ public class JunctionInformation {
     public List<RendezVous> getRendezVousDuJour(LocalDateTime jourChoisit, Docteur docteurChoisit) {
         List<RendezVous> rdvDuJour = new ArrayList<RendezVous>();
         for (RendezVous var : this.getPrecedentRendezVous()) {
-            if (var.getDate() == jourChoisit.toLocalDate() && var.getMedecinAffecte().equals(docteurChoisit)
-                    && var.getHeureDebut().isAfter(jourChoisit.toLocalTime())) {
+            if (var.getDate() == jourChoisit.toLocalDate() && var.getMedecinAffecte().equals(docteurChoisit)) {
                 rdvDuJour.add(new RendezVous(var));
             }
         }

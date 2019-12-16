@@ -9,12 +9,13 @@ Technical Project M1 Big Data
 - faire de l'enregistrement
 - fixer la taille de la fenetre (par rapport a la taille de la JFrame)
 - (fait) s'occuper de l'affichage des droites qui lient les rendez vous
-- faire l'affichage du lieux de depart du docteur 
+- (fait)faire l'affichage du lieux de depart du docteur 
 - si possible changer l'architecture pour la rendre plus dynamique : 
     - decouper Interfacegraphique en plusieur sous classe 
     - faire que chaque classe ecoutent les autres et s'actualise automatiquement (pattern Observeur)
 - si possible changer les noeud en position
 - si possible changer les rendezvous en un heritage de la classe demande 
 - enregistrement en json : faire deux inner classe dans junctionInformation (avec une interface commune) une pour le json est l'autre pour le la simulation
--tester si les positions peuvent etre dans le negatif
--faire deux entrees pour les positions.
+- tester si les positions peuvent etre dans le negatif
+- faire deux entrees pour les positions.
+- FAIRE UN BACKEND AVEC LE PROGRAMME POUR FAIRE UN FRONT END EN ANGULAR 

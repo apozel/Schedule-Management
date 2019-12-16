@@ -31,6 +31,7 @@ public class Simulation {
     public Simulation() {
 
         this.DateHeureActuel = LocalDateTime.now();
+        
 
         Docteur testDocteur = new Docteur("arthur", "saucisson", "mentoniste", new Position(90, 70));
         Patient testPatient = new Patient(new Position(11, 3), "Rafael", "le clown");

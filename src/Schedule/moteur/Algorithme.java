@@ -1,7 +1,6 @@
 package Schedule.moteur;
 
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -100,9 +99,11 @@ public class Algorithme {
 
     public LocalTime donnerHeure(LocalDateTime jourChoisit){
         // TODO changer l'heure de debut en fonction de ou commence les modifcation
+        /*
         if (jourChoisit.toLocalTime().isAfter(docChoisit.getHoraires(0))) {
             return jourChoisit.toLocalTime();
         }
+        */
         return docChoisit.getHoraires(0);
     }
 
