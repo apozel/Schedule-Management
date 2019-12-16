@@ -1,12 +1,11 @@
 package Schedule.moteur;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import Schedule.utilities.Diagnostic;
 import Schedule.utilities.Demande;
+import Schedule.utilities.Diagnostic;
 import Schedule.utilities.Docteur;
 import Schedule.utilities.Patient;
 import Schedule.utilities.RendezVous;

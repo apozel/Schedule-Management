@@ -1,6 +1,4 @@
-[submodule "src/JSON-java"]
-	path = src/JSON-java
-	url = https://github.com/stleary/JSON-java.git
+
 [submodule "src/Marchant"]
 	path = src/Marchant
 	url = https://github.com/arnaud-van-den-reysen/Marchant.git
