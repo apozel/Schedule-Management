@@ -16,3 +16,5 @@ Technical Project M1 Big Data
 - si possible changer les noeud en position
 - si possible changer les rendezvous en un heritage de la classe demande 
 - enregistrement en json : faire deux inner classe dans junctionInformation (avec une interface commune) une pour le json est l'autre pour le la simulation
+-tester si les positions peuvent etre dans le negatif
+-faire deux entrees pour les positions.

@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Random;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -86,10 +87,14 @@ public class InterfaceGraphique extends JFrame {
             // On le dessine de sorte qu'il occupe toute la surface
             g.fillRect(0, 0, this.getWidth(), this.getHeight());
             Graphics2D g2d = (Graphics2D) g;
-            g2d.translate(this.getWidth() / 2, this.getHeight() / 2);
-            g.setColor(Color.WHITE);
+            g2d.translate(0, this.getHeight() / 2);
+
             if (resteDuProjet.montrerScheduleSelonDocteur(docteurChoisit) != null) {
-                Position precedentPosition = null;
+                g.setColor(Color.BLUE); // point de depart du docteur
+                Position precedentPosition = docteurChoisit.getLieuDeDepart();
+                g.fillOval((int) precedentPosition.getX(), (int) precedentPosition.getY(), 10, 10);
+
+                g.setColor(Color.WHITE);// affichage des points du trajets
                 for (Position positionRdv : resteDuProjet.montrerScheduleSelonDocteur(docteurChoisit)) {
                     System.out.println("interfaceGraphique : affichageMap : paintComponent() : " + positionRdv);
                     g.fillOval((int) positionRdv.getX(), (int) positionRdv.getY(), 10, 10);
@@ -150,6 +155,12 @@ public class InterfaceGraphique extends JFrame {
         private JTextField ajoutPatientPositionJTextField = new JTextField();
         private JButton confirmationCreationPatientJButton = new JButton("confirmer");
 
+        private JPanel testJPanel = new JPanel();
+
+        private TitledBorder titreTest;
+        private JButton testPatientJButton = new JButton("Creer Patient");
+        private JButton testDemandeJButton = new JButton("Creer Demande");
+
         optionJpanelDroite() {
             creerInterfaceGraphique();
         }
@@ -177,6 +188,11 @@ public class InterfaceGraphique extends JFrame {
             BoxLayout affichageDateLayout = new BoxLayout(affichageDateJPanel, X_AXIS);
             affichageDateJPanel.setLayout(affichageDateLayout);
 
+            titreTest = BorderFactory.createTitledBorder("Test");
+            BoxLayout testLayout = new BoxLayout(testJPanel, Y_AXIS);
+            testJPanel.setLayout(testLayout);
+            testJPanel.setBorder(titreTest);
+
             MAJdesBarres();
 
             for (int i = 0; i < criticiteMax; i++) {
@@ -187,6 +203,7 @@ public class InterfaceGraphique extends JFrame {
 
             tabbedPane.addTab("Affichage", affichageJPanel);
             tabbedPane.addTab("Patient", ajoutJPanel);
+            tabbedPane.addTab("Test", testJPanel);
 
             affichageDateJPanel.add(affichageDateJLabel);
             affichageDateJPanel.add(affichageDateJButton);
@@ -218,6 +235,11 @@ public class InterfaceGraphique extends JFrame {
             ajoutPatientJPanel.add(confirmationCreationPatientJButton);
             confirmationCreationPatientJButton.addActionListener(this);
 
+            testJPanel.add(testPatientJButton);
+            testJPanel.add(testDemandeJButton);
+            testPatientJButton.addActionListener(this);
+            testDemandeJButton.addActionListener(this);
+
             this.add(tabbedPane);
 
         }
@@ -236,6 +258,7 @@ public class InterfaceGraphique extends JFrame {
             for (Patient Pati : resteDuProjet.getMalades()) {
                 creationNouvelleDemandePatientComboBox.addItem(Pati);
             }
+           
 
         }
 
@@ -286,6 +309,27 @@ public class InterfaceGraphique extends JFrame {
                     + resteDuProjet.retourStringDesRdvSelonDocteur(docteurChoisit));
         }
 
+        public Patient nouveauxPatientAleatoire(){
+            String nomAleatoire = "patient " + new Random().nextInt(100);
+            String prenomAleatoire = "test ";
+            Position positionAleatoire = new Position(new Random().nextInt(250), new Random().nextInt(250));
+            return new Patient(positionAleatoire, nomAleatoire, prenomAleatoire);
+        }
+
+        public void testGraphique(ActionEvent e) {
+            
+            if (e.getSource() == testPatientJButton) {
+               
+                resteDuProjet.addPatient(nouveauxPatientAleatoire());
+            } else if (e.getSource() == testDemandeJButton) {
+                Patient pat = nouveauxPatientAleatoire();
+                resteDuProjet.addPatient(pat);
+                resteDuProjet.nouveauDiagnostic(new Random().nextInt(5), "maladie",
+                        pat.getIDPatient());
+            }
+            MAJdesBarres();
+        }
+
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == confirmationCreationDemandeButton) {
                 System.out.println("interfaceGraphique : optionJpanelDroite : actionPerformed() bouton demande");
@@ -299,6 +343,8 @@ public class InterfaceGraphique extends JFrame {
                 recuperationPourPatient();
             } else if (e.getSource() == affichageDateJButton) {
                 changementDateAffichage();
+            } else if (e.getSource() == testPatientJButton || e.getSource() == testDemandeJButton) {
+                testGraphique(e);
             }
 
         }

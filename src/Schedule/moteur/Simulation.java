@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import Schedule.utilities.Diagnostic;
 import Schedule.utilities.Docteur;
@@ -31,7 +32,7 @@ public class Simulation {
 
         this.DateHeureActuel = LocalDateTime.now();
 
-        Docteur testDocteur = new Docteur("arthur", "saucisson", "mentoniste", new Position(10, 10));
+        Docteur testDocteur = new Docteur("arthur", "saucisson", "mentoniste", new Position(90, 70));
         Patient testPatient = new Patient(new Position(11, 3), "Rafael", "le clown");
         RendezVous testRendezVous = new RendezVous(DateHeureActuel.toLocalDate(), testDocteur.getHoraires(0).of(10, 0),
                 Duration.ofMinutes(45), testDocteur, new Diagnostic(1, "gastro", testPatient));
@@ -56,6 +57,10 @@ public class Simulation {
 
     public List<Patient> getMalades() {
         return malades;
+    }
+
+    public Patient getPatientAleatoire() {
+        return malades.get(new Random().nextInt(malades.size()));
     }
 
     public void setMalades(List<Patient> malades) {
@@ -97,9 +102,13 @@ public class Simulation {
                     ListePositionRendezVous.add(rdv.getLieu());
 
                 }
+
+            }
+            if (ListePositionRendezVous.size() > 0) {
+                return ListePositionRendezVous;
             }
         }
-        return ListePositionRendezVous;
+        return null;
     }
 
     public String retourStringDesRdvSelonDocteur(Docteur docteurChoisit) {

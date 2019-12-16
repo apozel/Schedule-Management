@@ -1,5 +1,7 @@
 package Schedule.utilities;
 
+import Marchant.Moteur.Noeud;
+
 /**
  * Position
  */
@@ -31,6 +33,13 @@ public class Position {
 
     public void setY(double y) {
         this.y = y;
+    }
+
+    public boolean equalsPosition(Noeud no) {
+        if (no.getX() == this.getX() && no.getY() == this.getY()) {
+            return true;
+        }
+        return false;
     }
 
     @Override

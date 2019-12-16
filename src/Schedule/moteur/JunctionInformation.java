@@ -32,10 +32,11 @@ public class JunctionInformation {
         return simu.getListRDV();
     }
 
-    public List<RendezVous> getRendezVousDuJour(LocalDate jourChoisit, Docteur docteurChoisit) {
+    public List<RendezVous> getRendezVousDuJour(LocalDateTime jourChoisit, Docteur docteurChoisit) {
         List<RendezVous> rdvDuJour = new ArrayList<RendezVous>();
         for (RendezVous var : this.getPrecedentRendezVous()) {
-            if (var.getDate() == jourChoisit && var.getMedecinAffecte().equals(docteurChoisit)) {
+            if (var.getDate() == jourChoisit.toLocalDate() && var.getMedecinAffecte().equals(docteurChoisit)
+                    && var.getHeureDebut().isAfter(jourChoisit.toLocalTime())) {
                 rdvDuJour.add(new RendezVous(var));
             }
         }
