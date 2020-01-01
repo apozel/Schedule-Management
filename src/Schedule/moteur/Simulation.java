@@ -22,7 +22,7 @@ public class Simulation {
     // cest aussi elle qui contient notre partie du projet representer par
     // EmploiDuTemps
 
-    public JunctionInformation schedule = new JunctionInformation(this);
+    public JunctionInformation schedule = new JunctionInformationSimulation(this);
     public List<Docteur> docList = new ArrayList<Docteur>();
     public List<Patient> malades = new ArrayList<Patient>();
     public List<RendezVous> listRDV = new ArrayList<RendezVous>();

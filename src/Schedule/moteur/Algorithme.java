@@ -49,30 +49,36 @@ public class Algorithme {
         // TODO changer la fonction pour renvoyer les rendez vous futur de la journee et
         // pas toute la journee
         List<RendezVous> rdvDuJour = avoirLesRendezVousDejaDonnee(jourOuOnRegarde, docChoisit);
-        
+
         Noeud[] transformationPositionNoeud = new Noeud[rdvDuJour.size() + 2];
         transformationPositionNoeud[0] = new Noeud(0, docChoisit.getLieuDeDepart());
         for (int i = 0; i < rdvDuJour.size(); i++) {
-            transformationPositionNoeud[i+1] = new Noeud(i, rdvDuJour.get(i).getMalade().getLieuDeVie());
+            transformationPositionNoeud[i + 1] = new Noeud(i, rdvDuJour.get(i).getMalade().getLieuDeVie());
         }
-        transformationPositionNoeud[rdvDuJour.size()+1] = new Noeud(rdvDuJour.size()+1,
+        transformationPositionNoeud[rdvDuJour.size() + 1] = new Noeud(rdvDuJour.size() + 1,
                 nouvelleDemandeATraiter.getMalade().getLieuDeVie());
 
         Noeud positionApresAlgo[] = Calcul.l2(transformationPositionNoeud);
-        
-        for (int i = 1; i < positionApresAlgo.length ; i++) {
+
+        for (int i = 1; i < positionApresAlgo.length; i++) {
             for (RendezVous rdvDejaPresent : rdvDuJour) {
-                
+
                 if (rdvDejaPresent.equalsPosition(positionApresAlgo[i])) { // positif si la position correspond au
-                                                                       // rendez vous
+                    // rendez vous
                     rdvDejaPresent.setDate(jourOuOnRegarde.toLocalDate());
                     rdvDejaPresent.setHeureDebut(heureDebut);
                     rdvReturn.add(rdvDejaPresent);
                     break;
-                } else if (nouvelleDemandeATraiter.getMalade().getLieuDeVie().equalsPosition(positionApresAlgo[i])){ // c'est le cas de la nouvelle demande
+                } else if (nouvelleDemandeATraiter.getMalade().getLieuDeVie().equalsPosition(positionApresAlgo[i])) { // c'est
+                                                                                                                      // le
+                                                                                                                      // cas
+                                                                                                                      // de
+                                                                                                                      // la
+                                                                                                                      // nouvelle
+                                                                                                                      // demande
                     rdvReturn.add(new RendezVous(jourOuOnRegarde.toLocalDate(), heureDebut, Duration.ofMinutes(45),
                             docChoisit, nouvelleDemandeATraiter.getMalade(), nouvelleDemandeATraiter.getDiag()));
-                            break;
+                    break;
                 }
             }
 
@@ -91,19 +97,18 @@ public class Algorithme {
     public Docteur choixDocteur() {
         List<Docteur> docteurs = avoirLesDocteurDisponible();
 
-        // TODO changer le choix du docteur en fonction de la situation ou de s'on
+        // TODO changer le choix du docteur en fonction de la situation ou de son
         // occupation
 
         return docteurs.get(0);
     }
 
-    public LocalTime donnerHeure(LocalDateTime jourChoisit){
+    public LocalTime donnerHeure(LocalDateTime jourChoisit) {
         // TODO changer l'heure de debut en fonction de ou commence les modifcation
         /*
-        if (jourChoisit.toLocalTime().isAfter(docChoisit.getHoraires(0))) {
-            return jourChoisit.toLocalTime();
-        }
-        */
+         * if (jourChoisit.toLocalTime().isAfter(docChoisit.getHoraires(0))) { return
+         * jourChoisit.toLocalTime(); }
+         */
         return docChoisit.getHoraires(0);
     }
 
