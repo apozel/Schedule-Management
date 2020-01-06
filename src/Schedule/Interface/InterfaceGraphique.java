@@ -6,6 +6,7 @@ import static javax.swing.BoxLayout.Y_AXIS;
 import java.awt.BorderLayout;
 import java.awt.Choice;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -21,6 +22,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -127,6 +129,8 @@ public class InterfaceGraphique extends JFrame {
         private JComboBox<Docteur> choixDocteurBox = new JComboBox<Docteur>();
         private JComboBox<Patient> creationNouvelleDemandePatientComboBox = new JComboBox<Patient>();
         private JTextArea affichageDonnees = new JTextArea();
+        private JScrollPane affichageDonneesJScrollPane = new JScrollPane(affichageDonnees);
+
         private JButton selectionDateDocteurButton = new JButton("selection Date");
 
         private JPanel affichageJPanel = new JPanel();
@@ -205,13 +209,17 @@ public class InterfaceGraphique extends JFrame {
             tabbedPane.addTab("Patient", ajoutJPanel);
             tabbedPane.addTab("Test", testJPanel);
 
+            //affichageDateJPanel.setPreferredSize(new Dimension(203,150));
+            affichageDateJLabel.setMaximumSize(new Dimension(340, 50));
             affichageDateJPanel.add(affichageDateJLabel);
             affichageDateJPanel.add(affichageDateJButton);
             affichageDateJButton.addActionListener(this);
 
+            choixDocteurBox.setMaximumSize(new Dimension(340, 50));
             affichageJPanel.add(choixDocteurBox);
             affichageJPanel.add(affichageDateJPanel);
-            affichageJPanel.add(affichageDonnees);
+            affichageDonneesJScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+            affichageJPanel.add(affichageDonneesJScrollPane);
             affichageJPanel.add(selectionDateDocteurButton);
             selectionDateDocteurButton.addActionListener(this);
 
@@ -307,6 +315,7 @@ public class InterfaceGraphique extends JFrame {
             map.MAJdeLaMap();
             System.out.println("interfaceGraphique : optionJpanelDroite : actionPerformed() : "
                     + resteDuProjet.retourStringDesRdvSelonDocteur(docteurChoisit));
+            System.out.println("interfaceGraphique : optionJpanelDroite : actionPerformed() : debug : taille d'affichage Date docteur " +  affichageDateJPanel.getSize() );
         }
 
         public Patient nouveauxPatientAleatoire(){
