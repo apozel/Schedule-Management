@@ -45,9 +45,11 @@ public class Algorithme {
         this.momentOuOnRegarde = getDateEtHeure();
 
         this.docChoisit = choixDocteur();
+        
         // TODO changer l'heure de debut en fonction de ou commence les modifcation
         this.rdvDuJour = avoirLesRendezVousDejaDonnee(momentOuOnRegarde, docChoisit);
         checkHoraires();
+        checkSiLaJourneeEstPleine();
         // TODO changer la fonction pour renvoyer les rendez vous futur de la journee et
         // pas toute la journee
 
@@ -82,11 +84,7 @@ public class Algorithme {
                 }
             }
 
-            // TODO changer le temps en fonction de la duree de la consulatation au dessus
-            // pareil pour les heures de pauses
             momentOuOnRegarde = momentOuOnRegarde.plus(Duration.ofMinutes(45));
-            // TODO si le rdv depasse les horaires du medecin passer a un autre jour
-            
 
         }
 
@@ -140,12 +138,16 @@ public class Algorithme {
 
     }
 
-    public void checkSiLaJourneeEstPleine(){
-       for (RendezVous rendezVous : rdvDuJour) {
-           if (rendezVous.getHeureDebut().plus(rendezVous.getDureeConsultation()).isAfter(this.docChoisit.getHoraires(3))) {
-            this.momentOuOnRegarde = LocalDateTime.of(momentOuOnRegarde.toLocalDate().plusDays(1),
-                    this.docChoisit.getHoraires(0));
-       } 
+    public void checkSiLaJourneeEstPleine() {
+        for (RendezVous rendezVous : rdvDuJour) {
+            if (rendezVous.getHeureDebut().plus(rendezVous.getDureeConsultation())
+                    .isAfter(this.docChoisit.getHoraires(3))) {
+                this.momentOuOnRegarde = LocalDateTime.of(momentOuOnRegarde.toLocalDate().plusDays(1),
+                        this.docChoisit.getHoraires(0));
+                this.rdvDuJour = avoirLesRendezVousDejaDonnee(momentOuOnRegarde, docChoisit);
+                checkSiLaJourneeEstPleine();
+            }
+        }
     }
 
     public List<RendezVous> avoirLesRendezVousDejaDonnee(LocalDateTime dateDemander, Docteur docteurChoisit) {
@@ -161,7 +163,6 @@ public class Algorithme {
         }
         return retour;
     }
-
 
     public List<Docteur> avoirLesDocteurDisponible() {
         return AccesStockageInformation.getDocteurDisponible();

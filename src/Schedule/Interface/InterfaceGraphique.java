@@ -81,6 +81,7 @@ public class InterfaceGraphique extends JFrame {
         /**
          *
          */
+        private LocalDate jourChoisit = LocalDate.now();
         private static final long serialVersionUID = 1L;
 
         public void paintComponent(Graphics g) {
@@ -91,13 +92,13 @@ public class InterfaceGraphique extends JFrame {
             Graphics2D g2d = (Graphics2D) g;
             g2d.translate(0, this.getHeight() / 2);
 
-            if (resteDuProjet.montrerScheduleSelonDocteur(docteurChoisit) != null) {
+            if (resteDuProjet.retourPositionRdvSelonDateDocteur(docteurChoisit, jourChoisit) != null) {
                 g.setColor(Color.BLUE); // point de depart du docteur
                 Position precedentPosition = docteurChoisit.getLieuDeDepart();
                 g.fillOval((int) precedentPosition.getX(), (int) precedentPosition.getY(), 10, 10);
 
                 g.setColor(Color.WHITE);// affichage des points du trajets
-                for (Position positionRdv : resteDuProjet.montrerScheduleSelonDocteur(docteurChoisit)) {
+                for (Position positionRdv : resteDuProjet.retourPositionRdvSelonDateDocteur(docteurChoisit,jourChoisit)) {
                     System.out.println("interfaceGraphique : affichageMap : paintComponent() : " + positionRdv);
                     g.fillOval((int) positionRdv.getX(), (int) positionRdv.getY(), 10, 10);
                     if (precedentPosition != null) {
@@ -113,6 +114,14 @@ public class InterfaceGraphique extends JFrame {
             this.repaint();
         }
 
+        public LocalDate getJourChoisit() {
+            return jourChoisit;
+        }
+
+        public void setJourChoisit(LocalDate jourChoisit) {
+            this.jourChoisit = jourChoisit;
+        }
+
     }
 
     private class optionJpanelDroite extends JPanel implements ActionListener {
@@ -122,7 +131,7 @@ public class InterfaceGraphique extends JFrame {
          */
         private static final long serialVersionUID = 1L;
 
-        private int criticiteMax = 5;
+        private int criticiteMax = 10;
 
         private JTabbedPane tabbedPane = new JTabbedPane();
 
@@ -306,6 +315,7 @@ public class InterfaceGraphique extends JFrame {
             DateTimeFormatter formatDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate date = LocalDate.parse(new DatePicker().setPickedDate(), formatDate);
             this.jourChoisit = date;
+            map.setJourChoisit(jourChoisit);
             MAJdesBarres();
         }
 

@@ -31,7 +31,6 @@ public class Simulation {
     public Simulation() {
 
         this.DateHeureActuel = LocalDateTime.now();
-        
 
         Docteur testDocteur = new Docteur("arthur", "saucisson", "mentoniste", new Position(90, 70));
         Patient testPatient = new Patient(new Position(11, 3), "Rafael", "le clown");
@@ -84,7 +83,7 @@ public class Simulation {
         this.listRDV = listRDV;
     }
 
-    public void suppressRendezvousSelonID(RendezVous ref){    
+    public void suppressRendezvousSelonID(RendezVous ref) {
         for (int i = 0; i < listRDV.size(); i++) {
             if (listRDV.get(i).equals(ref)) {
                 System.out.println("Simulation : suppressRendezVousSelonID() : supprimer");
@@ -99,6 +98,25 @@ public class Simulation {
             for (RendezVous rdv : listRDV) {
 
                 if (rdv.getMedecinAffecte().equals(docteurChoisit)) {
+                    System.out.println("simulation : montrerScheduleSelonDocteur() : affichage : " + rdv);
+                    ListePositionRendezVous.add(rdv.getLieu());
+
+                }
+
+            }
+            if (ListePositionRendezVous.size() > 0) {
+                return ListePositionRendezVous;
+            }
+        }
+        return null;
+    }
+
+    public ArrayList<Position> retourPositionRdvSelonDateDocteur(Docteur docteurChoisit, LocalDate jourChoisit) {
+        ArrayList<Position> ListePositionRendezVous = new ArrayList<Position>();
+        if (listRDV.size() > 0) {
+            for (RendezVous rdv : listRDV) {
+
+                if (rdv.getMedecinAffecte().equals(docteurChoisit) && rdv.getDate().equals(jourChoisit)) {
                     System.out.println("simulation : montrerScheduleSelonDocteur() : affichage : " + rdv);
                     ListePositionRendezVous.add(rdv.getLieu());
 
