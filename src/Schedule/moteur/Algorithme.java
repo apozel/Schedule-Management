@@ -45,10 +45,10 @@ public class Algorithme {
         this.momentOuOnRegarde = getDateEtHeure();
 
         this.docChoisit = choixDocteur();
-        
+        checkHoraires();
         // TODO changer l'heure de debut en fonction de ou commence les modifcation
         this.rdvDuJour = avoirLesRendezVousDejaDonnee(momentOuOnRegarde, docChoisit);
-        checkHoraires();
+        
         checkSiLaJourneeEstPleine();
         // TODO changer la fonction pour renvoyer les rendez vous futur de la journee et
         // pas toute la journee
@@ -67,22 +67,34 @@ public class Algorithme {
 
             checkHoraires();
 
-            for (RendezVous rdvDejaPresent : rdvDuJour) {
+            if (rdvDuJour.size() != 0) {
+                for (RendezVous rdvDejaPresent : rdvDuJour) {
 
-                if (rdvDejaPresent.equalsPosition(positionApresAlgo[i])) { // positif si la position correspond au
-                    // rendez vous
-                    rdvDejaPresent.setDate(momentOuOnRegarde.toLocalDate());
-                    rdvDejaPresent.setHeureDebut(momentOuOnRegarde.toLocalTime());
-                    rdvReturn.add(rdvDejaPresent);
-                    break;
-                } else if (nouvelleDemandeATraiter.getMalade().getLieuDeVie().equalsPosition(positionApresAlgo[i])) {
+                    if (rdvDejaPresent.equalsPosition(positionApresAlgo[i])) { // positif si la position correspond au
+                        // rendez vous
+                        rdvDejaPresent.setDate(momentOuOnRegarde.toLocalDate());
+                        rdvDejaPresent.setHeureDebut(momentOuOnRegarde.toLocalTime());
+                        rdvReturn.add(rdvDejaPresent);
+                        break;
+                    } else if (nouvelleDemandeATraiter.getMalade().getLieuDeVie()
+                            .equalsPosition(positionApresAlgo[i])) {
+                        // c'est le cas de la nouvelle demande
+                        rdvReturn.add(new RendezVous(momentOuOnRegarde.toLocalDate(), momentOuOnRegarde.toLocalTime(),
+                                Duration.ofMinutes(45), docChoisit, nouvelleDemandeATraiter.getMalade(),
+                                nouvelleDemandeATraiter.getDiag()));
+                        break;
+                    }
+                }
+            } else {
+                if (nouvelleDemandeATraiter.getMalade().getLieuDeVie().equalsPosition(positionApresAlgo[i])) {
                     // c'est le cas de la nouvelle demande
                     rdvReturn.add(new RendezVous(momentOuOnRegarde.toLocalDate(), momentOuOnRegarde.toLocalTime(),
                             Duration.ofMinutes(45), docChoisit, nouvelleDemandeATraiter.getMalade(),
                             nouvelleDemandeATraiter.getDiag()));
-                    break;
+                    
                 }
             }
+            
 
             momentOuOnRegarde = momentOuOnRegarde.plus(Duration.ofMinutes(45));
 
