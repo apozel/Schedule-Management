@@ -1,15 +1,19 @@
+package Schedule.utilities;
+
 import java.time.Duration;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 import java.time.LocalTime;
 import java.util.UUID;
+
+import Marchant.Moteur.Noeud;
 
 /**
  * RendezVous
  */
 public class RendezVous {
 
-    private final String IDRendezVous = UUID.randomUUID().toString();
+    private final String IDRendezVous;
     private LocalDate date;
     private LocalTime heureDebut;
     private Duration dureeConsultation;
@@ -20,6 +24,7 @@ public class RendezVous {
 
     public RendezVous(LocalDate date, LocalTime heureDebut, Duration dureeConsultation, Docteur medecinAffecte,
             Patient malade, Diagnostic diag) {
+        this.IDRendezVous = UUID.randomUUID().toString();
         this.date = date;
         this.heureDebut = heureDebut;
         this.dureeConsultation = dureeConsultation;
@@ -29,7 +34,9 @@ public class RendezVous {
         this.lieu = malade.getLieuDeVie();
     }
 
-    public RendezVous(LocalDate date, LocalTime heureDebut, Duration dureeConsultation,Docteur docteur, Diagnostic diag) {
+    public RendezVous(LocalDate date, LocalTime heureDebut, Duration dureeConsultation, Docteur docteur,
+            Diagnostic diag) {
+        this.IDRendezVous = UUID.randomUUID().toString();
         this.date = date;
         this.heureDebut = heureDebut;
         this.dureeConsultation = dureeConsultation;
@@ -38,6 +45,17 @@ public class RendezVous {
         this.lieu = this.malade.getLieuDeVie();
         this.medecinAffecte = docteur;
 
+    }
+
+    public RendezVous(RendezVous rdvSource) {
+        this.IDRendezVous = rdvSource.getIDRendezVous();
+        this.date = rdvSource.getDate();
+        this.heureDebut = rdvSource.getHeureDebut();
+        this.dureeConsultation = rdvSource.getDureeConsultation();
+        this.lieu = rdvSource.getLieu();
+        this.medecinAffecte = rdvSource.getMedecinAffecte();
+        this.malade = rdvSource.getMalade();
+        this.diag = rdvSource.getDiag();
     }
 
     public Position getLieu() {
@@ -96,6 +114,19 @@ public class RendezVous {
         this.diag = diag;
     }
 
+    public boolean equalsPosition(Noeud no) {
+        if (no.getX() == this.lieu.getX() && no.getY() == this.lieu.getY()) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return "IDRendezVous = " + IDRendezVous + ",\n date=" + date + ",\n diag=" + diag + ",\n dureeConsultation="
+                + dureeConsultation + ",\n heureDebut=" + heureDebut + ",\n malade=" + malade + "\n";
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -121,10 +152,8 @@ public class RendezVous {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "IDRendezVous=" + IDRendezVous + ", date=" + date + ", diag=" + diag + ", dureeConsultation="
-                + dureeConsultation + ", heureDebut=" + heureDebut + ", malade=" + malade + "]";
+    public String getIDRendezVous() {
+        return IDRendezVous;
     }
 
 }

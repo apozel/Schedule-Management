@@ -1,4 +1,7 @@
+package Schedule.utilities;
+
 import java.awt.geom.Point2D;
+import java.time.LocalTime;
 
 /**
  * docteur
@@ -9,10 +12,11 @@ public class Docteur {
     private String nom, prenom, special;
     private Position emplacement;
     private Position lieuDeDepart;
-     
+    private LocalTime[] horaires = new LocalTime[] { LocalTime.of(8, 0), LocalTime.of(12, 0), LocalTime.of(13, 0),
+            LocalTime.of(18, 0) };
 
-    public Docteur(String nom, String prenom, String special,Position lieuDeDepart) {
-        
+    public Docteur(String nom, String prenom, String special, Position lieuDeDepart) {
+
         this.nom = nom;
         this.prenom = prenom;
         this.special = special;
@@ -54,7 +58,7 @@ public class Docteur {
 
     @Override
     public String toString() {
-        return "Docteur " + nom + " "+  prenom ;
+        return "Docteur " + nom + " " + prenom;
     }
 
     public Position getEmplacement() {
@@ -94,6 +98,23 @@ public class Docteur {
         } else if (!prenom.equals(other.prenom))
             return false;
         return true;
+    }
+
+    public LocalTime getHoraires(int index) {
+
+        return horaires[index];
+    }
+
+    public void setHoraires(LocalTime[] horaires) {
+        this.horaires = horaires;
+    }
+
+    public Position getLieuDeDepart() {
+        return lieuDeDepart;
+    }
+
+    public void setLieuDeDepart(Position lieuDeDepart) {
+        this.lieuDeDepart = lieuDeDepart;
     }
 
 }

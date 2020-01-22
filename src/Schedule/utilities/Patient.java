@@ -1,3 +1,7 @@
+package Schedule.utilities;
+
+import java.util.UUID;
+
 /**
  * Patient
  */
@@ -5,6 +9,7 @@ public class Patient {
 
     private Position lieuDeVie;
     private String nom, prenom;
+    private final String IDPatient = UUID.randomUUID().toString();
 
     public Patient(Position lieuDeVie, String nom, String prenom) {
         this.lieuDeVie = lieuDeVie;
@@ -41,9 +46,7 @@ public class Patient {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((lieuDeVie == null) ? 0 : lieuDeVie.hashCode());
-        result = prime * result + ((nom == null) ? 0 : nom.hashCode());
-        result = prime * result + ((prenom == null) ? 0 : prenom.hashCode());
+        result = prime * result + ((IDPatient == null) ? 0 : IDPatient.hashCode());
         return result;
     }
 
@@ -56,22 +59,21 @@ public class Patient {
         if (getClass() != obj.getClass())
             return false;
         Patient other = (Patient) obj;
-        if (lieuDeVie == null) {
-            if (other.lieuDeVie != null)
+        if (IDPatient == null) {
+            if (other.IDPatient != null)
                 return false;
-        } else if (!lieuDeVie.equals(other.lieuDeVie))
-            return false;
-        if (nom == null) {
-            if (other.nom != null)
-                return false;
-        } else if (!nom.equals(other.nom))
-            return false;
-        if (prenom == null) {
-            if (other.prenom != null)
-                return false;
-        } else if (!prenom.equals(other.prenom))
+        } else if (!IDPatient.equals(other.IDPatient))
             return false;
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return nom + " " + prenom;
+    }
+
+    public String getIDPatient() {
+        return IDPatient;
     }
 
 }

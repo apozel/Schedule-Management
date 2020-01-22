@@ -1,0 +1,4 @@
+
+[submodule "src/Marchant"]
+	path = src/Marchant
+	url = https://github.com/arnaud-van-den-reysen/Marchant.git
