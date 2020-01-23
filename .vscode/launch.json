@@ -6,7 +6,7 @@
     "configurations": [
         {
             "type": "java",
-            "name": "CodeLens (Launch) - testEnregistrement",
+            "name": "Debug (Launch) - testEnregistrement",
             "request": "launch",
             "mainClass": "Schedule.enregistrement.testEnregistrement",
             "projectName": "Schedule-Management_14522a3a"
