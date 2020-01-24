@@ -23,7 +23,9 @@ import com.google.gson.*;
  */
 public class testEnregistrement {
 
-    private File fichier = new File("C:/Users/tomch/Documents/java/Schedule-Management/src/Ressources/Json/test.json");
+    private File fileRendezVous = new File("C:/Users/tomch/Documents/java/Schedule-Management/src/Ressources/Json/RendezVous.json");
+    private File fileDocteur = new File("C:/Users/tomch/Documents/java/Schedule-Management/src/Ressources/Json/Docteur.json");
+    private File filePatient = new File("C:/Users/tomch/Documents/java/Schedule-Management/src/Ressources/Json/Patient.json");
     private FileWriter ecritureStream = null;
     private LocalDateTime DateHeureActuel = LocalDateTime.now();
     private Gson trad = new GsonBuilder().setPrettyPrinting().create();
@@ -53,7 +55,7 @@ public class testEnregistrement {
 
     public void ecritureFichier(String aEcrire){
         try {
-            this.ecritureStream = new FileWriter(fichier);
+            this.ecritureStream = new FileWriter(fileRendezVous);
             this.ecritureStream.write(aEcrire);
         this.ecritureStream.flush();
         testCreationGson(aEcrire);
