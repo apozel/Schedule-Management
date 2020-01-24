@@ -36,10 +36,16 @@ public class testEnregistrement {
 
    
 
-    public void testCreationGson() {
-        InputStream myStream = new FileInputStream("C:/Users/tomch/Documents/java/Schedule-Management/src/Ressources/Json/test.json");
-String myString = IOUtils.toString(myStream);
+    public void testCreationGson(String aTester) {
+        RendezVous essaieCreation = trad.fromJson(aTester,RendezVous.class);
+        if(essaieCreation.equals(this.testRendezVous)){
+            System.out.println("elles sont pareil tkt");
+        }  else {
+            System.out.println("elles sont pas identique");
+        }      
     }
+
+    
 
     public void simpleGsonTest(){
         ecritureFichier(trad.toJson(testRendezVous));
@@ -47,10 +53,13 @@ String myString = IOUtils.toString(myStream);
 
     public void ecritureFichier(String aEcrire){
         try {
+            this.ecritureStream = new FileWriter(fichier);
             this.ecritureStream.write(aEcrire);
         this.ecritureStream.flush();
+        testCreationGson(aEcrire);
+
         } catch (Exception e) {
-            
+            System.out.println("probleme au niveau de ecriture fichier");
         }
         
     }
@@ -64,7 +73,7 @@ String myString = IOUtils.toString(myStream);
             test.simpleGsonTest();
 
         } catch (Exception e) {
-            
+            System.out.println("probleme au niveau du main");
         }
 
     }

@@ -1,6 +1,6 @@
 {
     "maven.view": "flat",
     "java.project.referencedLibraries": [
-        "lib/**/*.jar"
+        "lib/gson-2.8.6.jar"
     ]
 }
