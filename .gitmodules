@@ -1,4 +1,4 @@
 
-[submodule "src/Marchant"]
-	path = src/Marchant
-	url = https://github.com/arnaud-van-den-reysen/Marchant.git
+[submodule "src/bigData.Marchant"]
+	path = src/bigData.Marchant
+	url = https://github.com/arnaud-van-den-reysen/bigData.Marchant.git

@@ -1,0 +1,85 @@
+{
+  "IDRendezVous": "d2775280-a861-4ef3-8201-567355e04d3d",
+  "date": {
+    "year": 2020,
+    "month": 1,
+    "day": 24
+  },
+  "heureDebut": {
+    "hour": 10,
+    "minute": 0,
+    "second": 0,
+    "nano": 0
+  },
+  "dureeConsultation": {
+    "seconds": 2700,
+    "nanos": 0
+  },
+  "lieu": {
+    "x": 11.0,
+    "y": 3.0
+  },
+  "medecinAffecte": {
+    "nom": "arthur",
+    "prenom": "saucisson",
+    "special": "mentoniste",
+    "emplacement": {
+      "x": 90.0,
+      "y": 70.0
+    },
+    "lieuDeDepart": {
+      "x": 90.0,
+      "y": 70.0
+    },
+    "horaires": [
+      {
+        "hour": 8,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      },
+      {
+        "hour": 12,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      },
+      {
+        "hour": 13,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      },
+      {
+        "hour": 18,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      }
+    ]
+  },
+  "malade": {
+    "lieuDeVie": {
+      "x": 11.0,
+      "y": 3.0
+    },
+    "nom": "Rafael",
+    "prenom": "le clown",
+    "IDPatient": "4bf918a5-0220-4fb4-90e7-b6e0327136dd"
+  },
+  "diag": {
+    "diagnosticId": "739e3007-b2cf-4eae-92fd-5fe92cf03f9c",
+    "criticite": 1,
+    "description": "gastro",
+    "patientId": "4bf918a5-0220-4fb4-90e7-b6e0327136dd",
+    "patientConserne": {
+      "lieuDeVie": {
+        "x": 11.0,
+        "y": 3.0
+      },
+      "nom": "Rafael",
+      "prenom": "le clown",
+      "IDPatient": "4bf918a5-0220-4fb4-90e7-b6e0327136dd"
+    }
+  }
+}

@@ -1,3 +1,3 @@
 Manifest-Version: 1.0
-Main-Class: Schedule.Interface.InterfaceGraphique
+Main-Class: bigData.Schedule.Interface.InterfaceGraphique
 
