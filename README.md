@@ -1,4 +1,4 @@
-# bigData.Schedule-Management
+# Algorithm.Schedule-Management
 Technical Project M1 Big Data
 
 # Explications :
