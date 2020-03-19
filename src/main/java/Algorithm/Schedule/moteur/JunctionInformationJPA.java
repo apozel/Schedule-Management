@@ -11,7 +11,7 @@ import Algorithm.Schedule.utilities.RendezVous;
 /**
  * JunctionInformationJson
  */
-public class JunctionInformationJson implements JunctionInformation {
+public class JunctionInformationJPA implements JunctionInformation {
 
     @Override
     public void CreationDemandeDiagnostic(Diagnostic nouveauDiagnostic) {
