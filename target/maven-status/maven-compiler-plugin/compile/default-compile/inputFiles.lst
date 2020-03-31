@@ -11,6 +11,7 @@ C:\Users\tomch\Documents\java\Schedule-Management\src\main\java\Algorithm\Marcha
 C:\Users\tomch\Documents\java\Schedule-Management\src\main\java\Algorithm\Schedule\moteur\JunctionInformationSimulation.java
 C:\Users\tomch\Documents\java\Schedule-Management\src\main\java\Algorithm\Marchant\Moteur\Crossover.java
 C:\Users\tomch\Documents\java\Schedule-Management\src\main\java\Algorithm\Marchant\Moteur\Mutation.java
+C:\Users\tomch\Documents\java\Schedule-Management\src\main\java\Algorithm\Schedule\converter\BooleanConverter.java
 C:\Users\tomch\Documents\java\Schedule-Management\src\main\java\Algorithm\Schedule\moteur\Simulation.java
 C:\Users\tomch\Documents\java\Schedule-Management\src\main\java\Algorithm\Schedule\moteur\JunctionInformationJPA.java
 C:\Users\tomch\Documents\java\Schedule-Management\src\main\java\Algorithm\Marchant\Moteur\Graphe.java
@@ -18,9 +19,11 @@ C:\Users\tomch\Documents\java\Schedule-Management\src\main\java\Algorithm\Marcha
 C:\Users\tomch\Documents\java\Schedule-Management\src\main\java\Algorithm\Schedule\erreur\PatientNotFoundException.java
 C:\Users\tomch\Documents\java\Schedule-Management\src\main\java\Algorithm\Marchant\ZoneTest\TestPopulation.java
 C:\Users\tomch\Documents\java\Schedule-Management\src\main\java\Algorithm\Schedule\utilities\Position.java
+C:\Users\tomch\Documents\java\Schedule-Management\src\main\java\Algorithm\Schedule\converter\LocalTimeConverter.java
 C:\Users\tomch\Documents\java\Schedule-Management\src\main\java\Algorithm\Marchant\ZoneTest\TestCrossover.java
+C:\Users\tomch\Documents\java\Schedule-Management\src\main\java\Algorithm\Schedule\converter\PositionConverter.java
 C:\Users\tomch\Documents\java\Schedule-Management\src\main\java\Algorithm\Schedule\utilities\Demande.java
-C:\Users\tomch\Documents\java\Schedule-Management\src\main\java\Algorithm\Schedule\utilities\InterfaceDemandePoint.java
+C:\Users\tomch\Documents\java\Schedule-Management\src\main\java\Algorithm\Schedule\builder\SocialDetailsBuilder.java
 C:\Users\tomch\Documents\java\Schedule-Management\src\main\java\Algorithm\Schedule\Interface\InterfaceGraphique.java
 C:\Users\tomch\Documents\java\Schedule-Management\src\main\java\Algorithm\Marchant\Moteur\Selection.java
 C:\Users\tomch\Documents\java\Schedule-Management\src\main\java\Algorithm\Marchant\Interface\Fenetre.java
@@ -28,3 +31,5 @@ C:\Users\tomch\Documents\java\Schedule-Management\src\main\java\Algorithm\Marcha
 C:\Users\tomch\Documents\java\Schedule-Management\src\main\java\Algorithm\Schedule\moteur\Algorithme.java
 C:\Users\tomch\Documents\java\Schedule-Management\src\main\java\Algorithm\Schedule\moteur\JunctionInformation.java
 C:\Users\tomch\Documents\java\Schedule-Management\src\main\java\Algorithm\Schedule\Interface\DatePicker.java
+C:\Users\tomch\Documents\java\Schedule-Management\src\main\java\Algorithm\Schedule\converter\LocalDateConverter.java
+C:\Users\tomch\Documents\java\Schedule-Management\src\main\java\Algorithm\Schedule\utilities\SocialDetails.java

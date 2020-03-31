@@ -1,64 +1,93 @@
 package Algorithm.Schedule.utilities;
 
-import java.awt.geom.Point2D;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+import Algorithm.Schedule.builder.SocialDetailsBuilder;
 import java.time.LocalTime;
 
 /**
  * docteur
  */
+@Entity
+@Table(name = "Doctor")
 public class Docteur {
 
-    private Point2D lieu;
-    private String nom, prenom, special;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_doc")
+    private Long id;
+    @OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+    @JoinColumn(name = "id_socdet")
+    private SocialDetails details;
+    @Column(name = "CDHP")
+    private String cdhp;
+    @Transient
     private Position emplacement;
+    @OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+    @JoinColumn(name = "id_gpsc")
     private Position lieuDeDepart;
+    @Transient
     private LocalTime[] horaires = new LocalTime[] { LocalTime.of(8, 0), LocalTime.of(12, 0), LocalTime.of(13, 0),
             LocalTime.of(18, 0) };
 
-    public Docteur(String nom, String prenom, String special, Position lieuDeDepart) {
+            public Docteur() {
+    }
 
-        this.nom = nom;
-        this.prenom = prenom;
-        this.special = special;
+    public Docteur(String nom, String prenom, String cdhp, Position lieuDeDepart) {
+
+        this.details = new SocialDetailsBuilder().setFirstName(prenom).setLastName(cdhp).build();
+        this.cdhp = cdhp;
         this.lieuDeDepart = lieuDeDepart;
         this.emplacement = lieuDeDepart;
     }
 
-    public Point2D getLieu() {
-        return lieu;
-    }
-
-    public void setLieu(Point2D lieu) {
-        this.lieu = lieu;
-    }
 
     public String getNom() {
-        return nom;
+        return this.details.getLastName();
     }
 
     public void setNom(String nom) {
-        this.nom = nom;
+        this.details.setLastName(nom);
     }
 
     public String getPrenom() {
-        return prenom;
+        return this.details.getFirstName();
     }
 
     public void setPrenom(String prenom) {
-        this.prenom = prenom;
+        this.details.setFirstName(prenom);
     }
 
-    public String getSpecial() {
-        return special;
+    public Long getId() {
+        return id;
     }
 
-    public void setSpecial(String special) {
-        this.special = special;
+    public void setId(Long id) {
+        this.id = id;
     }
+
+    public SocialDetails getDetails() {
+        return details;
+    }
+
+    public void setDetails(SocialDetails details) {
+        this.details = details;
+    }
+
+
 
     @Override
     public String toString() {
-        return "Docteur " + nom + " " + prenom;
+        return "Docteur " + this.getNom() + " " + this.getPrenom();
     }
 
     public Position getEmplacement() {
@@ -73,8 +102,8 @@ public class Docteur {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((nom == null) ? 0 : nom.hashCode());
-        result = prime * result + ((prenom == null) ? 0 : prenom.hashCode());
+        result = prime * result + ((this.getNom() == null) ? 0 : this.getNom().hashCode());
+        result = prime * result + ((this.getPrenom() == null) ? 0 : this.getPrenom().hashCode());
         return result;
     }
 
@@ -87,15 +116,15 @@ public class Docteur {
         if (getClass() != obj.getClass())
             return false;
         Docteur other = (Docteur) obj;
-        if (nom == null) {
-            if (other.nom != null)
+        if (this.getNom() == null) {
+            if (other.getNom() != null)
                 return false;
-        } else if (!nom.equals(other.nom))
+        } else if (!this.getNom().equals(other.getNom()))
             return false;
-        if (prenom == null) {
-            if (other.prenom != null)
+        if (this.getPrenom() == null) {
+            if (other.getPrenom() != null)
                 return false;
-        } else if (!prenom.equals(other.prenom))
+        } else if (!this.getPrenom().equals(other.getPrenom()))
             return false;
         return true;
     }
@@ -115,6 +144,20 @@ public class Docteur {
 
     public void setLieuDeDepart(Position lieuDeDepart) {
         this.lieuDeDepart = lieuDeDepart;
+    }
+
+    /**
+     * @return the cdhp
+     */
+    public String getCdhp() {
+        return cdhp;
+    }
+
+    /**
+     * @param cdhp the cdhp to set
+     */
+    public void setCdhp(String cdhp) {
+        this.cdhp = cdhp;
     }
 
 }

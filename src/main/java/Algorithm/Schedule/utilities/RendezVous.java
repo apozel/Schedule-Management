@@ -2,29 +2,60 @@ package Algorithm.Schedule.utilities;
 
 import java.time.Duration;
 import java.time.LocalDate;
-
 import java.time.LocalTime;
-import java.util.UUID;
-
+import java.util.Objects;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import Algorithm.Marchant.Moteur.Noeud;
+import Algorithm.Schedule.converter.LocalDateConverter;
+import Algorithm.Schedule.converter.LocalTimeConverter;
 
 /**
  * RendezVous
  */
+
+@Entity
+@Table(name = "appointement")
 public class RendezVous {
 
-    private final String IDRendezVous;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_doc")
+    private Long id;
+    @Column(name = "date_appoi")
+    @Convert(converter = LocalDateConverter.class)
     private LocalDate date;
+    @Column(name = "hours_appoi")
+    @Convert(converter = LocalTimeConverter.class)
     private LocalTime heureDebut;
+    @Transient
     private Duration dureeConsultation;
+    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @JoinColumn(name = "id_gpsc")
     private Position lieu;
+    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @JoinColumn(name = "id_doc")
     private Docteur medecinAffecte;
+    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @JoinColumn(name = "id_medrec")
     private Patient malade;
+    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @JoinColumn(name = "id_diag")
     private Diagnostic diag;
 
-    public RendezVous(LocalDate date, LocalTime heureDebut, Duration dureeConsultation, Docteur medecinAffecte,
-            Patient malade, Diagnostic diag) {
-        this.IDRendezVous = UUID.randomUUID().toString();
+    public RendezVous(LocalDate date, LocalTime heureDebut, Duration dureeConsultation,
+            Docteur medecinAffecte, Patient malade, Diagnostic diag) {
         this.date = date;
         this.heureDebut = heureDebut;
         this.dureeConsultation = dureeConsultation;
@@ -34,9 +65,8 @@ public class RendezVous {
         this.lieu = malade.getLieuDeVie();
     }
 
-    public RendezVous(LocalDate date, LocalTime heureDebut, Duration dureeConsultation, Docteur docteur,
-            Diagnostic diag) {
-        this.IDRendezVous = UUID.randomUUID().toString();
+    public RendezVous(LocalDate date, LocalTime heureDebut, Duration dureeConsultation,
+            Docteur docteur, Diagnostic diag) {
         this.date = date;
         this.heureDebut = heureDebut;
         this.dureeConsultation = dureeConsultation;
@@ -48,7 +78,6 @@ public class RendezVous {
     }
 
     public RendezVous(RendezVous rdvSource) {
-        this.IDRendezVous = rdvSource.getIDRendezVous();
         this.date = rdvSource.getDate();
         this.heureDebut = rdvSource.getHeureDebut();
         this.dureeConsultation = rdvSource.getDureeConsultation();
@@ -56,6 +85,7 @@ public class RendezVous {
         this.medecinAffecte = rdvSource.getMedecinAffecte();
         this.malade = rdvSource.getMalade();
         this.diag = rdvSource.getDiag();
+        this.id = rdvSource.getId();
     }
 
     public Position getLieu() {
@@ -123,17 +153,35 @@ public class RendezVous {
 
     @Override
     public String toString() {
-        return "IDRendezVous = " + IDRendezVous + ",\n date=" + date + ",\n diag=" + diag + ",\n dureeConsultation="
-                + dureeConsultation + ",\n heureDebut=" + heureDebut + ",\n malade=" + malade + "\n";
+        return "IDRendezVous = " + id + ",\n date=" + date + ",\n diag=" + diag
+                + ",\n dureeConsultation=" + dureeConsultation + ",\n heureDebut=" + heureDebut
+                + ",\n malade=" + malade + "\n";
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#hashCode()
+     */
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((IDRendezVous == null) ? 0 : IDRendezVous.hashCode());
-        return result;
+        return Objects.hash(id);
     }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
 
     @Override
     public boolean equals(Object obj) {
@@ -144,16 +192,8 @@ public class RendezVous {
         if (getClass() != obj.getClass())
             return false;
         RendezVous other = (RendezVous) obj;
-        if (IDRendezVous == null) {
-            if (other.IDRendezVous != null)
-                return false;
-        } else if (!IDRendezVous.equals(other.IDRendezVous))
-            return false;
-        return true;
+        return Objects.equals(id, other.id);
     }
 
-    public String getIDRendezVous() {
-        return IDRendezVous;
-    }
 
 }

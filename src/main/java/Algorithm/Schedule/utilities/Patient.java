@@ -2,20 +2,54 @@ package Algorithm.Schedule.utilities;
 
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import Algorithm.Schedule.builder.SocialDetailsBuilder;
+
 /**
  * Patient
  */
+@Entity
+@Table(name = "patient_medical_record")
 public class Patient {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_medrec")
+    private Long id;
+    @OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+    @JoinColumn(name = "id_gpsc")
     private Position lieuDeVie;
-    private String nom, prenom;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+    @JoinColumn(name = "id_socdet")
+    private SocialDetails details;
+    @Transient
     private final String IDPatient = UUID.randomUUID().toString();
 
-    public Patient(Position lieuDeVie, String nom, String prenom) {
-        this.lieuDeVie = lieuDeVie;
-        this.nom = nom;
-        this.prenom = prenom;
+    public Patient() {
+    }
 
+    public Patient(Position lieuDeVie, String lastName, String firstName) {
+        this.lieuDeVie = lieuDeVie;
+        this.details = new SocialDetailsBuilder().build();
+        this.setNom(lastName);
+        this.setPrenom(firstName);
+
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public Position getLieuDeVie() {
@@ -27,19 +61,19 @@ public class Patient {
     }
 
     public String getNom() {
-        return nom;
+        return this.details.getLastName();
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setNom(String lastName) {
+        this.details.setLastName(lastName);
     }
 
     public String getPrenom() {
-        return prenom;
+        return details.getFirstName();
     }
 
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
+    public void setPrenom(String firstName) {
+        this.details.setFirstName(firstName);
     }
 
     @Override
@@ -69,7 +103,7 @@ public class Patient {
 
     @Override
     public String toString() {
-        return nom + " " + prenom;
+        return getNom() + " " + getPrenom();
     }
 
     public String getIDPatient() {

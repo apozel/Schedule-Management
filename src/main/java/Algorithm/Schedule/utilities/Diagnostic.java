@@ -2,21 +2,38 @@ package Algorithm.Schedule.utilities;
 
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 /**
  * Diagnostic
  */
 public class Diagnostic {
 
     private final String diagnosticId = UUID.randomUUID().toString();;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_diag")
+    private Long id;
+    @Column(name = "gravityGrade")
     private int criticite;
+    @Column(name = "report")
     private String description;
-    private String patientId;
+    @OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+    @JoinColumn(name = "id_medrec")
     private Patient patientConserne;
 
+    public Diagnostic() {
+
+    }
     public Diagnostic(int criticite, String description, Patient patient) {
         this.criticite = criticite;
         this.description = description;
-        this.patientId = patient.getIDPatient();
         this.patientConserne = patient;
     }
 
@@ -32,22 +49,13 @@ public class Diagnostic {
         this.criticite = criticite;
     }
 
-    public String getDescription() {
-        return description;
-    }
+    
 
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public String getPatientId() {
-        return patientId;
-    }
-
-    public void setPatientId(String patientId) {
-        this.patientId = patientId;
-    }
-
+    
     public Patient getPatientConserne() {
         return patientConserne;
     }
@@ -56,4 +64,11 @@ public class Diagnostic {
         this.patientConserne = patientConserne;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }
