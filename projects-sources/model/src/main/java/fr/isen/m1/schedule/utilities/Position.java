@@ -1,4 +1,4 @@
-package Algorithm.Schedule.utilities;
+package fr.isen.m1.schedule.utilities;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -7,9 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-
-import Algorithm.Marchant.Moteur.Noeud;
-import Algorithm.Schedule.converter.PositionConverter;
+import fr.isen.m1.schedule.converter.PositionConverter;
+import fr.isen.m1.schedule.marchant.moteur.Noeud;
 
 /**
  * Position

@@ -1,9 +1,7 @@
-package Algorithm.Marchant.Moteur;
-
-import Algorithm.Schedule.utilities.Position;
+package fr.isen.m1.schedule.marchant.moteur;
 
 /**
- * 
+ *
  * @author Arnaud.VDR
  * @date 30 sept. 2019
  * @project bigData.Marchant
@@ -30,11 +28,7 @@ public class Noeud {
     this.y = y;
   }
 
-  public Noeud(int id, Position pos){
-    this.id = id;
-    this.x = pos.getX();
-    this.y = pos.getY();
-  }
+
 
   public int getId() {
     return id;

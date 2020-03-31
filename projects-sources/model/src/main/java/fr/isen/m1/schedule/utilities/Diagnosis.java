@@ -1,4 +1,4 @@
-package Algorithm.Schedule.utilities;
+package fr.isen.m1.schedule.utilities;
 
 import java.util.UUID;
 

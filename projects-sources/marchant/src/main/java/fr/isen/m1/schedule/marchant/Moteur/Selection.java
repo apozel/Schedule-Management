@@ -1,7 +1,7 @@
-package Algorithm.Marchant.Moteur;
+package fr.isen.m1.schedule.marchant.moteur;
 
 /**
- * 
+ *
  * @author Arnaud.VDR
  * @date 22 oct. 2019
  * @project ISEN_Marchant
@@ -22,7 +22,7 @@ public class Selection {
 //    System.out.println("-------- SELECTION -----------");
     Lien l = new Lien();
     double tailleAncienChemin = l.tailleChemin(AncienNoeuds);
-    
+
     double tailleNouveauChemin = l.tailleChemin(NouveauNoeuds);
 
 //    System.out.print("------- passage : ");

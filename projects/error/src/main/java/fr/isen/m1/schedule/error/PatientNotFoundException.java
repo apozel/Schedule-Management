@@ -1,4 +1,4 @@
-package Algorithm.Schedule.error;
+package fr.isen.m1.schedule.error;
 
 /**
  * PatientNotFound

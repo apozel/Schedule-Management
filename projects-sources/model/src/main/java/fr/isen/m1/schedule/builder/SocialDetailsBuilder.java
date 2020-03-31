@@ -1,8 +1,7 @@
-package Algorithm.Schedule.builder;
+package fr.isen.m1.schedule.builder;
 
 import java.util.Date;
-
-import Algorithm.Schedule.utilities.SocialDetails;
+import fr.isen.m1.schedule.utilities.SocialDetails;
 
 /**
  * SocialDetailsBuilder
@@ -102,6 +101,6 @@ public class SocialDetailsBuilder {
         details.setPicture(picture);
         return details;
     }
-    
+
 
 }

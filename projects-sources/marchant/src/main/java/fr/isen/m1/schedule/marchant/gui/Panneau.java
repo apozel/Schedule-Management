@@ -1,15 +1,13 @@
-package Algorithm.Marchant.Interface;
+package fr.isen.m1.schedule.marchant.gui;
 
 import java.awt.Color;
 import java.awt.Graphics;
-
 import javax.swing.JPanel;
+import fr.isen.m1.schedule.marchant.moteur.Lien;
+import fr.isen.m1.schedule.marchant.moteur.Noeud;
 
-import Algorithm.Marchant.Moteur.Lien;
-import Algorithm.Marchant.Moteur.Noeud;
- 
 @SuppressWarnings("serial")
-public class Panneau extends JPanel { 
+public class Panneau extends JPanel {
   Noeud[] listeNoeuds;
   public Panneau(Noeud[] listeNoeuds) {
     this.listeNoeuds = listeNoeuds;
@@ -17,7 +15,7 @@ public class Panneau extends JPanel {
 
   public void paintComponent(Graphics g){
     Lien l = new Lien();
-    
+
     /**
      * Pour faire plusieurs population,
      * il faut contenir plusieurs ListeNoeuds identiques au d�but.
@@ -28,7 +26,7 @@ public class Panneau extends JPanel {
      * et seulement � la toute fin,
      * faire une s�l�ction du meilleur individu de la population.
      */
-    
+
     for(int i = 0;i<listeNoeuds.length;i++) {
       if(i==0) {
         g.fillOval((int)listeNoeuds[i].getX()-10, (int)listeNoeuds[i].getY()-10, 20, 20);
@@ -36,7 +34,7 @@ public class Panneau extends JPanel {
         g.fillOval((int)listeNoeuds[i].getX()-5, (int)listeNoeuds[i].getY()-5, 10, 10);
       }
     }
-    
+
     /**
      * affichage du chemin g�n�r�
      */
@@ -48,7 +46,7 @@ public class Panneau extends JPanel {
         g.drawLine((int)listeNoeuds[i].getX(), (int)listeNoeuds[i].getY(), (int)listeNoeuds[i+1].getX(), (int)listeNoeuds[i+1].getY());
       }
     }
-    
+
     g.drawString("Taille total: " + l.tailleChemin(listeNoeuds), 10, 20);
-  }               
+  }
 }

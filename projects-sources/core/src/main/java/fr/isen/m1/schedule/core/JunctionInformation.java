@@ -2,11 +2,10 @@ package fr.isen.m1.schedule.core;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
-import Algorithm.Schedule.utilities.Diagnosis;
-import Algorithm.Schedule.utilities.Doctor;
-import Algorithm.Schedule.utilities.Patient;
-import Algorithm.Schedule.utilities.Appointement;
+import fr.isen.m1.schedule.utilities.Appointement;
+import fr.isen.m1.schedule.utilities.Diagnosis;
+import fr.isen.m1.schedule.utilities.Doctor;
+import fr.isen.m1.schedule.utilities.Patient;
 
 /**
  * ReachInformation cette class sert a faire la junction entre lalgorithme et la

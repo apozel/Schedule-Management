@@ -1,4 +1,4 @@
-package Algorithm.Schedule.converter;
+package fr.isen.m1.schedule.converter;
 
 import java.sql.Time;
 import java.time.LocalTime;

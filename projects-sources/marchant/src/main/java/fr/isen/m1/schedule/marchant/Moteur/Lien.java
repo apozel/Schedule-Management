@@ -1,7 +1,7 @@
-package Algorithm.Marchant.Moteur;
+package fr.isen.m1.schedule.marchant.moteur;
 
 /**
- * 
+ *
  * @author Arnaud.VDR
  * @date 14 oct. 2019
  * @project bigData.Marchant
@@ -9,9 +9,9 @@ package Algorithm.Marchant.Moteur;
  *
  */
 public class Lien {
-  
+
   /**
-   * 
+   *
    * @param EntreeNoeuds
    * @return double tailleChemin
    */
@@ -26,7 +26,7 @@ public class Lien {
     }
     return tailleChemin;
   }
-  
+
   /**
    * Calcul distance entre 2 noeuds
    * @param n1

@@ -1,4 +1,4 @@
-package Algorithm.Schedule.utilities;
+package fr.isen.m1.schedule.utilities;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -16,9 +16,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import Algorithm.Marchant.Moteur.Noeud;
-import Algorithm.Schedule.converter.LocalDateConverter;
-import Algorithm.Schedule.converter.LocalTimeConverter;
+import fr.isen.m1.schedule.converter.LocalDateConverter;
+import fr.isen.m1.schedule.converter.LocalTimeConverter;
+import fr.isen.m1.schedule.marchant.moteur.Noeud;
 
 /**
  * RendezVous

@@ -1,31 +1,30 @@
-package Algorithm.Marchant.ZoneTest;
+package fr.isen.m1.schedule.marchant.test;
 
 import java.util.Random;
-
-import Algorithm.Marchant.AffichageDebug.AffDebug;
-import Algorithm.Marchant.Moteur.Graphe;
-import Algorithm.Marchant.Moteur.Lien;
-import Algorithm.Marchant.Moteur.Mutation;
-import Algorithm.Marchant.Moteur.Noeud;
+import fr.isen.m1.schedule.marchant.debug.AffDebug;
+import fr.isen.m1.schedule.marchant.moteur.Graphe;
+import fr.isen.m1.schedule.marchant.moteur.Lien;
+import fr.isen.m1.schedule.marchant.moteur.Mutation;
+import fr.isen.m1.schedule.marchant.moteur.Noeud;
 
 public class TestPopulation {
 
   public static void main(String[] args) {
     // TODO Auto-generated method stub
-    
+
     int nb = 10;
     int nbPop = 10;
     Graphe gr = new Graphe();
     AffDebug aff = new AffDebug();
     Mutation mu = new Mutation();
     Lien l = new Lien();
-    
+
     /**
      * initialisation des points
      */
     Noeud[] ListeNoeuds = new Noeud[nb];
     ListeNoeuds = gr.generationNoeud(nb);
-    
+
     /**
      * initialisation de la population
      */
@@ -33,18 +32,18 @@ public class TestPopulation {
     for(int i = 0;i<nbPop;i++) {
       Population[i] = ListeNoeuds = mu.geneticMutation(ListeNoeuds);
     }
-    
+
     long startTime = System.currentTimeMillis();
     aff.affichagePopulationTailleCheminEtOrderChemin(Population, "Population");
-    
+
     for(int iteration=0;iteration<10000;iteration++) {
-    
+
       /**
        * Tri de la population
        */
       int min = 0;
       for(int i=0;i<Population.length;i++) {
-        min = i; 
+        min = i;
         for(int j=i;j<Population.length;j++) {
           if(l.tailleChemin(Population[j])<l.tailleChemin(Population[min])) {
             min = j;
@@ -56,7 +55,7 @@ public class TestPopulation {
           Population[min] = ListeNoeuds;
         }
       }
-      
+
       /**
        * Probabilist selection
        */
@@ -82,13 +81,13 @@ public class TestPopulation {
           }
         }
       }
-      
+
       /**
        * mutation de l'individu s�l�ctionn�
        */
       ListeNoeuds = Population[a];
       ListeNoeuds = mu.geneticMutation(ListeNoeuds);
-      
+
       /**
        * Keep if tmp > pop[0], reject else;
        */
@@ -97,11 +96,11 @@ public class TestPopulation {
       }
     }
     aff.affichagePopulationTailleCheminEtOrderChemin(Population, "Population");
-    
+
     long endTime = System.currentTimeMillis();
-    
+
     System.out.println((endTime-startTime) + " ms");
-    
+
   }
 
 }

@@ -1,7 +1,7 @@
-package Algorithm.Marchant.Moteur;
+package fr.isen.m1.schedule.marchant.moteur;
 
 /**
- * 
+ *
  * @author Arnaud.VDR
  * @date 1 oct. 2019
  * @project bigData.Marchant
@@ -9,7 +9,7 @@ package Algorithm.Marchant.Moteur;
  *
  */
 public class Graphe {
-  
+
   /**
    * generation des noeuds
    * @param nb

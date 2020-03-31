@@ -1,5 +1,6 @@
-package Algorithm.Schedule.utilities;
+package fr.isen.m1.schedule.utilities;
 
+import java.time.LocalTime;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,8 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import Algorithm.Schedule.builder.SocialDetailsBuilder;
-import java.time.LocalTime;
+import fr.isen.m1.schedule.builder.SocialDetailsBuilder;
 
 /**
  * docteur

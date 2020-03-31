@@ -1,4 +1,4 @@
-package Algorithm.Schedule.Interface;
+package fr.isen.m1.schedule.gui;
 
 import java.awt.*;
 import java.awt.event.*;

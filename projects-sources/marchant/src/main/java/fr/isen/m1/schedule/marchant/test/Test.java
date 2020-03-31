@@ -1,13 +1,12 @@
-package Algorithm.Marchant.ZoneTest;
+package fr.isen.m1.schedule.marchant.test;
 
-import Algorithm.Marchant.AffichageDebug.AffDebug;
-import Algorithm.Marchant.Moteur.Chemin;
-import Algorithm.Marchant.Moteur.Graphe;
-
-import Algorithm.Marchant.Moteur.Noeud;
+import fr.isen.m1.schedule.marchant.debug.AffDebug;
+import fr.isen.m1.schedule.marchant.moteur.Chemin;
+import fr.isen.m1.schedule.marchant.moteur.Graphe;
+import fr.isen.m1.schedule.marchant.moteur.Noeud;
 
 /**
- * 
+ *
  * @author Arnaud.VDR
  * @date 22 oct. 2019
  * @project ISEN_Marchant

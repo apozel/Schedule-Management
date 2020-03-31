@@ -1,4 +1,4 @@
-package Algorithm.Marchant.Moteur;
+package fr.isen.m1.schedule.marchant.moteur;
 
 import java.util.Random;
 

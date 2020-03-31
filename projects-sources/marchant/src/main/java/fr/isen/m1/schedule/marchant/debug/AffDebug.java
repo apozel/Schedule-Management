@@ -1,10 +1,10 @@
-package Algorithm.Marchant.AffichageDebug;
+package fr.isen.m1.schedule.marchant.debug;
 
-import Algorithm.Marchant.Moteur.Lien;
-import Algorithm.Marchant.Moteur.Noeud;
+import fr.isen.m1.schedule.marchant.moteur.Lien;
+import fr.isen.m1.schedule.marchant.moteur.Noeud;
 
 /**
- * 
+ *
  * @author Arnaud.VDR
  * @date 24 oct. 2019
  * @project ISEN_Marchant
@@ -28,7 +28,7 @@ public class AffDebug {
     }
     System.out.println();
   }
-  
+
   /**
    * affichage ensemble population Noeud[][]
    * @param Noeuds
@@ -45,5 +45,5 @@ public class AffDebug {
     }
     System.out.println();
   }
-  
+
 }

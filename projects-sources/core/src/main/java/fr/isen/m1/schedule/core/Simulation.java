@@ -1,17 +1,17 @@
-package Algorithm.Schedule.moteur;
+package fr.isen.m1.schedule.core;
 
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
-import Algorithm.Schedule.utilities.Diagnosis;
-import Algorithm.Schedule.utilities.Doctor;
-import Algorithm.Schedule.utilities.Patient;
-import Algorithm.Schedule.utilities.Position;
-import Algorithm.Schedule.utilities.Appointement;
+import fr.isen.m1.schedule.utilities.Appointement;
+import fr.isen.m1.schedule.utilities.Diagnosis;
+import fr.isen.m1.schedule.utilities.Doctor;
+import fr.isen.m1.schedule.utilities.Patient;
+import fr.isen.m1.schedule.utilities.Position;
 
 public class Simulation {
     // cette partie sert a simuler le fonctionnement du reste de la plateforme
@@ -34,7 +34,7 @@ public class Simulation {
 
         Doctor testDocteur = new Doctor("arthur", "saucisson", "mentoniste", new Position(90, 70));
         Patient testPatient = new Patient(new Position(11, 3), "Rafael", "le clown");
-        Appointement testRendezVous = new Appointement(DateHeureActuel.toLocalDate(), testDocteur.getHoraires(0).of(10, 0),
+        Appointement testRendezVous = new Appointement(DateHeureActuel.toLocalDate(), LocalTime.of(10, 0),
                 Duration.ofMinutes(45), testDocteur, new Diagnosis(1, "gastro", testPatient));
 
         this.docList.add(testDocteur);

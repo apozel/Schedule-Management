@@ -1,8 +1,7 @@
-package Algorithm.Schedule.Interface;
+package fr.isen.m1.schedule.gui;
 
 import static javax.swing.BoxLayout.X_AXIS;
 import static javax.swing.BoxLayout.Y_AXIS;
-
 import java.awt.BorderLayout;
 import java.awt.Choice;
 import java.awt.Color;
@@ -14,7 +13,6 @@ import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -27,11 +25,10 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
-
-import Algorithm.Schedule.moteur.Simulation;
-import Algorithm.Schedule.utilities.Doctor;
-import Algorithm.Schedule.utilities.Patient;
-import Algorithm.Schedule.utilities.Position;
+import fr.isen.m1.schedule.core.Simulation;
+import fr.isen.m1.schedule.utilities.Doctor;
+import fr.isen.m1.schedule.utilities.Patient;
+import fr.isen.m1.schedule.utilities.Position;
 
 /**
  * InterfaceGraphique

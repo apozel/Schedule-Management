@@ -1,13 +1,13 @@
-package Algorithm.Marchant.Interface;
+package fr.isen.m1.schedule.marchant.gui;
+
 
 import java.util.Random;
-
-import Algorithm.Marchant.AffichageDebug.AffDebug;
-import Algorithm.Marchant.Moteur.Chemin;
-import Algorithm.Marchant.Moteur.Graphe;
-import Algorithm.Marchant.Moteur.Lien;
-import Algorithm.Marchant.Moteur.Mutation;
-import Algorithm.Marchant.Moteur.Noeud;
+import fr.isen.m1.schedule.marchant.debug.AffDebug;
+import fr.isen.m1.schedule.marchant.moteur.Chemin;
+import fr.isen.m1.schedule.marchant.moteur.Graphe;
+import fr.isen.m1.schedule.marchant.moteur.Lien;
+import fr.isen.m1.schedule.marchant.moteur.Mutation;
+import fr.isen.m1.schedule.marchant.moteur.Noeud;
 
 public class Principale {
 
@@ -24,7 +24,7 @@ public class Principale {
   /**
    * Ancienne version Pas de population multiple Pas de selection probabiliste Pas
    * de crossover Mutation Fitness Function Keep or Reject
-   * 
+   *
    * @param ListeNoeuds
    */
   public static void l1(Noeud[] ListeNoeuds) {
@@ -50,7 +50,7 @@ public class Principale {
   /**
    * Nouvelle version Population multiple Selection probabiliste Pas de crossover
    * Mutation Fitness Function Keep or Reject
-   * 
+   *
    * @param ListeNoeuds
    */
   public static void l2(Noeud[] ListeNoeuds) {
