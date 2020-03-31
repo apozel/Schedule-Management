@@ -1,9 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="Schedule-Management:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/Schedule_Management_jar</output-path>
-    <root id="archive" name="Schedule-Management.jar">
-      <element id="module-output" name="Schedule-Management" />
-
-    </root>
-  </artifact>
-</component>
