@@ -11,6 +11,7 @@ import fr.isen.m1.schedule.utilities.Patient;
  * ReachInformation cette class sert a faire la junction entre lalgorithme et la
  * bdd (ici la simulation)
  */
+
 public interface JunctionInformation {
 
     public void CreationDemandeDiagnostic(Diagnosis nouveauDiagnostic);

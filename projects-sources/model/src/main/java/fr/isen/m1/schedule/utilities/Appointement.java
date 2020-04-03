@@ -1,5 +1,6 @@
 package fr.isen.m1.schedule.utilities;
 
+
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;

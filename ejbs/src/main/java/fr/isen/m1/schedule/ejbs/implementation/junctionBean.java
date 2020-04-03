@@ -1,16 +1,21 @@
-package fr.isen.m1.schedule.core;
+package fr.isen.m1.schedule.ejbs.implementation;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import javax.ejb.Stateless;
+import fr.isen.m1.schedule.core.Algorithme;
+import fr.isen.m1.schedule.core.Simulation;
+import fr.isen.m1.schedule.ejbs.ejbinterface.JunctionInformationEJB;
 import fr.isen.m1.schedule.utilities.Appointement;
 import fr.isen.m1.schedule.utilities.Diagnosis;
 import fr.isen.m1.schedule.utilities.Doctor;
 import fr.isen.m1.schedule.utilities.Patient;
 
 /**
- * JunctionInformationJson
+ * junctionEJB
  */
-public class JunctionInformationJPA implements JunctionInformation {
+@Stateless(mappedName = "JunctionInformationEJB")
+public class junctionBean implements JunctionInformationEJB {
 
     @Override
     public void CreationDemandeDiagnostic(Diagnosis nouveauDiagnostic) {
@@ -49,7 +54,8 @@ public class JunctionInformationJPA implements JunctionInformation {
     }
 
     @Override
-    public List<Appointement> getRendezVousDuJour(LocalDateTime jourChoisit, Doctor docteurChoisit) {
+    public List<Appointement> getRendezVousDuJour(LocalDateTime jourChoisit,
+            Doctor docteurChoisit) {
         // TODO Auto-generated method stub
         return null;
     }
@@ -83,8 +89,6 @@ public class JunctionInformationJPA implements JunctionInformation {
         // TODO Auto-generated method stub
         return null;
     }
-
-
 
 
 }
