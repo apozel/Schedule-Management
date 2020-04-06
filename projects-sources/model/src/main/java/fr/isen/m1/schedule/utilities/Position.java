@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import fr.isen.m1.schedule.converter.PositionConverter;
-import fr.isen.m1.schedule.marchant.moteur.Noeud;
+
 
 /**
  * Position
@@ -60,12 +60,6 @@ public class Position {
         this.y = y;
     }
 
-    public boolean equalsPosition(Noeud no) {
-        if (no.getX() == this.getX() && no.getY() == this.getY()) {
-            return true;
-        }
-        return false;
-    }
 
     @Override
     public String toString() {

@@ -1,7 +1,6 @@
-package fr.isen.m1.schedule.marchant.Moteur;
+package fr.isen.m1.schedule.marchant.moteur;
 
-
-import Moteur.Position;
+import fr.isen.m1.schedule.utilities.Position;
 
 public class Map {
 	// private final static float distBound = 20; // 20 km. Arbitrary.
@@ -31,7 +30,7 @@ public class Map {
 	public float[][] net() {
 		return this.net;
 	}
-	
+
 	public float[][] netCriticity() {
 		return this.netCriticity;
 	}
@@ -91,4 +90,3 @@ public class Map {
 		System.out.printf("\nIts length: %.3f km\n", Path.totalLength(map, path));
 	}*/
 }
-

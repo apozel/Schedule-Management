@@ -19,7 +19,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import fr.isen.m1.schedule.converter.LocalDateConverter;
 import fr.isen.m1.schedule.converter.LocalTimeConverter;
-import fr.isen.m1.schedule.marchant.moteur.Noeud;
 
 /**
  * RendezVous
@@ -145,12 +144,7 @@ public class Appointement {
         this.diag = diag;
     }
 
-    public boolean equalsPosition(Noeud no) {
-        if (no.getX() == this.lieu.getX() && no.getY() == this.lieu.getY()) {
-            return true;
-        }
-        return false;
-    }
+
 
     @Override
     public String toString() {

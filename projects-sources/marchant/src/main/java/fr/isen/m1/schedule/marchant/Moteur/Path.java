@@ -1,4 +1,4 @@
-package fr.isen.m1.schedule.marchant.Moteur;
+package fr.isen.m1.schedule.marchant.moteur;
 
 
 public abstract class Path
@@ -7,10 +7,10 @@ public abstract class Path
 	public static float distance(float x1, float y1, float x2, float y2)
 	{
 		float delta_x = x1 - x2, delta_y = y1 - y2;
-		
+
 		return (float) Math.sqrt(delta_x * delta_x + delta_y * delta_y);
 	}
-	
+
 	// Euclidean distance between (x1, y1) and (x2, y2) using criticity.
 		public static float distanceCriticite(float x1, float y1, float x2, float y2, float criticite)
 		{
@@ -40,7 +40,7 @@ public abstract class Path
 
 		return totalLength;
 	}
-	
+
 	//Total lenght of the path with criticity.
 	public static float totalLengthCriticity(Map map, int path[])
 	{

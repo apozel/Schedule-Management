@@ -1,7 +1,7 @@
-package fr.isen.m1.schedule.marchant.Moteur;
+package fr.isen.m1.schedule.marchant.moteur;
 
-import projects-sources.model.src.main.java.fr.isen.m1.schedule.utilities.Position;
-import projects-sources.model.src.main.java.fr.isen.m1.schedule.utilities.Docteur;
+import fr.isen.m1.schedule.utilities.Position;
+import fr.isen.m1.schedule.utilities.Doctor;
 
 public abstract class Genetic
 {
@@ -348,24 +348,24 @@ public abstract class Genetic
 			return best_path;
 		}
 
-	
+
 		/**
-		 * 
+		 *
 		 * @param lstPositions The list of position in disorder
-		 * @param docteur the doctor that have to reach all positions
-		 * @return List of Position. First element of the list : doc position. Then the path to follow after the Docteur Positon.
+		 * @param Doctor the doctor that have to reach all positions
+		 * @return List of Position. First element of the list : doc position. Then the path to follow after the Doctor Positon.
 		 */
-		public static Position[] givePathToFollowWithDoctor(Position[] lstPositions, Docteur docteur) {
-			Position docPosition = docteur.getLieuDeDepart();
+		public static Position[] givePathToFollowWithDoctor(Position[] lstPositions, Doctor Doctor) {
+			Position docPosition = Doctor.getLieuDeDepart();
 			Position[] listePositions = new Position[lstPositions.length+1];
 			for(int i = 0 ; i < lstPositions.length; i ++) {
 				listePositions[i] = lstPositions[i];
 			}
 			int citiesNumber = listePositions.length;
 			listePositions[lstPositions.length] = docPosition;
-			
+
 			Map map = new Map(listePositions);
-			
+
 			// Those settings should work for all 'citiesNumber':
 			int populationSize = 64;
 			int epochsNumber = 10000 * citiesNumber;
@@ -378,36 +378,36 @@ public abstract class Genetic
 				listeGagnante[i] = listePositions[best_path[i]];
 			}
 			Path.print(best_path);
-			
+
 			int c = -1;
 			for (int i = 0; i < listeGagnante.length; i++) {
 				if(listeGagnante[i] == docPosition) {
 					c = i;
 				}
 			}
-			
+
 			//Re-organization of the list to have the doc initial position at the first place.
 			Position[] lstGagnante = new Position[listeGagnante.length];
 			for (int i = 0; i < listeGagnante.length; i++) {
 				if(c+i == listeGagnante.length) {
-					c = c - listeGagnante.length; 
+					c = c - listeGagnante.length;
 				}
 				lstGagnante[i] = listeGagnante[c+i];
 			}
 			return lstGagnante;
 		}
-		
-		
-		
+
+
+
 	/*public static void main(String[] args)
 	{
 		int citiesNumber = 50;
 		System.out.printf("Cities number: %d\n", citiesNumber);
-		
+
 		Graphe gr = new Graphe();
 		Position[] ListeNoeuds = new Position[citiesNumber];
 	    ListeNoeuds = gr.generationNoeud(citiesNumber);
-	    
+
 		Map map = new Map(ListeNoeuds);
 
 		// Those settings should work for all 'citiesNumber':

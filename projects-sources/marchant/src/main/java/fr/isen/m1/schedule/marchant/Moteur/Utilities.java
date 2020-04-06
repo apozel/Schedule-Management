@@ -1,4 +1,4 @@
-package fr.isen.m1.schedule.marchant.Moteur;
+package fr.isen.m1.schedule.marchant.moteur;
 
 public class Utilities
 {
