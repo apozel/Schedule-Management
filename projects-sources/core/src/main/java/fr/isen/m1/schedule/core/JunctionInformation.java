@@ -22,13 +22,6 @@ public interface JunctionInformation {
 
     public List<Doctor> getDocteurDisponible();
 
-    public Algorithme getAlgo();
-
-    public void setAlgo(Algorithme algo);
-
-    public Simulation getSimu();
-
-    public void setSimu(Simulation simu);
 
     public LocalDateTime getDateTime();
 

@@ -21,9 +21,6 @@ public interface JunctionInformationEJB extends JunctionInformation {
     void comparaisonEtStockageRDV(List<Appointement> listeTriee);
 
     @Override
-    Algorithme getAlgo();
-
-    @Override
     LocalDateTime getDateTime();
 
     @Override
@@ -36,19 +33,9 @@ public interface JunctionInformationEJB extends JunctionInformation {
     List<Appointement> getRendezVousDuJour(LocalDateTime jourChoisit, Doctor docteurChoisit);
 
     @Override
-    Simulation getSimu();
-
-    @Override
     void recuperationNouveauxDiagnostic(int crit, String descript, String patientid);
 
     @Override
-    void setAlgo(Algorithme algo);
-
-    @Override
-    void setSimu(Simulation simu);
-
-    @Override
     Patient trouverLePatientAvecSonID(String patientID);
-
 
 }
