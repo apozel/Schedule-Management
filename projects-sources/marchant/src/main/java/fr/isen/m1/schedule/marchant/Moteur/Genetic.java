@@ -1,7 +1,8 @@
-package fr.isen.m1.schedule.marchant.moteur;
+package fr.isen.m1.schedule.marchant.Moteur;
 
 import fr.isen.m1.schedule.utilities.Position;
 import fr.isen.m1.schedule.utilities.Doctor;
+import fr.isen.m1.schedule.utilities.Diagnosis;
 
 public abstract class Genetic
 {
@@ -260,7 +261,7 @@ public abstract class Genetic
 
 			if (map == null)
 			{
-				System.out.println("\nnull map in 'geneticSearch'.\n");
+				System.out.println("\null map in 'geneticSearch'.\n");
 				throw new RuntimeException();
 			}
 
@@ -355,16 +356,11 @@ public abstract class Genetic
 		 * @param Doctor the doctor that have to reach all positions
 		 * @return List of Position. First element of the list : doc position. Then the path to follow after the Doctor Positon.
 		 */
-		public static Position[] givePathToFollowWithDoctor(Position[] lstPositions, Doctor Doctor) {
-			Position docPosition = Doctor.getLieuDeDepart();
-			Position[] listePositions = new Position[lstPositions.length+1];
-			for(int i = 0 ; i < lstPositions.length; i ++) {
-				listePositions[i] = lstPositions[i];
-			}
-			int citiesNumber = listePositions.length;
-			listePositions[lstPositions.length] = docPosition;
+		public static Diagnosis[] givePathToFollowWithDoctor(Diagnosis[] listeDiag, Doctor doctor) {
+						
+			int citiesNumber = listeDiag.length;
 
-			Map map = new Map(listePositions);
+			Map map = new Map(listeDiag);
 
 			// Those settings should work for all 'citiesNumber':
 			int populationSize = 64;
@@ -372,22 +368,26 @@ public abstract class Genetic
 			SelectionMode selMode = SelectionMode.Uniform;
 
 			// Finding a good path (hopefully):
-			int[] best_path = geneticSearch(map, populationSize, epochsNumber, selMode);
-			Position[] listeGagnante = new Position[citiesNumber];
+			int[] best_path = geneticSearchWithCriticity(map, populationSize, epochsNumber, selMode);
+			//Position[] listeGagnante = new Position[citiesNumber];
+			Diagnosis[] listeGagnante = new Diagnosis[listeDiag.length];
 			for (int i = 0; i<citiesNumber; i++) {
-				listeGagnante[i] = listePositions[best_path[i]];
+				listeGagnante[i] = listeDiag[best_path[i]];
 			}
 			Path.print(best_path);
 
-			int c = -1;
-			for (int i = 0; i < listeGagnante.length; i++) {
-				if(listeGagnante[i] == docPosition) {
+			int c = 0;
+			float distance = Path.distanceCriticite(doctor.getLieuDeDepart().getX(), doctor.getLieuDeDepart().getY(), listeGagnante[0].getPatientConserne().getLieuDeVie().getX(), listeGagnante[0].getPatientConserne().getLieuDeVie().getY(), listeGagnante[0].getCriticite());;
+			for (int i = 1; i < listeGagnante.length; i++) {
+				float distance1 = Path.distanceCriticite(doctor.getLieuDeDepart().getX(), doctor.getLieuDeDepart().getY(), listeGagnante[i].getPatientConserne().getLieuDeVie().getX(), listeGagnante[i].getPatientConserne().getLieuDeVie().getY(), listeGagnante[i].getCriticite());
+				if(distance1 < distance) {
 					c = i;
+					distance = distance1;
 				}
 			}
 
-			//Re-organization of the list to have the doc initial position at the first place.
-			Position[] lstGagnante = new Position[listeGagnante.length];
+			//Re-organization of the list to have the list of Patient to see after the doc.
+			Diagnosis[] lstGagnante = new Diagnosis[listeGagnante.length];
 			for (int i = 0; i < listeGagnante.length; i++) {
 				if(c+i == listeGagnante.length) {
 					c = c - listeGagnante.length;

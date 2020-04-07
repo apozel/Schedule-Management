@@ -1,4 +1,4 @@
-package fr.isen.m1.schedule.marchant.moteur;
+package fr.isen.m1.schedule.marchant.Moteur;
 
 import fr.isen.m1.schedule.utilities.Position;
 
@@ -6,11 +6,11 @@ public class Map {
 	// private final static float distBound = 20; // 20 km. Arbitrary.
 
 	private int citiesNumber;
-	private Position locations[];
+	private Diagnosis listDiag[];
 	private float net[][]; // citiesNumber * citiesNumber -> distance map.
 	private float netCriticity[][];
 
-	public Map(Position[] listNoeud) {
+	public Map(Diagnosis[] listNoeud) {
 		this.citiesNumber = listNoeud.length;
 		this.locations = listNoeud;
 		this.net = new float[citiesNumber][citiesNumber];
@@ -23,7 +23,7 @@ public class Map {
 		return this.citiesNumber;
 	}
 
-	public Position[] locations() {
+	public Diagnosis[] locations() {
 		return this.locations;
 	}
 
@@ -38,16 +38,16 @@ public class Map {
 	public void init() {
 		for (int i = 0; i < this.citiesNumber; ++i) {
 			for (int j = i + 1; j < this.citiesNumber; ++j) {
-				float x1 = (float) this.locations[i].getX();
-				float y1 = (float) this.locations[i].getY();
+				float x1 = (float) this.listDiag[i].getPatientConserne().getLieuDeVie().getX();
+				float y1 = (float) this.listDiag[i].getPatientConserne().getLieuDeVie().getY();
 
-				float x2 = (float) this.locations[j].getX();
-				float y2 = (float) this.locations[j].getY();
+				float x2 = (float) this.listDiag[j].getPatientConserne().getLieuDeVie().getX();
+				float y2 = (float) this.listDiag[j].getPatientConserne().getLieuDeVie().getY();
 
 				this.net[i][j] = Path.distance(x1, y1, x2, y2);
-				this.netCriticity[i][j] = Path.distanceCriticite(x1, y1, x2, y2, (float) locations[j].getCriticite());
+				this.netCriticity[i][j] = Path.distanceCriticite(x1, y1, x2, y2, (float) listDiag[j].getCriticite());
 				this.net[j][i] = this.net[i][j];
-				this.netCriticity[j][i] = Path.distanceCriticite(x2, y2, x1, y1, (float) locations[i].getCriticite());
+				this.netCriticity[j][i] = Path.distanceCriticite(x2, y2, x1, y1, (float) listDiag[i].getCriticite());
 			}
 		}
 	}
