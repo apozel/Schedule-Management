@@ -1,20 +1,20 @@
-package fr.isen.m1.schedule.marchant.Moteur;
+package fr.isen.m1.schedule.marchant.moteur;
 
-import fr.isen.m1.schedule.utilities.Position;
+import fr.isen.m1.schedule.utilities.Diagnosis;
 
 public class Map {
-	// private final static float distBound = 20; // 20 km. Arbitrary.
+	// private final static double distBound = 20; // 20 km. Arbitrary.
 
 	private int citiesNumber;
 	private Diagnosis listDiag[];
-	private float net[][]; // citiesNumber * citiesNumber -> distance map.
-	private float netCriticity[][];
+	private double net[][]; // citiesNumber * citiesNumber -> distance map.
+	private double netCriticity[][];
 
 	public Map(Diagnosis[] listNoeud) {
 		this.citiesNumber = listNoeud.length;
-		this.locations = listNoeud;
-		this.net = new float[citiesNumber][citiesNumber];
-		this.netCriticity = new float[citiesNumber][citiesNumber];
+		this.listDiag = listNoeud;
+		this.net = new double[citiesNumber][citiesNumber];
+		this.netCriticity = new double[citiesNumber][citiesNumber];
 
 		this.init(); // A map must be initialized.
 	}
@@ -24,30 +24,32 @@ public class Map {
 	}
 
 	public Diagnosis[] locations() {
-		return this.locations;
+		return this.listDiag;
 	}
 
-	public float[][] net() {
+	public double[][] net() {
 		return this.net;
 	}
 
-	public float[][] netCriticity() {
+	public double[][] netCriticity() {
 		return this.netCriticity;
 	}
 
 	public void init() {
 		for (int i = 0; i < this.citiesNumber; ++i) {
 			for (int j = i + 1; j < this.citiesNumber; ++j) {
-				float x1 = (float) this.listDiag[i].getPatientConserne().getLieuDeVie().getX();
-				float y1 = (float) this.listDiag[i].getPatientConserne().getLieuDeVie().getY();
+				double x1 = (double) this.listDiag[i].getPatientConserne().getLieuDeVie().getX();
+				double y1 = (double) this.listDiag[i].getPatientConserne().getLieuDeVie().getY();
 
-				float x2 = (float) this.listDiag[j].getPatientConserne().getLieuDeVie().getX();
-				float y2 = (float) this.listDiag[j].getPatientConserne().getLieuDeVie().getY();
+				double x2 = (double) this.listDiag[j].getPatientConserne().getLieuDeVie().getX();
+				double y2 = (double) this.listDiag[j].getPatientConserne().getLieuDeVie().getY();
 
 				this.net[i][j] = Path.distance(x1, y1, x2, y2);
-				this.netCriticity[i][j] = Path.distanceCriticite(x1, y1, x2, y2, (float) listDiag[j].getCriticite());
+				this.netCriticity[i][j] =
+						Path.distanceCriticite(x1, y1, x2, y2, (double) listDiag[j].getCriticite());
 				this.net[j][i] = this.net[i][j];
-				this.netCriticity[j][i] = Path.distanceCriticite(x2, y2, x1, y1, (float) listDiag[i].getCriticite());
+				this.netCriticity[j][i] =
+						Path.distanceCriticite(x2, y2, x1, y1, (double) listDiag[i].getCriticite());
 			}
 		}
 	}
@@ -57,7 +59,9 @@ public class Map {
 
 		System.out.printf("\nLocations:\n\n");
 		for (int i = 0; i < this.citiesNumber; ++i)
-			System.out.printf("x = %6.3f, y = %6.3f\n", this.locations[i].getX(), this.locations[i].getY());
+			System.out.printf("x = %6.3f, y = %6.3f\n", this.listDiag[i]
+					.getPatientConserne().getLieuDeVie().getX(),
+					this.listDiag[i].getPatientConserne().getLieuDeVie().getY());
 
 		System.out.printf("\nNet:\n\n");
 		for (int i = 0; i < this.citiesNumber; ++i) {

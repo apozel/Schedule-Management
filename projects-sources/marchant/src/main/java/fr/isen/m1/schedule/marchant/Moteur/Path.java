@@ -4,26 +4,26 @@ package fr.isen.m1.schedule.marchant.moteur;
 public abstract class Path
 {
 	// Euclidean distance between (x1, y1) and (x2, y2).
-	public static float distance(float x1, float y1, float x2, float y2)
+	public static double distance(double x1, double y1, double x2, double y2)
 	{
-		float delta_x = x1 - x2, delta_y = y1 - y2;
+		double delta_x = x1 - x2, delta_y = y1 - y2;
 
-		return (float) Math.sqrt(delta_x * delta_x + delta_y * delta_y);
+		return (double) Math.sqrt(delta_x * delta_x + delta_y * delta_y);
 	}
 
 	// Euclidean distance between (x1, y1) and (x2, y2) using criticity.
-		public static float distanceCriticite(float x1, float y1, float x2, float y2, float criticite)
+		public static double distanceCriticite(double x1, double y1, double x2, double y2, double criticite)
 		{
-			float delta_x = x1 - x2, delta_y = y1 - y2;
+			double delta_x = x1 - x2, delta_y = y1 - y2;
 			if (criticite == 0) {
 				criticite = 1;
 			}
-			criticite = (float) (criticite/10);
-			return (float) ((Math.sqrt(delta_x * delta_x + delta_y * delta_y))/criticite);
+			criticite = (double) (criticite/10);
+			return (double) ((Math.sqrt(delta_x * delta_x + delta_y * delta_y))/criticite);
 		}
 
 	// Total length of the path, coming back to the start:
-	public static float totalLength(Map map, int path[])
+	public static double totalLength(Map map, int path[])
 	{
 		int n = path.length;
 
@@ -33,7 +33,7 @@ public abstract class Path
 			throw new RuntimeException();
 		}
 
-		float totalLength = map.net()[path[n - 1]][path[0]];
+		double totalLength = map.net()[path[n - 1]][path[0]];
 
 		for (int i = 0; i < n - 1; ++i)
 			totalLength += map.net()[path[i]][path[i + 1]];;
@@ -42,7 +42,7 @@ public abstract class Path
 	}
 
 	//Total lenght of the path with criticity.
-	public static float totalLengthCriticity(Map map, int path[])
+	public static double totalLengthCriticity(Map map, int path[])
 	{
 		int n = path.length;
 
@@ -52,7 +52,7 @@ public abstract class Path
 			throw new RuntimeException();
 		}
 
-		float totalLength = map.netCriticity()[path[n - 1]][path[0]];
+		double totalLength = map.netCriticity()[path[n - 1]][path[0]];
 
 		for (int i = 0; i < n - 1; ++i)
 			totalLength += map.netCriticity()[path[i]][path[i + 1]];;

@@ -1,8 +1,7 @@
-package fr.isen.m1.schedule.marchant.Moteur;
+package fr.isen.m1.schedule.marchant.moteur;
 
-import fr.isen.m1.schedule.utilities.Position;
-import fr.isen.m1.schedule.utilities.Doctor;
 import fr.isen.m1.schedule.utilities.Diagnosis;
+import fr.isen.m1.schedule.utilities.Doctor;
 
 public abstract class Genetic
 {
@@ -12,9 +11,9 @@ public abstract class Genetic
 		Probabilistic;
 	}
 	// Searching the worst path, i.e the one with higher total length:
-	private static int indexWorstPath(float pathLength_array[])
+	private static int indexWorstPath(double pathLength_array[])
 	{
-		float worst_pathLength = pathLength_array[0];
+		double worst_pathLength = pathLength_array[0];
 		int indexWorst = 0;
 
 		for (int index = 1; index < pathLength_array.length; ++index)
@@ -31,9 +30,9 @@ public abstract class Genetic
 
 
 	// Searching the best path, i.e the one with lower total length:
-	private static int indexBestPath(float pathLength_array[])
+	private static int indexBestPath(double pathLength_array[])
 	{
-		float best_pathLength = pathLength_array[0];
+		double best_pathLength = pathLength_array[0];
 		int indexBest = 0;
 
 		for (int index = 1; index < pathLength_array.length; ++index)
@@ -50,7 +49,7 @@ public abstract class Genetic
 
 
 	// Selection a path in the population to evolve:
-	private static int selection(float pathLength_array[], float sum_inv_pathLength, SelectionMode selMode)
+	private static int selection(double pathLength_array[], double sum_inv_pathLength, SelectionMode selMode)
 	{
 		if (selMode == SelectionMode.Uniform)
 		{
@@ -66,11 +65,11 @@ public abstract class Genetic
 			// for better performances. The inverse of a path length, divided by 'sum_inv_values', is the used distribution,
 			// i.e the fitness function of a path is the inverse of the path length:
 
-			float threshold = Utilities.randFloat(sum_inv_pathLength);
+			double threshold = Utilities.randdouble(sum_inv_pathLength);
 
 			int index = 0;
 
-			float partialSum = 1f / pathLength_array[0];
+			double partialSum = 1f / pathLength_array[0];
 
 			while (partialSum < threshold)
 			{
@@ -129,11 +128,11 @@ public abstract class Genetic
 
 	// Replacing the worst path by a new one, if the latter is better,
 	// and return the (eventually) modified 'sum_inv_pathLength':
-	private static float replace(Map map, int population[][], float pathLength_array[],
-		int new_path[], float sum_inv_pathLength)
+	private static double replace(Map map, int population[][], double pathLength_array[],
+		int new_path[], double sum_inv_pathLength)
 	{
 		// Computing the total length of the new path:
-		float new_pathLength = Path.totalLength(map, new_path);
+		double new_pathLength = Path.totalLength(map, new_path);
 
 		// Searching the worst path, i.e the one with higher total length:
 		int indexWorst = indexWorstPath(pathLength_array);
@@ -186,13 +185,13 @@ public abstract class Genetic
 			path_init[i] = i; // a trivial permutation.
 
 		// Total length of the starting path:
-		float pathLength_init = Path.totalLength(map, path_init);
+		double pathLength_init = Path.totalLength(map, path_init);
 
 		// Creating a population of paths:
 		int population[][] = new int[populationSize][citiesNumber];
 
 		// Creating an array containing all the total lengths for each path of the population:
-		float pathLength_array[] = new float[populationSize];
+		double pathLength_array[] = new double[populationSize];
 
 		// Copying the starting path all over 'population', and updating 'pathLength_array':
 		for (int index = 0; index < populationSize; ++index)
@@ -204,7 +203,7 @@ public abstract class Genetic
 		}
 
 		// Sum of all the inverse of lengths from the population:
-		float sum_inv_pathLength = populationSize / pathLength_init;
+		double sum_inv_pathLength = populationSize / pathLength_init;
 
 		// Buffer that will contain the newborn paths:
 		int path_buffer[] = new int[citiesNumber];
@@ -245,7 +244,7 @@ public abstract class Genetic
 
 		double timeElapsed = (double) (endTime - startTime) / 1000000000;
 
-		float best_pathLength = pathLength_array[indexBest];
+		double best_pathLength = pathLength_array[indexBest];
 
 		System.out.printf("\ngeneticSearch:\n -> Time elapsed: %.3f s, found length: %.6f km\n", timeElapsed, best_pathLength);
 
@@ -283,13 +282,13 @@ public abstract class Genetic
 				path_init[i] = i; // a trivial permutation.
 
 			// Total length of the starting path:
-			float pathLength_init = Path.totalLengthCriticity(map, path_init);
+			double pathLength_init = Path.totalLengthCriticity(map, path_init);
 
 			// Creating a population of paths:
 			int population[][] = new int[populationSize][citiesNumber];
 
 			// Creating an array containing all the total lengths for each path of the population:
-			float pathLength_array[] = new float[populationSize];
+			double pathLength_array[] = new double[populationSize];
 
 			// Copying the starting path all over 'population', and updating 'pathLength_array':
 			for (int index = 0; index < populationSize; ++index)
@@ -301,7 +300,7 @@ public abstract class Genetic
 			}
 
 			// Sum of all the inverse of lengths from the population:
-			float sum_inv_pathLength = populationSize / pathLength_init;
+			double sum_inv_pathLength = populationSize / pathLength_init;
 
 			// Buffer that will contain the newborn paths:
 			int path_buffer[] = new int[citiesNumber];
@@ -342,7 +341,7 @@ public abstract class Genetic
 
 			double timeElapsed = (double) (endTime - startTime) / 1000000000;
 
-			float best_pathLength = pathLength_array[indexBest];
+			double best_pathLength = pathLength_array[indexBest];
 
 			System.out.printf("\ngeneticSearch:\n -> Time elapsed: %.3f s, found length: %.6f km\n", timeElapsed, best_pathLength);
 
@@ -357,7 +356,7 @@ public abstract class Genetic
 		 * @return List of Position. First element of the list : doc position. Then the path to follow after the Doctor Positon.
 		 */
 		public static Diagnosis[] givePathToFollowWithDoctor(Diagnosis[] listeDiag, Doctor doctor) {
-						
+
 			int citiesNumber = listeDiag.length;
 
 			Map map = new Map(listeDiag);
@@ -377,9 +376,9 @@ public abstract class Genetic
 			Path.print(best_path);
 
 			int c = 0;
-			float distance = Path.distanceCriticite(doctor.getLieuDeDepart().getX(), doctor.getLieuDeDepart().getY(), listeGagnante[0].getPatientConserne().getLieuDeVie().getX(), listeGagnante[0].getPatientConserne().getLieuDeVie().getY(), listeGagnante[0].getCriticite());;
+			double distance = Path.distanceCriticite(doctor.getLieuDeDepart().getX(), doctor.getLieuDeDepart().getY(), listeGagnante[0].getPatientConserne().getLieuDeVie().getX(), listeGagnante[0].getPatientConserne().getLieuDeVie().getY(), listeGagnante[0].getCriticite());;
 			for (int i = 1; i < listeGagnante.length; i++) {
-				float distance1 = Path.distanceCriticite(doctor.getLieuDeDepart().getX(), doctor.getLieuDeDepart().getY(), listeGagnante[i].getPatientConserne().getLieuDeVie().getX(), listeGagnante[i].getPatientConserne().getLieuDeVie().getY(), listeGagnante[i].getCriticite());
+				double distance1 = Path.distanceCriticite(doctor.getLieuDeDepart().getX(), doctor.getLieuDeDepart().getY(), listeGagnante[i].getPatientConserne().getLieuDeVie().getX(), listeGagnante[i].getPatientConserne().getLieuDeVie().getY(), listeGagnante[i].getCriticite());
 				if(distance1 < distance) {
 					c = i;
 					distance = distance1;

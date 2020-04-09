@@ -7,8 +7,8 @@ public class Utilities
 		return (int) (Math.random() * bound);
 	}
 
-	public static float randFloat(float bound)
+	public static double randdouble(double bound)
 	{
-		return (float) (Math.random() * bound);
+		return (double) (Math.random() * bound);
 	}
 }
