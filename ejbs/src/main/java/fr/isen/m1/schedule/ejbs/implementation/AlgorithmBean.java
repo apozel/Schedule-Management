@@ -1,16 +1,18 @@
 package fr.isen.m1.schedule.ejbs.implementation;
 
-import java.time.Duration;
+import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import fr.isen.m1.schedule.ejbs.ejbinterface.AlgorithmInterface;
-import fr.isen.m1.schedule.marchant.moteur.Calcul;
-import fr.isen.m1.schedule.marchant.moteur.Noeud;
+import fr.isen.m1.schedule.marchant.moteur.Genetic;
 import fr.isen.m1.schedule.utilities.Appointement;
+import fr.isen.m1.schedule.utilities.Diagnosis;
 import fr.isen.m1.schedule.utilities.Doctor;
-import fr.isen.m1.schedule.utilities.Position;
 import fr.isen.m1.schedule.utilities.Request;
 
 @Stateless(mappedName = "AlgorithmInterface")
@@ -19,6 +21,8 @@ public class AlgorithmBean implements AlgorithmInterface {
     private Doctor docChoisit;
     private LocalDateTime momentOuOnRegarde;
     private List<Appointement> rdvDuJour;
+    @PersistenceContext(unitName = "schedulePU")
+    private EntityManager em;
 
     public void ajouterRendezVous(Request nouvelleDemandeATraiter) {
         // la fonction doit demander quel jour on est, ensuite a partir de cette journee
@@ -41,19 +45,12 @@ public class AlgorithmBean implements AlgorithmInterface {
         // TODO changer la fonction pour renvoyer les rendez vous futur de la journee et
         // pas toute la journee
 
-        Noeud[] transformationPositionNoeud = new Noeud[rdvDuJour.size() + 2];
-        transformationPositionNoeud[0] = new Noeud(0, docChoisit.getLieuDeDepart().getX(),
-                docChoisit.getLieuDeDepart().getY());
-        for (int i = 0; i < rdvDuJour.size(); i++) {
-            Position positionrdv = rdvDuJour.get(i).getMalade().getLieuDeVie();
-            transformationPositionNoeud[i + 1] =
-                    new Noeud(i + 1, positionrdv.getX(), positionrdv.getY());
+        List<Diagnosis> diagDay = new ArrayList<Diagnosis>();
+        for (Appointement appointement : rdvReturn) {
+            diagDay.add(appointement.getDiag());
         }
-        Position positionRequest = nouvelleDemandeATraiter.getMalade().getLieuDeVie();
-        transformationPositionNoeud[rdvDuJour.size() + 1] =
-                new Noeud(rdvDuJour.size() + 1, positionRequest.getX(), positionRequest.getY());
-
-        Noeud positionApresAlgo[] = Calcul.l2(transformationPositionNoeud);
+        diagDay.add(nouvelleDemandeATraiter.getDiag());
+        diagDay = Array.asList( Genetic.givePathToFollowWithDoctor((Diagnosis[]) diagDay.toArray(), docChoisit));
 
         for (int i = 1; i < positionApresAlgo.length; i++) {
 
@@ -160,13 +157,21 @@ public class AlgorithmBean implements AlgorithmInterface {
 
     public List<Appointement> avoirLesRendezVousDejaDonnee(LocalDateTime dateDemander,
             Doctor docteurChoisit) {
-        return AccesStockageInformation.getRendezVousDuJour(dateDemander, docteurChoisit);
+        Query query =
+                em.createNamedQuery("Appointement.findByDoctor").setParameter("id_doc", docteurChoisit.getId());
+        List<Appointement> appointement = new ArrayList<Appointement>();
+        for (Appointement appointement2 : (List<Appointement>) query.getResultList();) {
+            if (appointement2.getDate().isEqual(dateDemander.toLocalDate())) {
+                appointement.add(appointement2);
+            }
+        }
+        return appointement;
     }
 
     public List<Appointement> rendezvousDejaDonneeAPartirDunMoment(LocalDateTime dateDemander,
             Doctor docteurChoisit) {
         List<Appointement> retour = new ArrayList<Appointement>();
-        for (Appointement rendezVous : AccesStockageInformation.getRendezVousDuJour(dateDemander,
+        for (Appointement rendezVous : this.getRendezVousDuJour(dateDemander,
                 docteurChoisit)) {
             if (rendezVous.getHeureDebut().isAfter(dateDemander.toLocalTime())) {
                 retour.add(rendezVous);
@@ -176,11 +181,13 @@ public class AlgorithmBean implements AlgorithmInterface {
     }
 
     public List<Doctor> avoirLesDocteurDisponible() {
-        return AccesStockageInformation.getDocteurDisponible();
+        Query query = em.createNamedQuery("Doctor.findAll");
+        List<Doctor> doc = (List<Doctor>) query.getResultList();
+        return doc;
     }
 
     public LocalDateTime getDateEtHeure() {
-        return AccesStockageInformation.getDateTime();
+        return LocalDateTime.now();
     }
 
     public void renvoyeListeTrieeRendezVousStockage(List<Appointement> listeTriee) {

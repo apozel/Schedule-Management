@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -26,6 +27,7 @@ import fr.isen.m1.schedule.converter.LocalTimeConverter;
 
 @Entity
 @Table(name = "appointement")
+@NamedQuery(name = "Appointement.findByDoctor", query = "SELECT a FROM appointement a WHERE a.id_doc = :id_doc")
 public class Appointement {
 
 

@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -19,27 +21,28 @@ import fr.isen.m1.schedule.builder.SocialDetailsBuilder;
  */
 @Entity
 @Table(name = "Doctor")
+@NamedQueries({@NamedQuery(name = "Doctor.findAll", query = "select doctor from Doctor doctor")})
 public class Doctor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_doc")
     private Long id;
-    @OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinColumn(name = "id_socdet")
     private SocialDetails details;
     @Column(name = "CDHP")
     private String cdhp;
     @Transient
     private Position emplacement;
-    @OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinColumn(name = "id_gpsc")
     private Position lieuDeDepart;
     @Transient
-    private LocalTime[] horaires = new LocalTime[] { LocalTime.of(8, 0), LocalTime.of(12, 0), LocalTime.of(13, 0),
-            LocalTime.of(18, 0) };
+    private LocalTime[] horaires = new LocalTime[] {LocalTime.of(8, 0), LocalTime.of(12, 0),
+            LocalTime.of(13, 0), LocalTime.of(18, 0)};
 
-            public Doctor() {
+    public Doctor() {
     }
 
     public Doctor(String nom, String prenom, String cdhp, Position lieuDeDepart) {
