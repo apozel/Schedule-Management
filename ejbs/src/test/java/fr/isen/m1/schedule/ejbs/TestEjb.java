@@ -53,11 +53,14 @@ public class TestEjb {
 
     @Test
     public void createDoctor() {
-        Doctor jeanLasalle = new Doctor("lasalle", "jean", "11114", new Position(10, 10));
+        Doctor jeanLasalle = new Doctor("chaillan", "jean", "11115", new Position(10, 10));
         Long idDoc = crud.createDoctor(jeanLasalle);
         System.out.println(idDoc);
         Doctor jean = crud.findDoctorById(1L);
         assertTrue(jean.getPrenom().equals("jean"));
+        List<Doctor> doc = crud.findAllDoctor();
+        System.out.println(doc);
+        assertTrue(!doc.isEmpty());
     }
 
     @Test
@@ -73,5 +76,6 @@ public class TestEjb {
         System.out.println(doc);
         assertTrue(!doc.isEmpty());
     }
+
 
 }

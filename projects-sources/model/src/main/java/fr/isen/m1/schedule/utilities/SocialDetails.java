@@ -1,5 +1,6 @@
 package fr.isen.m1.schedule.utilities;
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -20,8 +21,12 @@ import fr.isen.m1.schedule.converter.BooleanConverter;
 
 @Entity
 @Table(name = "social_details")
-public class SocialDetails {
+public class SocialDetails implements Serializable {
 
+    /**
+    *
+    */
+    private static final long serialVersionUID = 2649326094784357894L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_socdet")

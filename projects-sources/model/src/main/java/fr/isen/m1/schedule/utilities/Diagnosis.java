@@ -1,5 +1,6 @@
 package fr.isen.m1.schedule.utilities;
 
+import java.io.Serializable;
 import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,9 +18,13 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "doctor_diagnostic")
-public class Diagnosis {
+public class Diagnosis implements Serializable {
 
-    private final String diagnosticId = UUID.randomUUID().toString();;
+    /**
+    *
+    */
+    private static final long serialVersionUID = -4171315315937989991L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_diag")
@@ -42,9 +47,7 @@ public class Diagnosis {
         this.patientConserne = patient;
     }
 
-    public String getDiagnosticId() {
-        return diagnosticId;
-    }
+
 
     public int getCriticite() {
         return criticite;

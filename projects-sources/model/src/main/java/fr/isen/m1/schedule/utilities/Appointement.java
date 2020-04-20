@@ -1,6 +1,7 @@
 package fr.isen.m1.schedule.utilities;
 
 
+import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -28,9 +29,13 @@ import fr.isen.m1.schedule.converter.LocalTimeConverter;
 @Entity
 @Table(name = "appointement")
 @NamedQuery(name = "Appointement.findByDoctor", query = "SELECT a FROM Appointement a WHERE a.medecinAffecte = :doc")
-public class Appointement {
+public class Appointement implements Serializable {
 
 
+    /**
+    *
+    */
+    private static final long serialVersionUID = -3148976359143252003L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_doc")

@@ -1,5 +1,6 @@
 package fr.isen.m1.schedule.utilities;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -17,9 +18,13 @@ import fr.isen.m1.schedule.converter.PositionConverter;
  */
 @Entity
 @Table(name = "gps_coordinates")
-public class Position {
+public class Position implements Serializable{
 
 
+    /**
+    *
+    */
+    private static final long serialVersionUID = 8662226952154552954L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_gpsc")

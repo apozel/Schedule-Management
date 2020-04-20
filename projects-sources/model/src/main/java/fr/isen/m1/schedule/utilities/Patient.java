@@ -1,5 +1,6 @@
 package fr.isen.m1.schedule.utilities;
 
+import java.io.Serializable;
 import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,8 +20,12 @@ import fr.isen.m1.schedule.builder.SocialDetailsBuilder;
  */
 @Entity
 @Table(name = "patient_medical_record")
-public class Patient {
+public class Patient implements Serializable{
 
+    /**
+    *
+    */
+    private static final long serialVersionUID = 9097542296323042841L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_medrec")

@@ -1,5 +1,6 @@
 package fr.isen.m1.schedule.utilities;
 
+import java.io.Serializable;
 import java.time.LocalTime;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -22,8 +23,12 @@ import fr.isen.m1.schedule.builder.SocialDetailsBuilder;
 @Entity
 @Table(name = "Doctor")
 @NamedQueries({@NamedQuery(name = "Doctor.findAll", query = "select doctor from Doctor doctor")})
-public class Doctor {
+public class Doctor implements Serializable {
 
+    /**
+    *
+    */
+    private static final long serialVersionUID = -3373115033031181964L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_doc")
