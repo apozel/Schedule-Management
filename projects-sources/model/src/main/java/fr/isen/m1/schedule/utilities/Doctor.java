@@ -47,7 +47,7 @@ public class Doctor {
 
     public Doctor(String nom, String prenom, String cdhp, Position lieuDeDepart) {
 
-        this.details = new SocialDetailsBuilder().setFirstName(prenom).setLastName(cdhp).build();
+        this.details = new SocialDetailsBuilder().setFirstName(prenom).setLastName(nom).build();
         this.cdhp = cdhp;
         this.lieuDeDepart = lieuDeDepart;
         this.emplacement = lieuDeDepart;

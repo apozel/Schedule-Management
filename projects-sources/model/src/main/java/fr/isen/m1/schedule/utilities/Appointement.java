@@ -27,7 +27,7 @@ import fr.isen.m1.schedule.converter.LocalTimeConverter;
 
 @Entity
 @Table(name = "appointement")
-@NamedQuery(name = "Appointement.findByDoctor", query = "SELECT a FROM appointement a WHERE a.id_doc = :id_doc")
+@NamedQuery(name = "Appointement.findByDoctor", query = "SELECT a FROM Appointement a WHERE a.medecinAffecte = :doc")
 public class Appointement {
 
 
@@ -47,7 +47,7 @@ public class Appointement {
     @JoinColumn(name = "id_gpsc")
     private Position lieu;
     @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    @JoinColumn(name = "id_doc")
+    @JoinColumn(name = "id_doc", insertable=false, updatable=false)
     private Doctor medecinAffecte;
     @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinColumn(name = "id_medrec")
@@ -56,6 +56,7 @@ public class Appointement {
     @JoinColumn(name = "id_diag")
     private Diagnosis diag;
 
+    public Appointement(){}
     public Appointement(LocalDate date, LocalTime heureDebut, Duration dureeConsultation,
             Doctor medecinAffecte, Patient malade, Diagnosis diag) {
         this.date = date;

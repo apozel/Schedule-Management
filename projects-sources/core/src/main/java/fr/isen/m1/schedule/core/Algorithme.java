@@ -1,14 +1,10 @@
 package fr.isen.m1.schedule.core;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import fr.isen.m1.schedule.marchant.moteur.Calcul;
-import fr.isen.m1.schedule.marchant.moteur.Noeud;
 import fr.isen.m1.schedule.utilities.Appointement;
 import fr.isen.m1.schedule.utilities.Doctor;
-import fr.isen.m1.schedule.utilities.Position;
 import fr.isen.m1.schedule.utilities.Request;
 
 /**
@@ -52,7 +48,7 @@ public class Algorithme {
         // TODO changer la fonction pour renvoyer les rendez vous futur de la journee et
         // pas toute la journee
 
-        Noeud[] transformationPositionNoeud = new Noeud[rdvDuJour.size() + 2];
+       /* Noeud[] transformationPositionNoeud = new Noeud[rdvDuJour.size() + 2];
         transformationPositionNoeud[0] = new Noeud(0, docChoisit.getLieuDeDepart().getX(),
                 docChoisit.getLieuDeDepart().getY());
         for (int i = 0; i < rdvDuJour.size(); i++) {
@@ -109,7 +105,7 @@ public class Algorithme {
         }
 
         this.renvoyeListeTrieeRendezVousStockage(rdvReturn);
-        System.out.println(" Algorithme : ajouterRendezVous() : rendezvous enregistrer");
+        System.out.println(" Algorithme : ajouterRendezVous() : rendezvous enregistrer");*/
 
     }
 
