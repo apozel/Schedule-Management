@@ -48,6 +48,7 @@ prendre l'installer s'il est dispo pour votre systeme d'exploitation, sinon il f
   une fois fais vous avez maintenant une base de donnees sur laquel le serveur d'application va ce connecter
 
 ## retour sur payara
+asadmin set server.ejb-container.property.disable-nonportable-jndi-names="true"
 asadmin start-domain
 asadmin add-library "chemin vers le jar du jconnector"
 asadmin create-jdbc-connection-pool --ping --restype javax.sql.DataSource --datasourceclassname com.mysql.cj.jdbc.MysqlDataSource --property user=app:password=app:DatabaseName=test:ServerName=127.0.0.1:port=3306:useSSL=false:zeroDateTimeBehavior=CONVERT_TO_NULL:useUnicode=true:serverTimezone=UTC:characterEncoding=UTF-8:useInformationSchema=true:nullCatalogMeansCurrent=true:nullNamePatternMatchesAll=false schedulePool

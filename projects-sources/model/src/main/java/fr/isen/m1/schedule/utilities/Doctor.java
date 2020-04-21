@@ -22,7 +22,10 @@ import fr.isen.m1.schedule.builder.SocialDetailsBuilder;
  */
 @Entity
 @Table(name = "Doctor")
-@NamedQueries({@NamedQuery(name = "Doctor.findAll", query = "select doctor from Doctor doctor")})
+@NamedQueries({
+        @NamedQuery(name = "Doctor.findAll", query = "SELECT doctor FROM Doctor doctor"),
+       // @NamedQuery(name = "Doctor.findByName", query = "SELECT doctor FROM Doctor doctor WHERE doctor.")
+})
 public class Doctor implements Serializable {
 
     /**

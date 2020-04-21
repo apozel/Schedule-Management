@@ -19,7 +19,6 @@
     <module>model</module>
     <module>marchant</module>
     <module>core</module>
-    <module>gui</module>
   </modules>
 
 

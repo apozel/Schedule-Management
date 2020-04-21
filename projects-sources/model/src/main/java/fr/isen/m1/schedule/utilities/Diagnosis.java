@@ -1,7 +1,6 @@
 package fr.isen.m1.schedule.utilities;
 
 import java.io.Serializable;
-import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
