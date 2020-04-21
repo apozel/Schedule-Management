@@ -51,7 +51,7 @@ public class TestEjb {
 
     }
 
-    @Test
+
     public void createDoctor() {
         Doctor jeanLasalle = new Doctor("chaillan", "jean", "11115", new Position(10, 10));
         Long idDoc = crud.createDoctor(jeanLasalle);

@@ -17,11 +17,11 @@
       <type>ejb</type>
     </dependency>
 
-    <!--<dependency>
+    <dependency>
       <groupId>fr.isen.m1.schedule</groupId>
       <artifactId>servlet</artifactId>
       <type>war</type>
-    </dependency>-->
+    </dependency>
 
     <dependency>
       <groupId>fr.isen.m1.schedule</groupId>

@@ -39,6 +39,7 @@
           <systemProperties>
             <adminHttps>true</adminHttps>
           </systemProperties>
+          <useFile>true</useFile>
         </configuration>
       </plugin>
     </plugins>
