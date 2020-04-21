@@ -1,5 +1,6 @@
 package fr.isen.m1.schedule.ejbs;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import java.util.List;
 import javax.ejb.EJB;
@@ -21,6 +22,7 @@ import fr.isen.m1.schedule.utilities.Doctor;
 import fr.isen.m1.schedule.utilities.Position;
 
 @RunWith(Arquillian.class)
+
 public class TestEjb {
 
     @EJB
@@ -41,36 +43,33 @@ public class TestEjb {
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
     }
 
-
-
     @Test()
     public void sayHelloTest() {
-
-
         Assert.assertEquals(algo.helloWord(), "Hello World");
-
     }
 
+    @Test
 
     public void createDoctor() {
         Doctor jeanLasalle = new Doctor("chaillan", "jean", "11115", new Position(10, 10));
         Long idDoc = crud.createDoctor(jeanLasalle);
         System.out.println(idDoc);
         Doctor jean = crud.findDoctorById(1L);
-        assertTrue(jean.getPrenom().equals("jean"));
+        assertEquals(jean.getPrenom(),"jean");
         List<Doctor> doc = crud.findAllDoctor();
         System.out.println(doc);
         assertTrue(!doc.isEmpty());
     }
 
     @Test
-    public void findDoctor() {
+        public void findDoctor() {
         Doctor jean = crud.findDoctorById(1L);
-        assertTrue(jean.getPrenom().equals("jean"));
+        assertEquals(jean.getPrenom(), "jean");
     }
 
 
     @Test
+
     public void firstTestDao() {
         List<Doctor> doc = crud.findAllDoctor();
         System.out.println(doc);

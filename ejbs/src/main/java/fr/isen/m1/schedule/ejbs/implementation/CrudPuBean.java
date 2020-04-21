@@ -34,6 +34,7 @@ public class CrudPuBean implements CrudPuInterface {
         em.persist(newDoc);
         // logger.debug("new doc : " + newDoc);
         // logger.debug("new doc id : " + newDoc.getId());
+        em.flush();
         return newDoc.getId();
 
     }
