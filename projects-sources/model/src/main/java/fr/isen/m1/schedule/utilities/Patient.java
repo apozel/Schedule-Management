@@ -90,5 +90,19 @@ public class Patient implements Serializable {
         return getNom() + " " + getPrenom();
     }
 
+    /**
+     * @return the details
+     */
+    public SocialDetails getDetails() {
+        return details;
+    }
+
+    /**
+     * @param details the details to set
+     */
+    public void setDetails(SocialDetails details) {
+        this.details = details;
+    }
+
 
 }

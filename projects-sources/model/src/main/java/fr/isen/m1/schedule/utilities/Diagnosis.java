@@ -78,4 +78,11 @@ public class Diagnosis implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
+    /**
+     * @return the description
+     */
+    public String getDescription() {
+        return description;
+    }
 }

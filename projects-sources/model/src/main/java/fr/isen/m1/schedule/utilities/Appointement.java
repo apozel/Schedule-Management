@@ -62,39 +62,7 @@ public class Appointement implements Serializable {
     private Diagnosis diag;
 
     public Appointement(){}
-    public Appointement(LocalDate date, LocalTime heureDebut, Duration dureeConsultation,
-            Doctor medecinAffecte, Patient malade, Diagnosis diag) {
-        this.date = date;
-        this.heureDebut = heureDebut;
-        this.dureeConsultation = dureeConsultation;
-        this.medecinAffecte = medecinAffecte;
-        this.malade = malade;
-        this.diag = diag;
-        this.lieu = malade.getLieuDeVie();
-    }
 
-    public Appointement(LocalDate date, LocalTime heureDebut, Duration dureeConsultation,
-            Doctor docteur, Diagnosis diag) {
-        this.date = date;
-        this.heureDebut = heureDebut;
-        this.dureeConsultation = dureeConsultation;
-        this.diag = diag;
-        this.malade = this.diag.getPatientConserne();
-        this.lieu = this.malade.getLieuDeVie();
-        this.medecinAffecte = docteur;
-
-    }
-
-    public Appointement(Appointement rdvSource) {
-        this.date = rdvSource.getDate();
-        this.heureDebut = rdvSource.getHeureDebut();
-        this.dureeConsultation = rdvSource.getDureeConsultation();
-        this.lieu = rdvSource.getLieu();
-        this.medecinAffecte = rdvSource.getMedecinAffecte();
-        this.malade = rdvSource.getMalade();
-        this.diag = rdvSource.getDiag();
-        this.id = rdvSource.getId();
-    }
 
     public Position getLieu() {
         return lieu;

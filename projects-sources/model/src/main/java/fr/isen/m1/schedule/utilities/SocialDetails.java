@@ -139,5 +139,19 @@ public class SocialDetails implements Serializable {
         this.idDoc = idDoc;
     }
 
+    /*
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#toString()
+     */
+
+    @Override
+    public String toString() {
+        return "SocialDetails [birthAddress=" + birthAddress + ", birthDate=" + birthDate
+                + ", birthZipCode=" + birthZipCode + ", firstName=" + firstName + ", gender="
+                + gender + ", id=" + id + ", idDoc=" + idDoc + ", lastName=" + lastName
+                + ", phoneNumber=" + phoneNumber + ", picture=" + picture + "]";
+    }
+
 
 }

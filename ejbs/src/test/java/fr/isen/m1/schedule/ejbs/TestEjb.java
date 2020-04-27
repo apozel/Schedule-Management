@@ -1,6 +1,7 @@
 package fr.isen.m1.schedule.ejbs;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import java.util.List;
 import javax.ejb.EJB;
@@ -18,6 +19,7 @@ import fr.isen.m1.schedule.ejbs.ejbinterface.AlgorithmInterface;
 import fr.isen.m1.schedule.ejbs.ejbinterface.CrudPuInterface;
 import fr.isen.m1.schedule.ejbs.implementation.AlgorithmBean;
 import fr.isen.m1.schedule.ejbs.implementation.CrudPuBean;
+import fr.isen.m1.schedule.random.RandomBuilder;
 import fr.isen.m1.schedule.utilities.Doctor;
 import fr.isen.m1.schedule.utilities.Position;
 
@@ -29,6 +31,7 @@ public class TestEjb {
     private AlgorithmInterface algo;
     @EJB
     private CrudPuInterface crud;
+    private RandomBuilder randombuilder = new RandomBuilder();
 
 
     @Deployment
@@ -49,32 +52,103 @@ public class TestEjb {
     }
 
     @Test
-
     public void createDoctor() {
-        Doctor jeanLasalle = new Doctor("chaillan", "jean", "11115", new Position(10, 10));
-        Long idDoc = crud.createDoctor(jeanLasalle);
-        System.out.println(idDoc);
-        Doctor jean = crud.findDoctorById(1L);
-        assertEquals(jean.getPrenom(),"jean");
-        List<Doctor> doc = crud.findAllDoctor();
-        System.out.println(doc);
-        assertTrue(!doc.isEmpty());
+        Doctor randomDoctor = randombuilder.buildRandomDoctor();
+        Long idDoc = crud.createDoctor(randomDoctor);
+        System.out.println("random id doc : "+idDoc);
+        Doctor resultDoctorId = crud.findDoctorById(idDoc);
+        assertEquals(resultDoctorId.getPrenom(), randomDoctor.getPrenom());
+        crud.createDoctor(randombuilder.buildRandomDoctor());
+        List<Doctor> docList = crud.findAllDoctor();
+        System.out.println(docList);
+        assertTrue(!docList.isEmpty());
+        assertEquals(docList.size(), 2);
+        crud.createDoctor(randombuilder.buildRandomDoctor());
+        docList = crud.findAllDoctor();
+        assertEquals(docList.size(), 3);
     }
 
     @Test
-        public void findDoctor() {
-        Doctor jean = crud.findDoctorById(1L);
-        assertEquals(jean.getPrenom(), "jean");
+    public void findDoctorByName() {
+        Doctor randomDoctor = randombuilder.buildRandomDoctor();
+        Long idDoc = crud.createDoctor(randomDoctor);
+        System.out.println("random id doc : " + idDoc);
+        Doctor resultDoctorId = crud.findDoctorByName(randomDoctor.getPrenom());
+        assertEquals(resultDoctorId.getPrenom(), randomDoctor.getPrenom());
     }
-
 
     @Test
+    public void suppressDoctor() {
 
-    public void firstTestDao() {
-        List<Doctor> doc = crud.findAllDoctor();
-        System.out.println(doc);
-        assertTrue(!doc.isEmpty());
     }
 
+    @Test
+    public void findAllPatient() {
 
+    }
+
+    @Test
+    public void createPatient() {
+
+    }
+
+    @Test
+    public void findPatientById() {
+
+    }
+
+    @Test
+    public void findPatientByName() {
+
+    }
+
+    @Test
+    public void suppressPatientById() {
+
+    }
+
+    @Test
+    public void findAllAppointement() {
+
+    }
+
+    @Test
+    public void createAppointement() {
+
+    }
+
+    @Test
+    public void findAppointementById() {
+
+    }
+
+    @Test
+    public void suppressAppointementById() {
+
+    }
+
+    @Test
+    public void findAllDiagnosis() {
+
+    }
+
+    @Test
+    public void createDiagnosis() {
+
+    }
+
+    @Test
+    public void findDiagnosisById() {
+
+    }
+
+    @Test
+    public void findDiagnosisByName() {
+
+    }
+
+    @Test
+    public void suppressDiagnosisById(){
+
+    }
 }
