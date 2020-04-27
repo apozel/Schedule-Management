@@ -24,7 +24,7 @@ import fr.isen.m1.schedule.builder.SocialDetailsBuilder;
 @Table(name = "Doctor")
 @NamedQueries({
         @NamedQuery(name = "Doctor.findAll", query = "SELECT doctor FROM Doctor doctor"),
-       // @NamedQuery(name = "Doctor.findByName", query = "SELECT doctor FROM Doctor doctor WHERE doctor.")
+        @NamedQuery(name = "Doctor.findByName", query = "SELECT doctor FROM Doctor doctor INNER JOIN doctor.details details WHERE details.lastName = :name")
 })
 public class Doctor implements Serializable {
 
@@ -36,14 +36,14 @@ public class Doctor implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_doc")
     private Long id;
-    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL}, orphanRemoval = true)
     @JoinColumn(name = "id_socdet")
     private SocialDetails details;
     @Column(name = "CDHP")
     private String cdhp;
     @Transient
     private Position emplacement;
-    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL}, orphanRemoval = true)
     @JoinColumn(name = "id_gpsc")
     private Position lieuDeDepart;
     @Transient

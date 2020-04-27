@@ -45,14 +45,16 @@ public class CrudPuBean implements CrudPuInterface {
     }
 
     @Override
-    public Doctor findDoctorByName(String name) {
-        // TODO Auto-generated method stub
-        return null;
+    public Doctor findDoctorByName(String lastName) {
+        Query query = em.createNamedQuery("Doctor.findByName", Doctor.class).setParameter("name", lastName);
+        return (Doctor) query.getSingleResult();
     }
 
     @Override
-    public void suppressDoctor(Doctor doctor) {
+    public void suppressDoctor(Doctor doctor) throws Exception {
         em.remove(doctor);
+        em.flush();
+        em.clear();
     }
 
     @Override
@@ -66,83 +68,91 @@ public class CrudPuBean implements CrudPuInterface {
     }
 
     @Override
-    public Long createPatient(Patient newDoc) {
-        // TODO Auto-generated method stub
-        return null;
+    public Long createPatient(Patient newPatient) {
+        em.persist(newPatient);
+        em.flush();
+        return newPatient.getId();
     }
 
     @Override
     public Patient findPatientById(Long id) {
-        // TODO Auto-generated method stub
-        return null;
+        return em.find(Patient.class, id);
     }
 
     @Override
-    public Patient findPatientByName(String name) {
-        // TODO Auto-generated method stub
-        return null;
+    public Patient findPatientByName(String lastName) {
+        Query query = em.createQuery("patient.findByname", Patient.class).setParameter("name", lastName);
+        return (Patient) query.getSingleResult();
     }
 
     @Override
-    public void suppressPatientById(Long id) {
-        // TODO Auto-generated method stub
-
+    public void suppressPatient(Patient patientSuppress) {
+        em.remove(patientSuppress);
     }
 
     @Override
     public List<Appointement> findAllAppointement() {
-        // TODO Auto-generated method stub
-        return null;
+        Query query = em.createNamedQuery("Appointement.findAll", Appointement.class);
+        @SuppressWarnings("unchecked")
+        List<Appointement> appointements = query.getResultList();
+        // logger.debug(appointements);
+        return appointements;
     }
 
     @Override
-    public Long createAppointement(Appointement newDoc) {
-        // TODO Auto-generated method stub
-        return null;
+    public Long createAppointement(Appointement newAppointement) {
+        em.persist(newAppointement);
+        em.flush();
+        return newAppointement.getId();
     }
 
     @Override
     public Appointement findAppointementById(Long id) {
-        // TODO Auto-generated method stub
-        return null;
+        return em.find(Appointement.class, id);
     }
 
     @Override
-    public void suppressAppointementById(Long id) {
-        // TODO Auto-generated method stub
+    public void suppressAppointement(Appointement suppressAppointement) {
+        em.remove(suppressAppointement);
+    }
 
+    @Override
+    public List<Appointement> findAppointementByDoctor(Doctor doctor) {
+        Query query = em.createQuery("Appointement.findByDoctor", Appointement.class).setParameter("doc", doctor);
+
+        return query.getResultList();
     }
 
     @Override
     public List<Diagnosis> findAllDiagnosis() {
-        // TODO Auto-generated method stub
-        return null;
+        Query query = em.createNamedQuery("Diagnosis.findAll", Diagnosis.class);
+        @SuppressWarnings("unchecked")
+        List<Diagnosis> diagnosis = query.getResultList();
+        // logger.debug(diagnosis);
+        return diagnosis;
     }
 
     @Override
-    public Long createDiagnosis(Diagnosis newDoc) {
-        // TODO Auto-generated method stub
-        return null;
+    public Long createDiagnosis(Diagnosis newDiagnosis) {
+        em.persist(newDiagnosis);
+        em.flush();
+        return newDiagnosis.getId();
     }
 
     @Override
     public Diagnosis findDiagnosisById(Long id) {
-        // TODO Auto-generated method stub
+        return em.find(Diagnosis.class, id);
+    }
+
+    @Override
+    public Diagnosis findDiagnosisByName(String docName) {
+        // TODO changer la fonction en recherche en fonction du docteur
         return null;
     }
 
     @Override
-    public Diagnosis findDiagnosisByName(String name) {
-        // TODO Auto-generated method stub
-        return null;
+    public void suppressDiagnosis(Diagnosis suppressDiagnosis) {
+        em.remove(suppressDiagnosis);
     }
-
-    @Override
-    public void suppressDiagnosisById(Long id) {
-        // TODO Auto-generated method stub
-
-    }
-
-
 
 }

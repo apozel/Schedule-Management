@@ -1,6 +1,7 @@
 package fr.isen.m1.schedule.ejbs;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import java.util.List;
@@ -31,6 +32,7 @@ public class TestEjb {
     private AlgorithmInterface algo;
     @EJB
     private CrudPuInterface crud;
+
     private RandomBuilder randombuilder = new RandomBuilder();
 
 
@@ -38,7 +40,9 @@ public class TestEjb {
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class).addPackage(Doctor.class.getPackage())
                 .addPackage(BooleanConverter.class.getPackage())
-                .addPackage(SocialDetailsBuilder.class.getPackage())
+                .addPackage(SocialDetailsBuilder.class
+                        .getPackage())
+                .addClass(RandomBuilder.class)
                 .addAsResource("META-INF/persistence.xml").addAsResource("META-INF/sql/Script.sql")
                 .addAsResource("META-INF/sql/Drop.sql")
                 .addClasses(AlgorithmBean.class, AlgorithmInterface.class)
@@ -51,7 +55,7 @@ public class TestEjb {
         Assert.assertEquals(algo.helloWord(), "Hello World");
     }
 
-    @Test
+    //@Test
     public void createDoctor() {
         Doctor randomDoctor = randombuilder.buildRandomDoctor();
         Long idDoc = crud.createDoctor(randomDoctor);
@@ -68,23 +72,40 @@ public class TestEjb {
         assertEquals(docList.size(), 3);
     }
 
-    @Test
+    //@Test
     public void findDoctorByName() {
         Doctor randomDoctor = randombuilder.buildRandomDoctor();
         Long idDoc = crud.createDoctor(randomDoctor);
         System.out.println("random id doc : " + idDoc);
-        Doctor resultDoctorId = crud.findDoctorByName(randomDoctor.getPrenom());
+        Doctor resultDoctorId = crud.findDoctorByName(randomDoctor.getNom());
         assertEquals(resultDoctorId.getPrenom(), randomDoctor.getPrenom());
     }
 
     @Test
-    public void suppressDoctor() {
-
+    public void suppressDoctor() throws Exception {
+        Doctor randomDoctor = randombuilder.buildRandomDoctor();
+        Long idDoc = crud.createDoctor(randomDoctor);
+        System.out.println("random id doc : " + idDoc);
+        crud.suppressDoctor(randomDoctor);
+        Doctor resultDoctorId = crud.findDoctorById(idDoc);
+        assertNull(resultDoctorId);
     }
 
-    @Test
+   // @Test
     public void findAllPatient() {
-
+        Doctor randomDoctor = randombuilder.buildRandomDoctor();
+        Long idDoc = crud.createDoctor(randomDoctor);
+        System.out.println("random id doc : " + idDoc);
+        Doctor resultDoctorId = crud.findDoctorById(idDoc);
+        assertEquals(resultDoctorId.getPrenom(), randomDoctor.getPrenom());
+        crud.createDoctor(randombuilder.buildRandomDoctor());
+        List<Doctor> docList = crud.findAllDoctor();
+        System.out.println(docList);
+        assertTrue(!docList.isEmpty());
+        assertEquals(docList.size(), 2);
+        crud.createDoctor(randombuilder.buildRandomDoctor());
+        docList = crud.findAllDoctor();
+        assertEquals(docList.size(), 3);
     }
 
     @Test

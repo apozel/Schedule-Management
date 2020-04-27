@@ -223,10 +223,10 @@ public class RandomBuilder {
 
     public SocialDetails buildRandomSocialDetails() {
         return new SocialDetailsBuilder().setGender(rand.nextBoolean())
-                .setBirthZipCode(Integer.toString(rand.nextInt()))
+                .setBirthZipCode(Integer.toString(rand.nextInt(10000)))
                 .setBirthDate(
                         Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()))
-                .setBirthAddress("aix").setPhoneNumber(Integer.toString(rand.nextInt()))
+                .setBirthAddress("aix").setPhoneNumber(Integer.toString(rand.nextInt(9000000)))
                 .setFirstName(fisrtNamesList.get(rand.nextInt(fisrtNamesList.size())))
                 .setLastName(lastNamesList.get(rand.nextInt(lastNamesList.size()))).build();
     }

@@ -18,7 +18,7 @@ public interface CrudPuInterface {
 
     public Doctor findDoctorByName(String name);
 
-    public void suppressDoctor(Doctor doctor);
+    public void suppressDoctor(Doctor doctor) throws Exception;
 
     public List<Patient> findAllPatient();
 
@@ -28,7 +28,7 @@ public interface CrudPuInterface {
 
     public Patient findPatientByName(String name);
 
-    public void suppressPatientById(Long id);
+    public void suppressPatient(Patient patientSuppress);
 
     public List<Appointement> findAllAppointement();
 
@@ -36,7 +36,9 @@ public interface CrudPuInterface {
 
     public Appointement findAppointementById(Long id);
 
-    public void suppressAppointementById(Long id);
+    public void suppressAppointement(Appointement suppressAppointement);
+
+    public List<Appointement> findAppointementByDoctor(Doctor doctor);
 
     public List<Diagnosis> findAllDiagnosis();
 
@@ -46,7 +48,7 @@ public interface CrudPuInterface {
 
     public Diagnosis findDiagnosisByName(String name);
 
-    public void suppressDiagnosisById(Long id);
+    public void suppressDiagnosis(Diagnosis suppressDiagnosis);
 
 
 

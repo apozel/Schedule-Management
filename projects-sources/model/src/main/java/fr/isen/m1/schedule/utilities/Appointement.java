@@ -1,11 +1,11 @@
 package fr.isen.m1.schedule.utilities;
 
-
 import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -15,10 +15,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
 import fr.isen.m1.schedule.converter.LocalDateConverter;
 import fr.isen.m1.schedule.converter.LocalTimeConverter;
 
@@ -28,9 +30,12 @@ import fr.isen.m1.schedule.converter.LocalTimeConverter;
 
 @Entity
 @Table(name = "appointement")
-@NamedQuery(name = "Appointement.findByDoctor", query = "SELECT a FROM Appointement a WHERE a.medecinAffecte = :doc")
-public class Appointement implements Serializable {
+@NamedQueries({
+        @NamedQuery(name = "Appointement.findByDoctor", query = "SELECT a FROM Appointement a WHERE a.medecinAffecte = :doc"),
+        @NamedQuery(name = "Appointement.findAll", query = "SELECT appointement FROM Appointement appointement"),
+        })
 
+public class Appointement implements Serializable {
 
     /**
     *
@@ -48,21 +53,21 @@ public class Appointement implements Serializable {
     private LocalTime heureDebut;
     @Transient
     private Duration dureeConsultation;
-    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
     @JoinColumn(name = "id_gpsc")
     private Position lieu;
-    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    @JoinColumn(name = "id_doc", insertable=false, updatable=false)
+    @OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+    @JoinColumn(name = "id_doc", insertable = false, updatable = false)
     private Doctor medecinAffecte;
-    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
     @JoinColumn(name = "id_medrec")
     private Patient malade;
-    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
     @JoinColumn(name = "id_diag")
     private Diagnosis diag;
 
-    public Appointement(){}
-
+    public Appointement() {
+    }
 
     public Position getLieu() {
         return lieu;
@@ -120,13 +125,10 @@ public class Appointement implements Serializable {
         this.diag = diag;
     }
 
-
-
     @Override
     public String toString() {
-        return "IDRendezVous = " + id + ",\n date=" + date + ",\n diag=" + diag
-                + ",\n dureeConsultation=" + dureeConsultation + ",\n heureDebut=" + heureDebut
-                + ",\n malade=" + malade + "\n";
+        return "IDRendezVous = " + id + ",\n date=" + date + ",\n diag=" + diag + ",\n dureeConsultation="
+                + dureeConsultation + ",\n heureDebut=" + heureDebut + ",\n malade=" + malade + "\n";
     }
 
     public Long getId() {
@@ -165,6 +167,5 @@ public class Appointement implements Serializable {
         Appointement other = (Appointement) obj;
         return Objects.equals(id, other.id);
     }
-
 
 }

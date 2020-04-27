@@ -20,12 +20,8 @@ import fr.isen.m1.schedule.builder.SocialDetailsBuilder;
  */
 @Entity
 @Table(name = "patient_medical_record")
-@NamedQueries({
-    @NamedQuery(name = "Patient.findAll", query = "SELECT patient FROM Patient patient"),
-        // @NamedQuery(name = "Patient.findByName", query = "SELECT patient FROM Patient patient
-        // WHERE
-        // patient.")
-})
+@NamedQueries({ @NamedQuery(name = "Patient.findAll", query = "SELECT patient FROM Patient patient"),
+        @NamedQuery(name = "Patient.findByName", query = "SELECT patient FROM Patient patient INNER JOIN patient.details details WHERE details.lastName = :name") })
 public class Patient implements Serializable {
 
     /**
@@ -36,11 +32,11 @@ public class Patient implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_medrec")
     private Long id;
-    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
     @JoinColumn(name = "id_gpsc")
     private Position lieuDeVie;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
     @JoinColumn(name = "id_socdet")
     private SocialDetails details;
 
@@ -83,8 +79,6 @@ public class Patient implements Serializable {
         this.details.setFirstName(firstName);
     }
 
-
-
     @Override
     public String toString() {
         return getNom() + " " + getPrenom();
@@ -103,6 +97,5 @@ public class Patient implements Serializable {
     public void setDetails(SocialDetails details) {
         this.details = details;
     }
-
 
 }
