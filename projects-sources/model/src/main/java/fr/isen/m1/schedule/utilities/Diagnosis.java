@@ -1,6 +1,7 @@
 package fr.isen.m1.schedule.utilities;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -84,5 +85,35 @@ public class Diagnosis implements Serializable {
      */
     public String getDescription() {
         return description;
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#hashCode()
+     */
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, patientConserne);
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Diagnosis other = (Diagnosis) obj;
+        return Objects.equals(id, other.id)
+                && Objects.equals(patientConserne, other.patientConserne);
     }
 }

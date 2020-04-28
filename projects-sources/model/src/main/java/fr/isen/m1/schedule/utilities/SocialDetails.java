@@ -2,6 +2,7 @@ package fr.isen.m1.schedule.utilities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -54,7 +55,7 @@ public class SocialDetails implements Serializable {
     private Doctor idDoc;
 
 
-    public SocialDetails(){
+    public SocialDetails() {
 
     }
 
@@ -151,6 +152,35 @@ public class SocialDetails implements Serializable {
                 + ", birthZipCode=" + birthZipCode + ", firstName=" + firstName + ", gender="
                 + gender + ", id=" + id + ", idDoc=" + idDoc + ", lastName=" + lastName
                 + ", phoneNumber=" + phoneNumber + ", picture=" + picture + "]";
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#hashCode()
+     */
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        SocialDetails other = (SocialDetails) obj;
+        return Objects.equals(id, other.id);
     }
 
 

@@ -2,6 +2,8 @@ package fr.isen.m1.schedule.utilities;
 
 import java.io.Serializable;
 import java.time.LocalTime;
+import java.util.Arrays;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,10 +24,9 @@ import fr.isen.m1.schedule.builder.SocialDetailsBuilder;
  */
 @Entity
 @Table(name = "Doctor")
-@NamedQueries({
-        @NamedQuery(name = "Doctor.findAll", query = "SELECT doctor FROM Doctor doctor"),
-        @NamedQuery(name = "Doctor.findByName", query = "SELECT doctor FROM Doctor doctor INNER JOIN doctor.details details WHERE details.lastName = :name")
-})
+@NamedQueries({@NamedQuery(name = "Doctor.findAll", query = "SELECT doctor FROM Doctor doctor"),
+        @NamedQuery(name = "Doctor.findByName",
+                query = "SELECT doctor FROM Doctor doctor INNER JOIN doctor.details details WHERE details.lastName = :name")})
 public class Doctor implements Serializable {
 
     /**
@@ -109,36 +110,7 @@ public class Doctor implements Serializable {
         this.emplacement = emplacement;
     }
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((this.getNom() == null) ? 0 : this.getNom().hashCode());
-        result = prime * result + ((this.getPrenom() == null) ? 0 : this.getPrenom().hashCode());
-        return result;
-    }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Doctor other = (Doctor) obj;
-        if (this.getNom() == null) {
-            if (other.getNom() != null)
-                return false;
-        } else if (!this.getNom().equals(other.getNom()))
-            return false;
-        if (this.getPrenom() == null) {
-            if (other.getPrenom() != null)
-                return false;
-        } else if (!this.getPrenom().equals(other.getPrenom()))
-            return false;
-        return true;
-    }
 
     public LocalTime getHoraires(int index) {
 
@@ -169,6 +141,71 @@ public class Doctor implements Serializable {
      */
     public void setCdhp(String cdhp) {
         this.cdhp = cdhp;
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#hashCode()
+     */
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#hashCode()
+     */
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#hashCode()
+     */
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#hashCode()
+     */
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(details, id);
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Doctor other = (Doctor) obj;
+        return Objects.equals(details, other.details) && Objects.equals(id, other.id);
     }
 
 }

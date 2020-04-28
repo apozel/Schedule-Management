@@ -2,6 +2,7 @@ package fr.isen.m1.schedule.random;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -188,7 +189,7 @@ public class RandomBuilder {
         AppointementBuilder appointement = new AppointementBuilder();
         return appointement.setPatient(buildRandomPatient()).setDoctor(buildRandomDoctor())
                 .setDiagnosis(buildRandomDiagnosis())
-                .setConsultTime(Duration.ofMinutes(rand.nextInt(60)))
+                .setConsultTime(Duration.ofMinutes(rand.nextInt(60))).setStartTime(LocalTime.of(rand.nextInt(24),rand.nextInt(60)))
                 .setLocation(buildRandomPosition())
                 .setDate(LocalDate.of(2020, rand.nextInt(12), rand.nextInt(28))).build();
     }
