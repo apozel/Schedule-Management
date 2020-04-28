@@ -58,7 +58,8 @@ public class TestEjb {
     //@Test
     public void createDoctor() {
         Doctor randomDoctor = randombuilder.buildRandomDoctor();
-        Long idDoc = crud.createDoctor(randomDoctor);
+        randomDoctor = crud.createDoctor(randomDoctor);
+        Long idDoc = randomDoctor.getId();
         System.out.println("random id doc : "+idDoc);
         Doctor resultDoctorId = crud.findDoctorById(idDoc);
         assertEquals(resultDoctorId.getPrenom(), randomDoctor.getPrenom());
@@ -75,7 +76,8 @@ public class TestEjb {
     //@Test
     public void findDoctorByName() {
         Doctor randomDoctor = randombuilder.buildRandomDoctor();
-        Long idDoc = crud.createDoctor(randomDoctor);
+        randomDoctor = crud.createDoctor(randomDoctor);
+        Long idDoc = randomDoctor.getId();
         System.out.println("random id doc : " + idDoc);
         Doctor resultDoctorId = crud.findDoctorByName(randomDoctor.getNom());
         assertEquals(resultDoctorId.getPrenom(), randomDoctor.getPrenom());
@@ -84,20 +86,35 @@ public class TestEjb {
     @Test
     public void suppressDoctor() throws Exception {
         Doctor randomDoctor = randombuilder.buildRandomDoctor();
-        Long idDoc = crud.createDoctor(randomDoctor);
+        randomDoctor = crud.createDoctor(randomDoctor);
+        Long idDoc = randomDoctor.getId();
         System.out.println("random id doc : " + idDoc);
         crud.suppressDoctor(randomDoctor);
         Doctor resultDoctorId = crud.findDoctorById(idDoc);
+        System.out.println("docteur supprimer : " + resultDoctorId);
         assertNull(resultDoctorId);
     }
 
-   // @Test
+    @Test
+    public void suppressPosition() {
+        Position posTest = randombuilder.buildRandomPosition();
+        posTest = crud.createPosition(posTest);
+        Long idPos = posTest.getId();
+        System.out.println("id after creation : (idPos) " + idPos);
+        System.out.println("id after creation : (posTest) " + posTest.getId());
+        crud.suppressPosition(posTest);
+        Position posResult = crud.findPositionById(idPos);
+        assertNull(posResult);
+    }
+
+    // @Test
     public void findAllPatient() {
         Doctor randomDoctor = randombuilder.buildRandomDoctor();
-        Long idDoc = crud.createDoctor(randomDoctor);
+        randomDoctor = crud.createDoctor(randomDoctor);
+        Long idDoc = randomDoctor.getId();
         System.out.println("random id doc : " + idDoc);
         Doctor resultDoctorId = crud.findDoctorById(idDoc);
-        assertEquals(resultDoctorId.getPrenom(), randomDoctor.getPrenom());
+        assertEquals(resultDoctorId, randomDoctor);
         crud.createDoctor(randombuilder.buildRandomDoctor());
         List<Doctor> docList = crud.findAllDoctor();
         System.out.println(docList);

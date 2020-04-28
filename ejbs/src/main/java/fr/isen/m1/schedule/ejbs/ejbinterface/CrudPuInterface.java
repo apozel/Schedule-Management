@@ -6,13 +6,14 @@ import fr.isen.m1.schedule.utilities.Appointement;
 import fr.isen.m1.schedule.utilities.Diagnosis;
 import fr.isen.m1.schedule.utilities.Doctor;
 import fr.isen.m1.schedule.utilities.Patient;
+import fr.isen.m1.schedule.utilities.Position;
 
 @Remote
 public interface CrudPuInterface {
 
     public List<Doctor> findAllDoctor();
 
-    public Long createDoctor(Doctor newDoc);
+    public Doctor createDoctor(Doctor newDoc);
 
     public Doctor findDoctorById(Long id);
 
@@ -22,7 +23,7 @@ public interface CrudPuInterface {
 
     public List<Patient> findAllPatient();
 
-    public Long createPatient(Patient newDoc);
+    public Patient createPatient(Patient newDoc);
 
     public Patient findPatientById(Long id);
 
@@ -32,7 +33,7 @@ public interface CrudPuInterface {
 
     public List<Appointement> findAllAppointement();
 
-    public Long createAppointement(Appointement newDoc);
+    public Appointement createAppointement(Appointement newDoc);
 
     public Appointement findAppointementById(Long id);
 
@@ -42,7 +43,7 @@ public interface CrudPuInterface {
 
     public List<Diagnosis> findAllDiagnosis();
 
-    public Long createDiagnosis(Diagnosis newDoc);
+    public Diagnosis createDiagnosis(Diagnosis newDoc);
 
     public Diagnosis findDiagnosisById(Long id);
 
@@ -50,6 +51,10 @@ public interface CrudPuInterface {
 
     public void suppressDiagnosis(Diagnosis suppressDiagnosis);
 
+    public void suppressPosition(Position suppressPosition);
 
+    public Position createPosition(Position newPosition);
+
+    public Position findPositionById(Long id);
 
 }

@@ -10,8 +10,10 @@ import fr.isen.m1.schedule.utilities.Appointement;
 import fr.isen.m1.schedule.utilities.Diagnosis;
 import fr.isen.m1.schedule.utilities.Doctor;
 import fr.isen.m1.schedule.utilities.Patient;
+import fr.isen.m1.schedule.utilities.Position;
 
 @Stateless(mappedName = "CrudPuInterface")
+
 public class CrudPuBean implements CrudPuInterface {
 
     @PersistenceContext(unitName = "schedulePU")
@@ -29,13 +31,13 @@ public class CrudPuBean implements CrudPuInterface {
     }
 
     @Override
-    public Long createDoctor(Doctor newDoc) {
+    public Doctor createDoctor(Doctor newDoc) {
         // logger.info("create Doctor");
         em.persist(newDoc);
         // logger.debug("new doc : " + newDoc);
         // logger.debug("new doc id : " + newDoc.getId());
         em.flush();
-        return newDoc.getId();
+        return newDoc;
 
     }
 
@@ -46,15 +48,18 @@ public class CrudPuBean implements CrudPuInterface {
 
     @Override
     public Doctor findDoctorByName(String lastName) {
-        Query query = em.createNamedQuery("Doctor.findByName", Doctor.class).setParameter("name", lastName);
+        Query query = em.createNamedQuery("Doctor.findByName", Doctor.class).setParameter("name",
+                lastName);
         return (Doctor) query.getSingleResult();
     }
 
     @Override
     public void suppressDoctor(Doctor doctor) throws Exception {
+        if (!em.contains(doctor)) {
+            doctor = em.merge(doctor);
+        }
         em.remove(doctor);
         em.flush();
-        em.clear();
     }
 
     @Override
@@ -68,10 +73,10 @@ public class CrudPuBean implements CrudPuInterface {
     }
 
     @Override
-    public Long createPatient(Patient newPatient) {
+    public Patient createPatient(Patient newPatient) {
         em.persist(newPatient);
         em.flush();
-        return newPatient.getId();
+        return newPatient;
     }
 
     @Override
@@ -81,13 +86,18 @@ public class CrudPuBean implements CrudPuInterface {
 
     @Override
     public Patient findPatientByName(String lastName) {
-        Query query = em.createQuery("patient.findByname", Patient.class).setParameter("name", lastName);
+        Query query =
+                em.createQuery("patient.findByname", Patient.class).setParameter("name", lastName);
         return (Patient) query.getSingleResult();
     }
 
     @Override
     public void suppressPatient(Patient patientSuppress) {
+        if (!em.contains(patientSuppress)) {
+            patientSuppress = em.merge(patientSuppress);
+        }
         em.remove(patientSuppress);
+        em.flush();
     }
 
     @Override
@@ -100,10 +110,10 @@ public class CrudPuBean implements CrudPuInterface {
     }
 
     @Override
-    public Long createAppointement(Appointement newAppointement) {
+    public Appointement createAppointement(Appointement newAppointement) {
         em.persist(newAppointement);
         em.flush();
-        return newAppointement.getId();
+        return newAppointement;
     }
 
     @Override
@@ -113,12 +123,17 @@ public class CrudPuBean implements CrudPuInterface {
 
     @Override
     public void suppressAppointement(Appointement suppressAppointement) {
+        if (!em.contains(suppressAppointement)) {
+            suppressAppointement = em.merge(suppressAppointement);
+        }
         em.remove(suppressAppointement);
+        em.flush();
     }
 
     @Override
     public List<Appointement> findAppointementByDoctor(Doctor doctor) {
-        Query query = em.createQuery("Appointement.findByDoctor", Appointement.class).setParameter("doc", doctor);
+        Query query = em.createQuery("Appointement.findByDoctor", Appointement.class)
+                .setParameter("doc", doctor);
 
         return query.getResultList();
     }
@@ -133,10 +148,10 @@ public class CrudPuBean implements CrudPuInterface {
     }
 
     @Override
-    public Long createDiagnosis(Diagnosis newDiagnosis) {
+    public Diagnosis createDiagnosis(Diagnosis newDiagnosis) {
         em.persist(newDiagnosis);
         em.flush();
-        return newDiagnosis.getId();
+        return newDiagnosis;
     }
 
     @Override
@@ -152,7 +167,37 @@ public class CrudPuBean implements CrudPuInterface {
 
     @Override
     public void suppressDiagnosis(Diagnosis suppressDiagnosis) {
+        if (!em.contains(suppressDiagnosis)) {
+            suppressDiagnosis = em.merge(suppressDiagnosis);
+        }
         em.remove(suppressDiagnosis);
+        em.flush();
+    }
+
+    @Override
+    public void suppressPosition(Position suppressPosition) {
+      /*  System.out.println("id pos : " + suppressPosition.getId());
+        Query query = em.createNativeQuery(
+                "DELETE FROM gps_coordinates WHERE id_gpsc = " + suppressPosition.getId());
+        System.out.println("nombre entite update : " + query.executeUpdate());*/
+      if (!em.contains(suppressPosition)) {
+          suppressPosition = em.merge(suppressPosition);
+      }
+        em.remove(suppressPosition);
+        em.flush();
+
+    }
+
+    @Override
+    public Position createPosition(Position newPosition) {
+        em.persist(newPosition);
+        em.flush();
+        return newPosition;
+    }
+
+    @Override
+    public Position findPositionById(Long id) {
+        return em.find(Position.class, id);
     }
 
 }
