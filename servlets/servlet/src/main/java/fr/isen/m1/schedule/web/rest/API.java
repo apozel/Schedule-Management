@@ -5,15 +5,22 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import fr.isen.m1.schedule.ejbs.ejbinterface.AlgorithmInterface;
 
-@Path("test")
-public class Test {
+@Path("API")
+public class API {
 
     @EJB(mappedName = "AlgorithmInterface")
     AlgorithmInterface algo;
 
     @GET
+    @Path("algo")
     public String testMethod() {
-        return algo.helloWord();
+        return algo.helloWord() + "2";
+    }
+
+    @GET
+    @Path("test")
+    public String testMethod2() {
+        return "test2";
     }
 
 

@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -18,6 +20,11 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "doctor_diagnostic")
+@NamedQueries({@NamedQuery(name = "Diagnosis.findAll",
+        query = "SELECT diagnosis FROM Diagnosis diagnosis"),
+        // @NamedQuery(name = "Diagnosis.findByName",query = "SELECT diagnosis FROM Diagnosis
+        // diagnosis INNER JOIN diagnosis.details details WHERE details.lastName = :name")
+})
 public class Diagnosis implements Serializable {
 
     /**

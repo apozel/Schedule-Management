@@ -43,7 +43,7 @@ public class Appointement implements Serializable {
     private static final long serialVersionUID = -3148976359143252003L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_doc")
+    @Column(name = "id_appoi")
     private Long id;
     @Column(name = "date_appoi")
     @Convert(converter = LocalDateConverter.class)

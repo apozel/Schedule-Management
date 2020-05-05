@@ -181,17 +181,19 @@ public class RandomBuilder {
             "Oneal", "Preston", "Small", "Wu", "Zamora", "Macdonald", "Vance", "Snow", "Mcclain",
             "Stafford", "Orozco", "Barry", "English", "Shannon", "Kline", "Jacobson"));
 
-            /**
-             * the position of the appointement is randomly generated
-             * @return random Appointement
-             */
+    /**
+     * the position of the appointement is randomly generated
+     *
+     * @return random Appointement
+     */
     public Appointement buildRandomAppointement() {
         AppointementBuilder appointement = new AppointementBuilder();
         return appointement.setPatient(buildRandomPatient()).setDoctor(buildRandomDoctor())
                 .setDiagnosis(buildRandomDiagnosis())
-                .setConsultTime(Duration.ofMinutes(rand.nextInt(60))).setStartTime(LocalTime.of(rand.nextInt(24),rand.nextInt(60)))
+                .setConsultTime(Duration.ofMinutes(rand.nextInt(60)))
+                .setStartTime(LocalTime.of(rand.nextInt(24), rand.nextInt(60)))
                 .setLocation(buildRandomPosition())
-                .setDate(LocalDate.of(2020, rand.nextInt(12), rand.nextInt(28))).build();
+                .setDate(LocalDate.of(2020, (rand.nextInt(12) + 1), (rand.nextInt(28)+1))).build();
     }
 
     public Diagnosis buildRandomDiagnosis() {

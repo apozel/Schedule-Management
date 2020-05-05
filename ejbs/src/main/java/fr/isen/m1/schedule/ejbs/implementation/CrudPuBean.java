@@ -50,7 +50,7 @@ public class CrudPuBean implements CrudPuInterface {
     public Doctor findDoctorByName(String lastName) {
         Query query = em.createNamedQuery("Doctor.findByName", Doctor.class).setParameter("name",
                 lastName);
-        return (Doctor) query.getSingleResult();
+        return (Doctor) query.getResultList().get(0);
     }
 
     @Override
@@ -87,7 +87,7 @@ public class CrudPuBean implements CrudPuInterface {
     @Override
     public Patient findPatientByName(String lastName) {
         Query query =
-                em.createQuery("patient.findByname", Patient.class).setParameter("name", lastName);
+                em.createNamedQuery("Patient.findByName", Patient.class).setParameter("name", lastName);
         return (Patient) query.getSingleResult();
     }
 

@@ -25,7 +25,6 @@
     <dependency>
       <groupId>org.glassfish</groupId>
       <artifactId>javax.ejb</artifactId>
-
     </dependency>
     <dependency>
 
