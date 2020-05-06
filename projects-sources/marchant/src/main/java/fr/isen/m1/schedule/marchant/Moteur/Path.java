@@ -15,11 +15,7 @@ public abstract class Path
 		public static double distanceCriticite(double x1, double y1, double x2, double y2, double criticite)
 		{
 			double delta_x = x1 - x2, delta_y = y1 - y2;
-			if (criticite == 0) {
-				criticite = 1;
-			}
-			criticite = (double) (criticite/10);
-			return (double) ((Math.sqrt(delta_x * delta_x + delta_y * delta_y))/criticite);
+			return (double) ((Math.sqrt(delta_x * delta_x + delta_y * delta_y))*criticite);
 		}
 
 	// Total length of the path, coming back to the start:
