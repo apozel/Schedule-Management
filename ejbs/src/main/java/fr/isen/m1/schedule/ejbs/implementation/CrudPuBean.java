@@ -1,5 +1,7 @@
 package fr.isen.m1.schedule.ejbs.implementation;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -11,6 +13,7 @@ import fr.isen.m1.schedule.utilities.Diagnosis;
 import fr.isen.m1.schedule.utilities.Doctor;
 import fr.isen.m1.schedule.utilities.Patient;
 import fr.isen.m1.schedule.utilities.Position;
+import fr.isen.m1.schedule.utilities.SocialDetails;
 
 @Stateless(mappedName = "CrudPuInterface")
 
@@ -19,6 +22,7 @@ public class CrudPuBean implements CrudPuInterface {
     @PersistenceContext(unitName = "schedulePU")
     EntityManager em;
     // private static Logger logger = Logger.getLogger(CrudPuBean.class);
+    private String firstName;
 
     @Override
     public List<Doctor> findAllDoctor() {
@@ -47,9 +51,9 @@ public class CrudPuBean implements CrudPuInterface {
     }
 
     @Override
-    public Doctor findDoctorByName(String lastName) {
-        Query query = em.createNamedQuery("Doctor.findByName", Doctor.class).setParameter("name",
-                lastName);
+    public Doctor findDoctorByName(String lastName,String firstName) {
+        Query query = em.createNamedQuery("Doctor.findByName", Doctor.class).setParameter("lastName",
+                lastName).setParameter("firstName", firstName);
         return (Doctor) query.getResultList().get(0);
     }
 
@@ -86,8 +90,8 @@ public class CrudPuBean implements CrudPuInterface {
 
     @Override
     public Patient findPatientByName(String lastName) {
-        Query query =
-                em.createNamedQuery("Patient.findByName", Patient.class).setParameter("name", lastName);
+        Query query = em.createNamedQuery("Patient.findByName", Patient.class).setParameter("name",
+                lastName);
         return (Patient) query.getSingleResult();
     }
 
@@ -176,13 +180,10 @@ public class CrudPuBean implements CrudPuInterface {
 
     @Override
     public void suppressPosition(Position suppressPosition) {
-      /*  System.out.println("id pos : " + suppressPosition.getId());
-        Query query = em.createNativeQuery(
-                "DELETE FROM gps_coordinates WHERE id_gpsc = " + suppressPosition.getId());
-        System.out.println("nombre entite update : " + query.executeUpdate());*/
-      if (!em.contains(suppressPosition)) {
-          suppressPosition = em.merge(suppressPosition);
-      }
+
+        if (!em.contains(suppressPosition)) {
+            suppressPosition = em.merge(suppressPosition);
+        }
         em.remove(suppressPosition);
         em.flush();
 
@@ -198,6 +199,24 @@ public class CrudPuBean implements CrudPuInterface {
     @Override
     public Position findPositionById(Long id) {
         return em.find(Position.class, id);
+    }
+
+    @Override
+    public List<Appointement> findAppointementByDayDoctor(LocalDate day, Doctor doctor) {
+        Query query = em.createNamedQuery("Appointement.findByDayDoctor", Appointement.class)
+                .setParameter("doctor", doctor).setParameter("startDate", day.minusDays(1))
+                .setParameter("finishDate", day.plusDays(1));
+        @SuppressWarnings("unchecked")
+        List<Appointement> appointements = query.getResultList();
+        // logger.debug(appointements);
+        return appointements;
+    }
+
+    @Override
+    public SocialDetails createSocialDetails(SocialDetails details) {
+        em.persist(details);
+        em.flush();
+        return details;
     }
 
 }

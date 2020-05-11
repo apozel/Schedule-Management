@@ -1,5 +1,6 @@
 package fr.isen.m1.schedule.ejbs.ejbinterface;
 
+import java.time.LocalDate;
 import java.util.List;
 import javax.ejb.Remote;
 import fr.isen.m1.schedule.utilities.Appointement;
@@ -7,6 +8,7 @@ import fr.isen.m1.schedule.utilities.Diagnosis;
 import fr.isen.m1.schedule.utilities.Doctor;
 import fr.isen.m1.schedule.utilities.Patient;
 import fr.isen.m1.schedule.utilities.Position;
+import fr.isen.m1.schedule.utilities.SocialDetails;
 
 @Remote
 public interface CrudPuInterface {
@@ -17,7 +19,7 @@ public interface CrudPuInterface {
 
     public Doctor findDoctorById(Long id);
 
-    public Doctor findDoctorByName(String name);
+    public Doctor findDoctorByName(String lastName,String firstName);
 
     public void suppressDoctor(Doctor doctor) throws Exception;
 
@@ -56,5 +58,9 @@ public interface CrudPuInterface {
     public Position createPosition(Position newPosition);
 
     public Position findPositionById(Long id);
+
+    public List<Appointement> findAppointementByDayDoctor(LocalDate day, Doctor doctor);
+
+    public SocialDetails createSocialDetails(SocialDetails details);
 
 }

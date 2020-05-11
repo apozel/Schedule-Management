@@ -26,7 +26,7 @@ import fr.isen.m1.schedule.builder.SocialDetailsBuilder;
 @Table(name = "Doctor")
 @NamedQueries({@NamedQuery(name = "Doctor.findAll", query = "SELECT doctor FROM Doctor doctor"),
         @NamedQuery(name = "Doctor.findByName",
-                query = "SELECT doctor FROM Doctor doctor INNER JOIN doctor.details details WHERE details.lastName = :name")})
+                query = "SELECT doctor FROM Doctor doctor INNER JOIN doctor.details details WHERE details.lastName = :lastName AND details.firstName = :firstName")})
 public class Doctor implements Serializable {
 
     /**
