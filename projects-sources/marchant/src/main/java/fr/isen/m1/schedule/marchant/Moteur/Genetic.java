@@ -172,7 +172,7 @@ public abstract class Genetic
 
 		int citiesNumber = map.citiesNumber();
 
-		if (citiesNumber < 3)
+		if (citiesNumber < 1)
 		{
 			System.out.println("Number of cities must be at least 3. is : " + citiesNumber);
 			throw new RuntimeException();
@@ -269,9 +269,9 @@ public abstract class Genetic
 
 			int citiesNumber = map.citiesNumber();
 
-			if (citiesNumber < 3)
+			if (citiesNumber < 1)
 			{
-				System.out.println("\nNumber of cities must be at least 3.\n");
+				System.out.println("\nNumber of appointments must be at least 1.\n");
 				throw new RuntimeException();
 			}
 

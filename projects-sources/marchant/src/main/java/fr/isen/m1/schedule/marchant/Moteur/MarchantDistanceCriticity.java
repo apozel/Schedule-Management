@@ -1,5 +1,13 @@
 package fr.isen.m1.schedule.marchant.moteur;
 
+<<<<<<< HEAD
+=======
+import fr.isen.m1.schedule.utilities.Diagnosis;
+import testProjetBigData.Genetic;
+import testProjetBigData.Map;
+import testProjetBigData.Path;
+
+>>>>>>> 5ee149ca4f9c7ff80ad7c6491d1331a44287e006
 import java.util.ArrayList;
 import fr.isen.m1.schedule.marchant.moteur.Genetic.SelectionMode;
 import fr.isen.m1.schedule.utilities.Diagnosis;
