@@ -25,12 +25,6 @@ public class AlgorithmBean implements AlgorithmInterface {
     private CrudPuInterface crud;
 
     @Override
-    public String helloWord() {
-
-        return "Hello World";
-    }
-
-    @Override
     public void addAppointementSchedule(Request newQuest) {
         this.now = LocalDateTime.now();
         List<Appointement> returnAppointements = new ArrayList<Appointement>();
@@ -49,7 +43,46 @@ public class AlgorithmBean implements AlgorithmInterface {
             diagnosis[i] = dayAppointements.get(i).getDiag();
             System.out.println("diagnosis : " + diagnosis[i]);
         }
-        System.out.println("diagnosis : " + diagnosis);
+        System.out.println("diagnosis.length : " + diagnosis.length);
+        if (diagnosis.length > 2) {
+            MarchantDistanceCriticity calculAlgorithm =
+                    new MarchantDistanceCriticity(diagnosis, chooseDoctor);
+            diagnosis = calculAlgorithm.getListDiag();
+        }
+        openHours();
+        System.out.println("heure avant : " + now);
+        for (Diagnosis diagnosis2 : diagnosis) {
+            Appointement appointementInOrder = crud.findAppointementByDiagnosis(diagnosis2);
+            appointementInOrder.setDate(now.toLocalDate());
+            appointementInOrder.setHeureDebut(now.toLocalTime());
+            appointementInOrder.setMedecinAffecte(chooseDoctor);
+            returnAppointements.add(appointementInOrder);
+            this.now = now.plus(appointementInOrder.getDureeConsultation());
+            openHours();
+            appointementInOrder = crud.updateAppointement(appointementInOrder);
+        }
+
+    }
+
+    @Override
+    public void addAppointementSchedule(Request newQuest, Doctor chooseDoctor) {
+        this.now = LocalDateTime.now();
+        List<Appointement> returnAppointements = new ArrayList<Appointement>();
+        this.chooseDoctor = chooseDoctor;
+        Appointement appointementFromNewQuest = new AppointementBuilder().setDate(now.toLocalDate())
+                .setDiagnosis(newQuest.getDiag()).setStartTime(now.toLocalTime()).build();
+        appointementFromNewQuest = crud.createAppointement(appointementFromNewQuest);
+        openHours();
+
+        dayAppointements = avoirLesRendezVousDejaDonnee(now, chooseDoctor);
+        checkSiLaJourneeEstPleine();
+        dayAppointements.add(appointementFromNewQuest);
+        System.out.println("appointement : " + dayAppointements);
+        Diagnosis[] diagnosis = new Diagnosis[dayAppointements.size()];
+        for (int i = 0; i < dayAppointements.size(); i++) {
+            diagnosis[i] = dayAppointements.get(i).getDiag();
+            System.out.println("diagnosis : " + diagnosis[i]);
+        }
         System.out.println("diagnosis.length : " + diagnosis.length);
         if (diagnosis.length > 2) {
             MarchantDistanceCriticity calculAlgorithm =

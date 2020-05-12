@@ -24,7 +24,7 @@ import fr.isen.m1.schedule.builder.SocialDetailsBuilder;
 @NamedQueries({
     @NamedQuery(name = "Patient.findAll", query = "SELECT patient FROM Patient patient"),
         @NamedQuery(name = "Patient.findByName",
-                query = "SELECT patient FROM Patient patient INNER JOIN patient.details details WHERE details.lastName = :name")})
+                query = "SELECT patient FROM Patient patient INNER JOIN patient.socialDetails socialDetails WHERE socialDetails.lastName = :name")})
 public class Patient implements Serializable {
 
     /**
@@ -37,18 +37,18 @@ public class Patient implements Serializable {
     private Long id;
     @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinColumn(name = "id_gpsc")
-    private Position lieuDeVie;
+    private Position position;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinColumn(name = "id_socdet")
-    private SocialDetails details;
+    private SocialDetails socialDetails;
 
     public Patient() {
     }
 
     public Patient(Position lieuDeVie, String lastName, String firstName) {
-        this.lieuDeVie = lieuDeVie;
-        this.details = new SocialDetailsBuilder().build();
+        this.position = lieuDeVie;
+        this.socialDetails = new SocialDetailsBuilder().build();
         this.setNom(lastName);
         this.setPrenom(firstName);
 
@@ -59,27 +59,27 @@ public class Patient implements Serializable {
     }
 
     public Position getLieuDeVie() {
-        return lieuDeVie;
+        return position;
     }
 
     public void setLieuDeVie(Position lieuDeVie) {
-        this.lieuDeVie = lieuDeVie;
+        this.position = lieuDeVie;
     }
 
     public String getNom() {
-        return this.details.getLastName();
+        return this.socialDetails.getLastName();
     }
 
     public void setNom(String lastName) {
-        this.details.setLastName(lastName);
+        this.socialDetails.setLastName(lastName);
     }
 
     public String getPrenom() {
-        return details.getFirstName();
+        return socialDetails.getFirstName();
     }
 
     public void setPrenom(String firstName) {
-        this.details.setFirstName(firstName);
+        this.socialDetails.setFirstName(firstName);
     }
 
     @Override
@@ -91,14 +91,14 @@ public class Patient implements Serializable {
      * @return the details
      */
     public SocialDetails getDetails() {
-        return details;
+        return socialDetails;
     }
 
     /**
      * @param details the details to set
      */
     public void setDetails(SocialDetails details) {
-        this.details = details;
+        this.socialDetails = details;
     }
 
     /*
@@ -109,7 +109,7 @@ public class Patient implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(details, id);
+        return Objects.hash(socialDetails, id);
     }
 
     /*
@@ -127,7 +127,7 @@ public class Patient implements Serializable {
         if (getClass() != obj.getClass())
             return false;
         Patient other = (Patient) obj;
-        return Objects.equals(details, other.details) && Objects.equals(id, other.id);
+        return Objects.equals(socialDetails, other.socialDetails) && Objects.equals(id, other.id);
     }
 
 }

@@ -26,7 +26,7 @@ import fr.isen.m1.schedule.builder.SocialDetailsBuilder;
 @Table(name = "Doctor")
 @NamedQueries({@NamedQuery(name = "Doctor.findAll", query = "SELECT doctor FROM Doctor doctor"),
         @NamedQuery(name = "Doctor.findByName",
-                query = "SELECT doctor FROM Doctor doctor INNER JOIN doctor.details details WHERE details.lastName = :lastName AND details.firstName = :firstName")})
+                query = "SELECT doctor FROM Doctor doctor INNER JOIN doctor.socialDetails socialDetails WHERE socialDetails.lastName = :lastName AND socialDetails.firstName = :firstName")})
 public class Doctor implements Serializable {
 
     /**
@@ -39,14 +39,14 @@ public class Doctor implements Serializable {
     private Long id;
     @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinColumn(name = "id_socdet")
-    private SocialDetails details;
+    private SocialDetails socialDetails;
     @Column(name = "CDHP")
     private String cdhp;
     @Transient
-    private Position emplacement;
+    private Position realPosition;
     @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinColumn(name = "id_gpsc")
-    private Position lieuDeDepart;
+    private Position startPosition;
     @Transient
     private LocalTime[] horaires = new LocalTime[] {LocalTime.of(8, 0), LocalTime.of(12, 0),
             LocalTime.of(13, 0), LocalTime.of(18, 0)};
@@ -56,27 +56,27 @@ public class Doctor implements Serializable {
 
     public Doctor(String nom, String prenom, String cdhp, Position lieuDeDepart) {
 
-        this.details = new SocialDetailsBuilder().setFirstName(prenom).setLastName(nom).build();
+        this.socialDetails = new SocialDetailsBuilder().setFirstName(prenom).setLastName(nom).build();
         this.cdhp = cdhp;
-        this.lieuDeDepart = lieuDeDepart;
-        this.emplacement = lieuDeDepart;
+        this.startPosition = lieuDeDepart;
+        this.realPosition = lieuDeDepart;
     }
 
 
     public String getNom() {
-        return this.details.getLastName();
+        return this.socialDetails.getLastName();
     }
 
     public void setNom(String nom) {
-        this.details.setLastName(nom);
+        this.socialDetails.setLastName(nom);
     }
 
     public String getPrenom() {
-        return this.details.getFirstName();
+        return this.socialDetails.getFirstName();
     }
 
     public void setPrenom(String prenom) {
-        this.details.setFirstName(prenom);
+        this.socialDetails.setFirstName(prenom);
     }
 
     public Long getId() {
@@ -88,11 +88,11 @@ public class Doctor implements Serializable {
     }
 
     public SocialDetails getDetails() {
-        return details;
+        return socialDetails;
     }
 
     public void setDetails(SocialDetails details) {
-        this.details = details;
+        this.socialDetails = details;
     }
 
 
@@ -103,11 +103,11 @@ public class Doctor implements Serializable {
     }
 
     public Position getEmplacement() {
-        return emplacement;
+        return realPosition;
     }
 
     public void setEmplacement(Position emplacement) {
-        this.emplacement = emplacement;
+        this.realPosition = emplacement;
     }
 
 
@@ -122,11 +122,11 @@ public class Doctor implements Serializable {
     }
 
     public Position getLieuDeDepart() {
-        return lieuDeDepart;
+        return startPosition;
     }
 
     public void setLieuDeDepart(Position lieuDeDepart) {
-        this.lieuDeDepart = lieuDeDepart;
+        this.startPosition = lieuDeDepart;
     }
 
     /**
@@ -169,7 +169,7 @@ public class Doctor implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(details, id);
+        return Objects.hash(socialDetails, id);
     }
 
     /*
@@ -205,7 +205,7 @@ public class Doctor implements Serializable {
         if (getClass() != obj.getClass())
             return false;
         Doctor other = (Doctor) obj;
-        return Objects.equals(details, other.details) && Objects.equals(id, other.id);
+        return Objects.equals(socialDetails, other.socialDetails) && Objects.equals(id, other.id);
     }
 
 }

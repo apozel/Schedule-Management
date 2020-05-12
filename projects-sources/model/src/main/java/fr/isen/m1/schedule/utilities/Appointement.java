@@ -31,13 +31,13 @@ import fr.isen.m1.schedule.converter.LocalTimeConverter;
 @Table(name = "appointement")
 @NamedQueries({
         @NamedQuery(name = "Appointement.findByDoctor",
-                query = "SELECT a FROM Appointement a WHERE a.medecinAffecte = :doc"),
+                query = "SELECT appointement FROM Appointement appointement WHERE appointement.doctor = :doc"),
         @NamedQuery(name = "Appointement.findAll",
                 query = "SELECT appointement FROM Appointement appointement"),
         @NamedQuery(name = "Appointement.findByDayDoctor",
-                query = "SELECT appointement FROM Appointement appointement WHERE appointement.medecinAffecte = :doctor AND appointement.date = :day"),
+                query = "SELECT appointement FROM Appointement appointement WHERE appointement.doctor = :doctor AND appointement.date = :day"),
             @NamedQuery(name = "Appointement.findByDiagnosis",
-                query = "SELECT appointement FROM Appointement appointement WHERE appointement.diag = :diagnosis")
+                query = "SELECT appointement FROM Appointement appointement WHERE appointement.diagnosis = :diagnosis")
             })
 
 public class Appointement implements Serializable {
@@ -55,21 +55,21 @@ public class Appointement implements Serializable {
     private LocalDate date;
     @Column(name = "hours_appoi")
     @Convert(converter = LocalTimeConverter.class)
-    private LocalTime heureDebut;
+    private LocalTime hoursAppointement;
     @Transient
-    private Duration dureeConsultation;
+    private Duration consultationTime;
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_gpsc")
     private Position lieu;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_doc")
-    private Doctor medecinAffecte;
+    private Doctor doctor;
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_medrec")
-    private Patient malade;
+    private Patient patient;
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_diag")
-    private Diagnosis diag;
+    private Diagnosis diagnosis;
 
     public Appointement() {
     }
@@ -83,19 +83,19 @@ public class Appointement implements Serializable {
     }
 
     public Doctor getMedecinAffecte() {
-        return medecinAffecte;
+        return doctor;
     }
 
     public void setMedecinAffecte(Doctor medecinAffecte) {
-        this.medecinAffecte = medecinAffecte;
+        this.doctor = medecinAffecte;
     }
 
     public Patient getMalade() {
-        return malade;
+        return patient;
     }
 
     public void setMalade(Patient malade) {
-        this.malade = malade;
+        this.patient = malade;
     }
 
     public LocalDate getDate() {
@@ -107,34 +107,34 @@ public class Appointement implements Serializable {
     }
 
     public LocalTime getHeureDebut() {
-        return heureDebut;
+        return hoursAppointement;
     }
 
     public void setHeureDebut(LocalTime heureDebut) {
-        this.heureDebut = heureDebut;
+        this.hoursAppointement = heureDebut;
     }
 
     public Duration getDureeConsultation() {
-        return dureeConsultation;
+        return consultationTime;
     }
 
     public void setDureeConsultation(Duration dureeConsultation) {
-        this.dureeConsultation = dureeConsultation;
+        this.consultationTime = dureeConsultation;
     }
 
     public Diagnosis getDiag() {
-        return diag;
+        return diagnosis;
     }
 
     public void setDiag(Diagnosis diag) {
-        this.diag = diag;
+        this.diagnosis = diag;
     }
 
     @Override
     public String toString() {
-        return "IDRendezVous = " + id + ",\n date=" + date + ",\n diag=" + diag
-                + ",\n dureeConsultation=" + dureeConsultation + ",\n heureDebut=" + heureDebut
-                + ",\n malade=" + malade + "\n";
+        return "IDRendezVous = " + id + ",\n date=" + date + ",\n diag=" + diagnosis
+                + ",\n dureeConsultation=" + consultationTime + ",\n heureDebut=" + hoursAppointement
+                + ",\n malade=" + patient + "\n";
     }
 
     public Long getId() {

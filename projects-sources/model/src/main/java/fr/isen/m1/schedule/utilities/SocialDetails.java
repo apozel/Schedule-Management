@@ -50,7 +50,7 @@ public class SocialDetails implements Serializable {
     private String phoneNumber;
     @Column(name = "picture")
     private String picture;
-    @OneToOne(mappedBy = "details")
+    @OneToOne(mappedBy = "socialDetails")
     @JoinColumn(name = "id_doc")
     private Doctor idDoc;
 

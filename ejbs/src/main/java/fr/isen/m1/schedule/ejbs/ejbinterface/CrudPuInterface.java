@@ -21,7 +21,7 @@ public interface CrudPuInterface {
 
     public Doctor findDoctorByName(String lastName,String firstName);
 
-    public void suppressDoctor(Doctor doctor) throws Exception;
+    public void suppressDoctor(Doctor doctor);
 
     public List<Patient> findAllPatient();
 

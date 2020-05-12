@@ -36,31 +36,31 @@ public class Diagnosis implements Serializable {
     @Column(name = "id_diag")
     private Long id;
     @Column(name = "gravityGrade")
-    private int criticite;
+    private int criticity;
     @Column(name = "report")
     private String description;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_medrec")
-    private Patient patientConserne;
+    private Patient patient;
 
     public Diagnosis() {
 
     }
 
     public Diagnosis(int criticite, String description, Patient patient) {
-        this.criticite = criticite;
+        this.criticity = criticite;
         this.description = description;
-        this.patientConserne = patient;
+        this.patient = patient;
     }
 
 
 
     public int getCriticite() {
-        return criticite;
+        return criticity;
     }
 
     public void setCriticite(int criticite) {
-        this.criticite = criticite;
+        this.criticity = criticite;
     }
 
 
@@ -71,11 +71,11 @@ public class Diagnosis implements Serializable {
 
 
     public Patient getPatientConserne() {
-        return patientConserne;
+        return patient;
     }
 
     public void setPatientConserne(Patient patientConserne) {
-        this.patientConserne = patientConserne;
+        this.patient = patientConserne;
     }
 
     public Long getId() {
@@ -101,7 +101,7 @@ public class Diagnosis implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, patientConserne);
+        return Objects.hash(id, patient);
     }
 
     /*
@@ -120,7 +120,7 @@ public class Diagnosis implements Serializable {
             return false;
         Diagnosis other = (Diagnosis) obj;
         return Objects.equals(id, other.id)
-                && Objects.equals(patientConserne, other.patientConserne);
+                && Objects.equals(patient, other.patient);
     }
 
     /*
@@ -131,6 +131,6 @@ public class Diagnosis implements Serializable {
 
     @Override
     public String toString() {
-        return "Diagnosis [id=" + id + ", patientConserne=" + patientConserne + "]";
+        return "Diagnosis [id=" + id + ", patientConserne=" + patient + "]";
     }
 }

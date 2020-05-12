@@ -35,7 +35,7 @@ public class Position implements Serializable{
     @Column(name = "latitude")
     @Convert(converter = PositionConverter.class)
     private Double y;
-    @OneToOne(mappedBy = "lieuDeDepart")
+    @OneToOne(mappedBy = "startPosition")
     @JoinColumn(name = "id_doc")
     private Doctor idDoc;
 

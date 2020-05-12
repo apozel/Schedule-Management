@@ -1,7 +1,6 @@
 package fr.isen.m1.schedule.ejbs.implementation;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -22,7 +21,6 @@ public class CrudPuBean implements CrudPuInterface {
     @PersistenceContext(unitName = "schedulePU")
     EntityManager em;
     // private static Logger logger = Logger.getLogger(CrudPuBean.class);
-    private String firstName;
 
     @Override
     public List<Doctor> findAllDoctor() {
@@ -58,7 +56,7 @@ public class CrudPuBean implements CrudPuInterface {
     }
 
     @Override
-    public void suppressDoctor(Doctor doctor) throws Exception {
+    public void suppressDoctor(Doctor doctor) {
         if (!em.contains(doctor)) {
             doctor = em.merge(doctor);
         }
@@ -136,10 +134,11 @@ public class CrudPuBean implements CrudPuInterface {
 
     @Override
     public List<Appointement> findAppointementByDoctor(Doctor doctor) {
-        Query query = em.createQuery("Appointement.findByDoctor", Appointement.class)
+        Query query = em.createNamedQuery("Appointement.findByDoctor", Appointement.class)
                 .setParameter("doc", doctor);
-
-        return query.getResultList();
+        @SuppressWarnings("unchecked")
+        List<Appointement> appointements = query.getResultList();
+        return appointements;
     }
 
     @Override
