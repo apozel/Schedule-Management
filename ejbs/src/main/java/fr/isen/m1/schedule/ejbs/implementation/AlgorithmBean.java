@@ -47,7 +47,7 @@ public class AlgorithmBean implements AlgorithmInterface {
         Diagnosis[] diagnosis = new Diagnosis[dayAppointements.size()];
         for (int i = 0; i < dayAppointements.size(); i++) {
             diagnosis[i] = dayAppointements.get(i).getDiag();
-            System.out.println("diagnosis : " + diagnosis[I]);
+            System.out.println("diagnosis : " + diagnosis[i]);
         }
         System.out.println("diagnosis : " + diagnosis);
         System.out.println("diagnosis.length : " + diagnosis.length);
