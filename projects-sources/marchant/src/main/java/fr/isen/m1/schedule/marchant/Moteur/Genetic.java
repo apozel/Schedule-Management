@@ -174,7 +174,7 @@ public abstract class Genetic
 
 		if (citiesNumber < 3)
 		{
-			System.out.println("\nNumber of cities must be at least 3.\n");
+			System.out.println("Number of cities must be at least 3. is : " + citiesNumber);
 			throw new RuntimeException();
 		}
 

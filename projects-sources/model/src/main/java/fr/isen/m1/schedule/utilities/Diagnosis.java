@@ -122,4 +122,15 @@ public class Diagnosis implements Serializable {
         return Objects.equals(id, other.id)
                 && Objects.equals(patientConserne, other.patientConserne);
     }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#toString()
+     */
+
+    @Override
+    public String toString() {
+        return "Diagnosis [id=" + id + ", patientConserne=" + patientConserne + "]";
+    }
 }

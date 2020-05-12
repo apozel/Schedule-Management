@@ -63,4 +63,8 @@ public interface CrudPuInterface {
 
     public SocialDetails createSocialDetails(SocialDetails details);
 
+    public Appointement findAppointementByDiagnosis(Diagnosis diagnosis);
+
+    public Appointement updateAppointement(Appointement appointement);
+
 }

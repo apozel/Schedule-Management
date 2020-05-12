@@ -24,7 +24,12 @@ public class AppointementBuilder {
         Appointement newAppointement = new Appointement();
         newAppointement.setDate(date);
         newAppointement.setHeureDebut(startTime);
-        newAppointement.setDureeConsultation(consultTime);
+        if (consultTime == null) {
+            newAppointement.setDureeConsultation(Duration.ofMinutes(45));
+        } else {
+            newAppointement.setDureeConsultation(consultTime);
+        }
+
         newAppointement.setLieu(location);
         newAppointement.setMedecinAffecte(doctor);
         newAppointement.setMalade(patient);
@@ -60,7 +65,7 @@ public class AppointementBuilder {
      * @param location the location to set
      */
     public AppointementBuilder setLocation(Position location) {
-        this.location = location;
+        this.location = (this.location != null) ? this.location : location;
         return this;
     }
 
@@ -68,7 +73,7 @@ public class AppointementBuilder {
      * @param doctor the doctor to set
      */
     public AppointementBuilder setDoctor(Doctor doctor) {
-        this.doctor = doctor;
+        this.doctor = (this.doctor != null) ? this.doctor : doctor;
         return this;
     }
 
@@ -76,7 +81,8 @@ public class AppointementBuilder {
      * @param patient the patient to set
      */
     public AppointementBuilder setPatient(Patient patient) {
-        this.patient = patient;
+        this.patient = (this.patient != null) ? this.patient : patient;
+        this.location = (this.location != null) ? this.location : this.patient.getLieuDeVie();
         return this;
     }
 
@@ -85,6 +91,8 @@ public class AppointementBuilder {
      */
     public AppointementBuilder setDiagnosis(Diagnosis diagnosis) {
         this.diagnosis = diagnosis;
+        this.patient = (this.patient != null) ? this.patient : diagnosis.getPatientConserne();
+        this.location = (this.location != null) ? this.location : this.patient.getLieuDeVie();
         return this;
     }
 

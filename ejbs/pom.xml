@@ -19,7 +19,11 @@
 
     <dependency>
       <groupId>fr.isen.m1.schedule</groupId>
-      <artifactId>core</artifactId>
+      <artifactId>model</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>fr.isen.m1.schedule</groupId>
+      <artifactId>marchant</artifactId>
     </dependency>
     <!-- https://mvnrepository.com/artifact/org.glassfish/javax.ejb -->
     <dependency>

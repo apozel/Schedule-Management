@@ -20,12 +20,14 @@ import fr.isen.m1.schedule.ejbs.ejbinterface.AlgorithmInterface;
 import fr.isen.m1.schedule.ejbs.ejbinterface.CrudPuInterface;
 import fr.isen.m1.schedule.ejbs.implementation.AlgorithmBean;
 import fr.isen.m1.schedule.ejbs.implementation.CrudPuBean;
+import fr.isen.m1.schedule.marchant.moteur.MarchantDistanceCriticity;
 import fr.isen.m1.schedule.random.RandomBuilder;
 import fr.isen.m1.schedule.utilities.Appointement;
 import fr.isen.m1.schedule.utilities.Diagnosis;
 import fr.isen.m1.schedule.utilities.Doctor;
 import fr.isen.m1.schedule.utilities.Patient;
 import fr.isen.m1.schedule.utilities.Position;
+import fr.isen.m1.schedule.utilities.Request;
 import fr.isen.m1.schedule.utilities.SocialDetails;
 
 @RunWith(Arquillian.class)
@@ -48,7 +50,7 @@ public class TestEjb {
                 .addAsResource("META-INF/persistence.xml").addAsResource("META-INF/sql/Script.sql")
                 .addAsResource("META-INF/sql/Drop.sql")
                 .addClasses(AlgorithmBean.class, AlgorithmInterface.class)
-                .addClasses(CrudPuInterface.class, CrudPuBean.class)
+                .addClasses(CrudPuInterface.class, CrudPuBean.class).addPackage(MarchantDistanceCriticity.class.getPackage())
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
     }
 
@@ -199,7 +201,7 @@ public class TestEjb {
         assertNull(resultAppointement);
     }
 
-    @Test
+    //@Test
     public void findAppointementByDate() {
         Doctor doctor = randombuilder.buildRandomDoctor();
         doctor = crud.createDoctor(doctor);
@@ -218,13 +220,17 @@ public class TestEjb {
         appointement2.setDiag(diagnosis);
         appointement2.setMalade(patient);
         appointement2.setLieu(patient.getLieuDeVie());
-
-
         appointement2.setDate(appointement.getDate().minusDays(1));
+        Appointement appointement3 = new Appointement();
+        appointement3.setMedecinAffecte(doctor);
+        appointement3.setDiag(diagnosis);
+        appointement3.setMalade(patient);
+        appointement3.setLieu(patient.getLieuDeVie());
+        appointement3.setDate(appointement.getDate().plusDays(1));
         System.out.println("appointementDate  1 : " + appointement.getDate());
         appointement = crud.createAppointement(appointement);
         appointement2 = crud.createAppointement(appointement2);
-
+        appointement3 = crud.createAppointement(appointement3);
         List<Appointement> appointements =
                 crud.findAppointementByDayDoctor(appointement.getDate(), doctor);
         System.out.println("appointementDate : " + appointement.getDate());
@@ -263,7 +269,7 @@ public class TestEjb {
 
     //@Test
     public void findDiagnosisByName() {
-        // TODO: find diagnosis by name of doctor
+        //
     }
 
     //@Test
@@ -274,6 +280,46 @@ public class TestEjb {
         crud.suppressDiagnosis(testDiagnosis);
         Diagnosis resultDiagnosis = crud.findDiagnosisById(idDiagnosis);
         assertNull(resultDiagnosis);
+    }
+
+    public void findAppointementByDiagnosis() {
+
+    }
+
+    public void updateAppointement() {
+    }
+
+    @Test
+    public void testAlgorithm() {
+        Doctor doctor = randombuilder.buildRandomDoctor();
+        doctor = crud.createDoctor(doctor);
+        Patient patient = randombuilder.buildRandomPatient();
+        patient = crud.createPatient(patient);
+        Diagnosis diagnosis = randombuilder.buildRandomDiagnosis();
+        diagnosis.setPatientConserne(patient);
+        diagnosis = crud.createDiagnosis(diagnosis);
+        Request newRequest = new Request(diagnosis, patient);
+        System.out.println("first");
+        algo.addAppointementSchedule(newRequest);
+        assertEquals(1, crud.findAllAppointement().size());
+        Patient patient2 = randombuilder.buildRandomPatient();
+        patient2 = crud.createPatient(patient2);
+        Diagnosis diagnosis2 = randombuilder.buildRandomDiagnosis();
+        diagnosis2.setPatientConserne(patient2);
+        diagnosis2 = crud.createDiagnosis(diagnosis2);
+        Request newRequest2 = new Request(diagnosis2, patient2);
+        System.out.println("second");
+        algo.addAppointementSchedule(newRequest2);
+        assertEquals(2, crud.findAllAppointement().size());
+        Patient patient3 = randombuilder.buildRandomPatient();
+        patient3 = crud.createPatient(patient3);
+        Diagnosis diagnosis3 = randombuilder.buildRandomDiagnosis();
+        diagnosis3.setPatientConserne(patient3);
+        diagnosis3 = crud.createDiagnosis(diagnosis3);
+        Request newRequest3 = new Request(diagnosis3, patient3);
+        System.out.println("third : ");
+        algo.addAppointementSchedule(newRequest3);
+        assertEquals(3, crud.findAllAppointement().size());
     }
 
 }

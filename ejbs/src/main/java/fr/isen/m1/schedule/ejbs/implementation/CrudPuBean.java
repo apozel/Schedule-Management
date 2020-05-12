@@ -204,8 +204,7 @@ public class CrudPuBean implements CrudPuInterface {
     @Override
     public List<Appointement> findAppointementByDayDoctor(LocalDate day, Doctor doctor) {
         Query query = em.createNamedQuery("Appointement.findByDayDoctor", Appointement.class)
-                .setParameter("doctor", doctor).setParameter("startDate", day.minusDays(1))
-                .setParameter("finishDate", day.plusDays(1));
+                .setParameter("doctor", doctor).setParameter("day", day);
         @SuppressWarnings("unchecked")
         List<Appointement> appointements = query.getResultList();
         // logger.debug(appointements);
@@ -217,6 +216,20 @@ public class CrudPuBean implements CrudPuInterface {
         em.persist(details);
         em.flush();
         return details;
+    }
+
+    @Override
+    public Appointement findAppointementByDiagnosis(Diagnosis diagnosis) {
+        Query query = em.createNamedQuery("Appointement.findByDiagnosis", Appointement.class)
+                .setParameter("diagnosis", diagnosis);
+        Appointement appointement = (Appointement) query.getSingleResult();
+        // logger.debug(appointements);
+        return appointement;
+    }
+
+    @Override
+    public Appointement updateAppointement(Appointement appointement) {
+     return em.merge(appointement);
     }
 
 }

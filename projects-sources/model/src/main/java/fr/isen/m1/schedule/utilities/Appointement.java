@@ -35,7 +35,10 @@ import fr.isen.m1.schedule.converter.LocalTimeConverter;
         @NamedQuery(name = "Appointement.findAll",
                 query = "SELECT appointement FROM Appointement appointement"),
         @NamedQuery(name = "Appointement.findByDayDoctor",
-                query = "SELECT appointement FROM Appointement appointement WHERE appointement.medecinAffecte = :doctor AND appointement.date BETWEEN :startDate AND :finishDate")})
+                query = "SELECT appointement FROM Appointement appointement WHERE appointement.medecinAffecte = :doctor AND appointement.date = :day"),
+            @NamedQuery(name = "Appointement.findByDiagnosis",
+                query = "SELECT appointement FROM Appointement appointement WHERE appointement.diag = :diagnosis")
+            })
 
 public class Appointement implements Serializable {
 

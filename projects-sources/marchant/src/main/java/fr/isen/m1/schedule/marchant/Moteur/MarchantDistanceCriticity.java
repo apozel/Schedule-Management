@@ -1,22 +1,22 @@
 package fr.isen.m1.schedule.marchant.moteur;
 
-import fr.isen.m1.schedule.utilities.Diagnosis;
-
 import java.util.ArrayList;
-import Genetic.SelectionMode;
+import fr.isen.m1.schedule.marchant.moteur.Genetic.SelectionMode;
+import fr.isen.m1.schedule.utilities.Diagnosis;
+import fr.isen.m1.schedule.utilities.Doctor;
 
-public class MarchantDistanceCriticite{
+public class MarchantDistanceCriticity{
 	private double distance;
 	private double distanceCriticity;
 	private Diagnosis[] listDiag;
-	
-	
-	public MarchantDistanceCriticite(Diagnosis[] list, Doctor doctor) {
+
+
+	public MarchantDistanceCriticity(Diagnosis[] list, Doctor doctor) {
 		distance = 0;
 		distanceCriticity = 0;
 		listDiag = givePathToFollowPrioHighCriticity(list, doctor);
 	}
-	
+
 	/**
 	 * @return the distance
 	 */
@@ -39,16 +39,16 @@ public class MarchantDistanceCriticite{
 	public Diagnosis[] getListDiag() {
 		return listDiag;
 	}
-	
+
 	private Diagnosis[] givePathToFollowPrioHighCriticity(Diagnosis[] listeDiag, Doctor doctor){
-       
+
         // Those settings should work for all 'citiesNumber':
-        int citiesNumber = listeDiag.length;     
+        int citiesNumber = listeDiag.length;
         int populationSize = 64;
 	    int epochsNumber = 10000 * citiesNumber;
 		SelectionMode selMode = SelectionMode.Uniform;
-       
-        distance = calculDistanceWithoutCriticity(listeDiag, citiesNumber, populationSize, epochsNumber, selMode); 
+
+        distance = calculDistanceWithoutCriticity(listeDiag, citiesNumber, populationSize, epochsNumber, selMode);
         Diagnosis[] listeGagnante = new Diagnosis[listeDiag.length];
         ArrayList<Integer> listIndexHigh = new ArrayList<Integer>();
         ArrayList<Integer> listIndexLow = new ArrayList<Integer>();
@@ -105,7 +105,7 @@ public class MarchantDistanceCriticite{
 			}
 			lstPositionLow[i] = listPositionLow[c+i];
             }
-        
+
         //Melting the two list in one to have the final list :
         for (int i = 0 ; i < listPositionHigh.length ; i++){
             listeGagnante[i] = listPositionHigh[i];
@@ -113,14 +113,14 @@ public class MarchantDistanceCriticite{
         for (int i = 0 ; i < lstPositionLow.length ; i++){
             listeGagnante[i+listPositionHigh.length] = lstPositionLow[i];
         }
-        
+
         //Saving the distance into the variable distanceCriticity
         int[] path = new int[listeGagnante.length];
         for(int i = 0; i<path.length; i++) {
         	path[i] = i;
         }
         distanceCriticity = Path.totalLength(new Map(listeGagnante), path);
-        return listeGagnante; 
+        return listeGagnante;
     }
 
 	private double calculDistanceWithoutCriticity(Diagnosis[] listDiag, int citiesNumber, int populationSize, int epochsNumber, SelectionMode selMode) {
