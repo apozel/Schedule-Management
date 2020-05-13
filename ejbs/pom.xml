@@ -20,16 +20,21 @@
     <dependency>
       <groupId>fr.isen.m1.schedule</groupId>
       <artifactId>model</artifactId>
+
     </dependency>
     <dependency>
       <groupId>fr.isen.m1.schedule</groupId>
       <artifactId>marchant</artifactId>
     </dependency>
     <!-- https://mvnrepository.com/artifact/org.glassfish/javax.ejb -->
+    <!-- https://mvnrepository.com/artifact/javax/javaee-api -->
     <dependency>
-      <groupId>org.glassfish</groupId>
-      <artifactId>javax.ejb</artifactId>
+      <groupId>javax</groupId>
+      <artifactId>javaee-api</artifactId>
+      <version>8.0</version>
+      <scope>provided</scope>
     </dependency>
+
     <dependency>
 
       <groupId>org.jboss.arquillian.junit</groupId>

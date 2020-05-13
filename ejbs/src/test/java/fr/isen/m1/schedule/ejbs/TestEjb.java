@@ -323,7 +323,7 @@ public class TestEjb {
     public void updateAppointement() {
     }
 
-    //@Test
+    @Test
     public void testAlgorithm() {
         Doctor doctor = randombuilder.buildRandomDoctor();
         doctor = crud.createDoctor(doctor);
