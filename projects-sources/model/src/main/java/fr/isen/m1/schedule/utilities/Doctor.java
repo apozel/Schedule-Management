@@ -2,7 +2,6 @@ package fr.isen.m1.schedule.utilities;
 
 import java.io.Serializable;
 import java.time.LocalTime;
-import java.util.Arrays;
 import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;

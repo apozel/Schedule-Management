@@ -38,13 +38,6 @@
     <plugins>
       <plugin>
         <artifactId>maven-ear-plugin</artifactId>
-        <configuration>
-          <archive>
-            <manifest>
-              <addClasspath>true</addClasspath>
-            </manifest>
-          </archive>
-        </configuration>
       </plugin>
       <plugin>
         <groupId>org.codehaus.cargo</groupId>
