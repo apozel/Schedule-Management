@@ -2,7 +2,6 @@ package fr.isen.m1.schedule.ejbs;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import java.util.List;
 import javax.ejb.EJB;
@@ -11,7 +10,6 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import fr.isen.m1.schedule.builder.SocialDetailsBuilder;
@@ -28,7 +26,6 @@ import fr.isen.m1.schedule.utilities.Doctor;
 import fr.isen.m1.schedule.utilities.Patient;
 import fr.isen.m1.schedule.utilities.Position;
 import fr.isen.m1.schedule.utilities.Request;
-import fr.isen.m1.schedule.utilities.SocialDetails;
 
 @RunWith(Arquillian.class)
 

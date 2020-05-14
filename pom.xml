@@ -99,6 +99,12 @@
         <type>ejb</type>
       </dependency>
       <dependency>
+        <groupId>fr.isen.m1.schedule</groupId>
+        <artifactId>ear</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <type>ear</type>
+      </dependency>
+      <dependency>
         <groupId>org.jboss.arquillian</groupId>
         <artifactId>arquillian-bom</artifactId>
         <version>1.1.14.Final</version>
@@ -113,11 +119,11 @@
         <scope>test</scope>
       </dependency>
       <dependency>
-      <groupId>javax</groupId>
-      <artifactId>javaee-api</artifactId>
-      <version>8.0.1</version>
-      <scope>provided</scope>
-    </dependency>
+        <groupId>javax</groupId>
+        <artifactId>javaee-api</artifactId>
+        <version>8.0.1</version>
+        <scope>provided</scope>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -161,6 +167,12 @@
           <version>3.0.1</version>
           <configuration>
             <ejbVersion>3.1</ejbVersion>
+            <archive>
+              <manifest>
+                <addClasspath>true</addClasspath>
+                <classpathPrefix>lib/</classpathPrefix>
+              </manifest>
+            </archive>
           </configuration>
         </plugin>
         <plugin>
@@ -195,7 +207,24 @@
                 <cargo.payara.domain.name>${payara.domainName}</cargo.payara.domain.name>
               </properties>
             </configuration>
+            <deployables>
+              <deployable>
+                <groupId>fr.isen.m1.schedule</groupId>
+                <artifactId>ear</artifactId>
+                <type>ear</type>
+              </deployable>
+            </deployables>
           </configuration>
+          <!-- https://mvnrepository.com/artifact/org.glassfish.main.deployment/deployment-client -->
+          <dependencies>
+          <dependency>
+            <groupId>org.glassfish.main.deployment</groupId>
+            <artifactId>deployment-client</artifactId>
+            <version>5.1.0</version>
+            <scope>runtime</scope>
+          </dependency>
+</dependencies>
+
         </plugin>
       </plugins>
 

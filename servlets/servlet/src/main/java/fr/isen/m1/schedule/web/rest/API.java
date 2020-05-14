@@ -26,10 +26,10 @@ import fr.isen.m1.schedule.utilities.Request;
 
 public class API {
 
-    @EJB(mappedName = "AlgorithmInterface")
+    @EJB
     AlgorithmInterface algo;
 
-    @EJB(mappedName = "CrudPuInterface")
+    @EJB
     CrudPuInterface crud;
 
     @PUT
