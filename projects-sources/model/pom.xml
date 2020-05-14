@@ -16,11 +16,7 @@
   <name>model package</name>
 
   <dependencies>
-    <dependency>
-      <groupId>fr.isen.m1.schedule</groupId>
-      <artifactId>logging</artifactId>
-    </dependency>
-    <!-- https://mvnrepository.com/artifact/javax/javaee-api -->
+
     <dependency>
       <groupId>javax</groupId>
       <artifactId>javaee-api</artifactId>

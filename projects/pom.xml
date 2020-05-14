@@ -16,7 +16,6 @@
   <name>sub projects</name>
 
   <modules>
-    <module>logging</module>
     <module>error</module>
     </modules>
 </project>

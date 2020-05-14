@@ -27,10 +27,6 @@
 
     <dependency>
       <groupId>fr.isen.m1.schedule</groupId>
-      <artifactId>logging</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>fr.isen.m1.schedule</groupId>
       <artifactId>model</artifactId>
     </dependency>
   </dependencies>
