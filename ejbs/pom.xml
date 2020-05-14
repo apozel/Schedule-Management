@@ -78,6 +78,7 @@
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
+          <skip>${skip.integration.test}</skip>
           <systemProperties>
             <adminHttps>true</adminHttps>
           </systemProperties>

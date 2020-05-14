@@ -4,6 +4,49 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
+  <profiles>
+
+    <profile>
+      <id>payaraLocal</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <skip.docker.plugin>true</skip.docker.plugin>
+        <skip.integration.test>false</skip.integration.test>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>payaraRemote</id>
+      <properties>
+        <skip.docker.plugin>true</skip.docker.plugin>
+        <skip.integration.test>false</skip.integration.test>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>docker</id>
+      <properties>
+        <skip.docker.plugin>false</skip.docker.plugin>
+        <skip.integration.test>true</skip.integration.test>
+      </properties>
+    </profile>
+
+  </profiles>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <payara.adminPort>4848</payara.adminPort>
+    <payara.username>admin</payara.username>
+    <payara.password></payara.password>
+    <payara.hostname>localhost</payara.hostname>
+    <payara.home>${env.PAYARA_5_HOME}</payara.home>
+    <payara.domainDir>${env.PAYARA_5_HOME}/glassfish/domains</payara.domainDir>
+    <payara.domainName>domain1</payara.domainName>
+    <project.build.finalName>scheduleManagement-ear</project.build.finalName>
+  </properties>
+
   <groupId>fr.isen.m1.schedule</groupId>
   <artifactId>scheduleManagement</artifactId>
   <version>1.0-SNAPSHOT</version>
@@ -28,17 +71,7 @@
     </site>
   </distributionManagement>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <payara.adminPort>4848</payara.adminPort>
-    <payara.username>admin</payara.username>
-    <payara.password></payara.password>
-    <payara.hostname>localhost</payara.hostname>
-    <payara.home>${env.PAYARA_5_HOME}</payara.home>
-    <payara.domainDir>${env.PAYARA_5_HOME}/glassfish/domains</payara.domainDir>
-    <payara.domainName>domain1</payara.domainName>
-    <project.build.finalName>scheduleManagement-ear</project.build.finalName>
-  </properties>
+
 
   <dependencyManagement>
     <dependencies>
