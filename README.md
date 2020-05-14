@@ -5,6 +5,23 @@ docker network create schedule-net
 docker run -d --name mysql -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=test -e MYSQL_USER=app -e MYSQL_PASSWORD=app -p 3306:3306 mysql
 docker run --rm -p 4848:4848 --name schedule --network schedule-net  -p 8080:80 schedule
 
+log d'un container :
+docker container logs <docker-container-name>
+
+docker container run --name jenkins-docker --detach \
+  --privileged --network jenkins --network-alias docker \
+  --env DOCKER_TLS_CERTDIR=/certs \
+  --volume jenkins-docker-certs:/certs/client \
+  --volume jenkins-data:/var/jenkins_home \
+  --publish 2376:2376 docker:dind
+
+  docker container run --name jenkins-blueocean --detach \
+  --network jenkins --env DOCKER_HOST=tcp://docker:2376 \
+  --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1 \
+  --volume jenkins-data:/var/jenkins_home \
+  --volume jenkins-docker-certs:/certs/client:ro \
+  --publish 8080:8080 --publish 50000:50000 jenkinsci/blueocean
+
 # Installation : (depuis 1 avril)
 
 ## JDK
