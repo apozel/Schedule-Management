@@ -9,7 +9,9 @@ EXPOSE 4848 9009 8080 8181
 
 USER root
 
-COPY ./ear/target/ear-1.0-SNAPSHOT.ear $DEPLOY_DIR
+ARG JAR_FILE
+
+COPY ./target/${JAR_FILE}.ear $DEPLOY_DIR
 COPY ./docker/mysql-connector-java-8.0.19.jar /
 COPY  ./docker/post-boot-commands.asadmin $POSTBOOT_COMMANDS
 

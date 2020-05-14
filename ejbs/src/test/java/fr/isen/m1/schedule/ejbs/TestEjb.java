@@ -14,8 +14,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import fr.isen.m1.schedule.builder.SocialDetailsBuilder;
 import fr.isen.m1.schedule.converter.BooleanConverter;
-import fr.isen.m1.schedule.ejbs.ejbinterface.AlgorithmInterface;
-import fr.isen.m1.schedule.ejbs.ejbinterface.CrudPuInterface;
 import fr.isen.m1.schedule.ejbs.implementation.AlgorithmBean;
 import fr.isen.m1.schedule.ejbs.implementation.CrudPuBean;
 import fr.isen.m1.schedule.marchant.moteur.MarchantDistanceCriticity;
@@ -32,9 +30,9 @@ import fr.isen.m1.schedule.utilities.Request;
 public class TestEjb {
 
     @EJB
-    private AlgorithmInterface algo;
+    private AlgorithmBean algo;
     @EJB
-    private CrudPuInterface crud;
+    private CrudPuBean crud;
 
     private RandomBuilder randombuilder = new RandomBuilder();
 
@@ -46,8 +44,8 @@ public class TestEjb {
                 .addPackage(SocialDetailsBuilder.class.getPackage()).addClass(RandomBuilder.class)
                 .addAsResource("META-INF/persistence.xml").addAsResource("META-INF/sql/Script.sql")
                 .addAsResource("META-INF/sql/Drop.sql")
-                .addClasses(AlgorithmBean.class, AlgorithmInterface.class)
-                .addClasses(CrudPuInterface.class, CrudPuBean.class).addPackage(MarchantDistanceCriticity.class.getPackage())
+                .addClasses(AlgorithmBean.class, CrudPuBean.class)
+                .addPackage(MarchantDistanceCriticity.class.getPackage())
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
     }
 
@@ -277,7 +275,7 @@ public class TestEjb {
         Long idDiagnosis = diagnosis.getId();
         Diagnosis resultDiagnosisId = crud.findDiagnosisById(idDiagnosis);
         assertEquals(resultDiagnosisId, diagnosis);
-            }
+    }
 
     @Test
     public void findDiagnosisById() {
@@ -331,7 +329,7 @@ public class TestEjb {
         diagnosis = crud.createDiagnosis(diagnosis);
         Request newRequest = new Request(diagnosis, patient);
         System.out.println("first");
-        algo.addAppointementSchedule(newRequest,doctor);
+        algo.addAppointementSchedule(newRequest, doctor);
         assertEquals(1, crud.findAppointementByDoctor(doctor).size());
         Patient patient2 = randombuilder.buildRandomPatient();
         patient2 = crud.createPatient(patient2);
@@ -340,7 +338,7 @@ public class TestEjb {
         diagnosis2 = crud.createDiagnosis(diagnosis2);
         Request newRequest2 = new Request(diagnosis2, patient2);
         System.out.println("second");
-        algo.addAppointementSchedule(newRequest2,doctor);
+        algo.addAppointementSchedule(newRequest2, doctor);
         assertEquals(2, crud.findAppointementByDoctor(doctor).size());
         Patient patient3 = randombuilder.buildRandomPatient();
         patient3 = crud.createPatient(patient3);
@@ -349,7 +347,7 @@ public class TestEjb {
         diagnosis3 = crud.createDiagnosis(diagnosis3);
         Request newRequest3 = new Request(diagnosis3, patient3);
         System.out.println("third : ");
-        algo.addAppointementSchedule(newRequest3,doctor);
+        algo.addAppointementSchedule(newRequest3, doctor);
         assertEquals(3, crud.findAppointementByDoctor(doctor).size());
     }
 

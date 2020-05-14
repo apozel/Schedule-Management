@@ -37,6 +37,7 @@
     <payara.home>${env.PAYARA_5_HOME}</payara.home>
     <payara.domainDir>${env.PAYARA_5_HOME}/glassfish/domains</payara.domainDir>
     <payara.domainName>domain1</payara.domainName>
+    <project.build.finalName>scheduleManagement-ear</project.build.finalName>
   </properties>
 
   <dependencyManagement>
@@ -159,7 +160,28 @@
         </plugin>
         <plugin>
           <artifactId>maven-ear-plugin</artifactId>
-          <version>3.0.1</version>
+          <version>3.0.2</version>
+          <configuration>
+            <skinnyWars>true</skinnyWars>
+            <defaultLibBundleDir>lib</defaultLibBundleDir>
+            <modules>
+              <!-- Web Gui -->
+              <webModule>
+                <groupId>fr.isen.m1.schedule</groupId>
+                <artifactId>servlet</artifactId>
+                <uri>fr.isen.m1.schedule-servlet-1.0-SNAPSHOT.war</uri>
+              </webModule>
+              <jarModule>
+                <groupId>fr.isen.m1.schedule</groupId>
+                <artifactId>logging</artifactId>
+              </jarModule>
+              <jarModule>
+                <groupId>fr.isen.m1.schedule</groupId>
+                <artifactId>model</artifactId>
+              </jarModule>
+            </modules>
+            <generateApplicationXml>true</generateApplicationXml>
+          </configuration>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -217,14 +239,33 @@
           </configuration>
           <!-- https://mvnrepository.com/artifact/org.glassfish.main.deployment/deployment-client -->
           <dependencies>
-          <dependency>
-            <groupId>org.glassfish.main.deployment</groupId>
-            <artifactId>deployment-client</artifactId>
-            <version>5.1.0</version>
-            <scope>runtime</scope>
-          </dependency>
-</dependencies>
-
+            <dependency>
+              <groupId>org.glassfish.main.deployment</groupId>
+              <artifactId>deployment-client</artifactId>
+              <version>5.1.0</version>
+              <scope>runtime</scope>
+            </dependency>
+          </dependencies>
+        </plugin>
+        <plugin>
+          <groupId>com.spotify</groupId>
+          <artifactId>dockerfile-maven-plugin</artifactId>
+          <version>1.4.13</version>
+          <executions>
+            <execution>
+              <id>default</id>
+              <goals>
+                <goal>build</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <skip>true</skip>
+            <repository>m1/schedule</repository>
+            <buildArgs>
+              <JAR_FILE>${project.build.finalName}</JAR_FILE>
+            </buildArgs>
+          </configuration>
         </plugin>
       </plugins>
 

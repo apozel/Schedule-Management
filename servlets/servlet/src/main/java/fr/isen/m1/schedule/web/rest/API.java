@@ -2,6 +2,7 @@ package fr.isen.m1.schedule.web.rest;
 
 import java.util.List;
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -11,8 +12,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import fr.isen.m1.schedule.ejbs.ejbinterface.AlgorithmInterface;
-import fr.isen.m1.schedule.ejbs.ejbinterface.CrudPuInterface;
+import fr.isen.m1.schedule.ejbs.implementation.AlgorithmBean;
+import fr.isen.m1.schedule.ejbs.implementation.CrudPuBean;
 import fr.isen.m1.schedule.random.RandomBuilder;
 import fr.isen.m1.schedule.utilities.Appointement;
 import fr.isen.m1.schedule.utilities.Diagnosis;
@@ -22,15 +23,16 @@ import fr.isen.m1.schedule.utilities.Position;
 import fr.isen.m1.schedule.utilities.Request;
 
 @Path("API")
+@RequestScoped
 @Produces(MediaType.APPLICATION_JSON)
 
 public class API {
 
     @EJB
-    AlgorithmInterface algo;
+    AlgorithmBean algo;
 
     @EJB
-    CrudPuInterface crud;
+    CrudPuBean crud;
 
     @PUT
     @Path("addAppointement/{idDiagnosis}")

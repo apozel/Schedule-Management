@@ -6,25 +6,23 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import fr.isen.m1.schedule.builder.AppointementBuilder;
-import fr.isen.m1.schedule.ejbs.ejbinterface.AlgorithmInterface;
-import fr.isen.m1.schedule.ejbs.ejbinterface.CrudPuInterface;
 import fr.isen.m1.schedule.marchant.moteur.MarchantDistanceCriticity;
 import fr.isen.m1.schedule.utilities.Appointement;
 import fr.isen.m1.schedule.utilities.Diagnosis;
 import fr.isen.m1.schedule.utilities.Doctor;
 import fr.isen.m1.schedule.utilities.Request;
 
-@Stateless(mappedName = "AlgorithmInterface")
-public class AlgorithmBean implements AlgorithmInterface {
+@Stateless
+public class AlgorithmBean {
 
     private Doctor chooseDoctor;
     private LocalDateTime now;
     private List<Appointement> dayAppointements;
 
-    @EJB(mappedName = "CrudPuInterface")
-    private CrudPuInterface crud;
+    @EJB
+    private CrudPuBean crud;
 
-    @Override
+
     public void addAppointementSchedule(Request newQuest) {
         this.now = LocalDateTime.now();
         List<Appointement> returnAppointements = new ArrayList<Appointement>();
@@ -64,7 +62,7 @@ public class AlgorithmBean implements AlgorithmInterface {
 
     }
 
-    @Override
+
     public void addAppointementSchedule(Request newQuest, Doctor chooseDoctor) {
         this.now = LocalDateTime.now();
         List<Appointement> returnAppointements = new ArrayList<Appointement>();

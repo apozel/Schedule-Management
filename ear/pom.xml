@@ -36,58 +36,26 @@
   </dependencies>
 
   <build>
-    <finalName>scheduleManagement-ear</finalName>
+    <finalName>${project.build.finalName}</finalName>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-ear-plugin</artifactId>
-        <version>3.0.2</version>
-        <configuration>
-
-          <skinnyWars>true</skinnyWars>
-
-          <!-- unpacked jar, lib dir unchanged, doesn't work in payara, works in wildfly -->
-          <!-- <unpackTypes>war,ejb,jar</unpackTypes> -->
-
-          <!-- unpacked jar, lib dir changed, works in payara and wildfly -->
-          <!-- <unpackTypes>war,ejb,jar</unpackTypes> -->
-
-          <defaultLibBundleDir>lib</defaultLibBundleDir>
-
-
-          <!-- packed jar, works in payara and wildfly -->
-          <!--               <unpackTypes>war,ejb</unpackTypes>-->
-          <!--               <defaultLibBundleDir>lib</defaultLibBundleDir>-->
-          <modules>
-            <!-- Web Gui -->
-            <webModule>
-              <groupId>fr.isen.m1.schedule</groupId>
-              <artifactId>servlet</artifactId>
-              <uri>fr.isen.m1.schedule-servlet-1.0-SNAPSHOT.war</uri>
-            </webModule>
-
-
-
-            <jarModule>
-              <groupId>fr.isen.m1.schedule</groupId>
-              <artifactId>logging</artifactId>
-            </jarModule>
-            <jarModule>
-              <groupId>fr.isen.m1.schedule</groupId>
-              <artifactId>model</artifactId>
-            </jarModule>
-
-          </modules>
-          <generateApplicationXml>true</generateApplicationXml>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.cargo</groupId>
-        <artifactId>cargo-maven2-plugin</artifactId>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.cargo</groupId>
+          <artifactId>cargo-maven2-plugin</artifactId>
         <configuration>
           <skip>false</skip>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>com.spotify</groupId>
+        <artifactId>dockerfile-maven-plugin</artifactId>
+        <configuration>
+        <skip>false</skip>
+      </configuration>
+    </plugin>
     </plugins>
   </build>
 </project>
