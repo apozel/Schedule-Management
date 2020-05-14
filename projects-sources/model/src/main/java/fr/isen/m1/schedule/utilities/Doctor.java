@@ -39,7 +39,7 @@ public class Doctor implements Serializable {
     @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinColumn(name = "id_socdet")
     private SocialDetails socialDetails;
-    @Column(name = "CDHP")
+    @Column(name = "rpps")
     private String cdhp;
     @Transient
     private Position realPosition;

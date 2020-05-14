@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * Diagnostic
@@ -35,9 +36,9 @@ public class Diagnosis implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_diag")
     private Long id;
-    @Column(name = "gravityGrade")
-    private int criticity;
-    @Column(name = "report")
+    @Column(name = "criticity")
+    private float criticity;
+    @Transient
     private String description;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_medrec")
@@ -47,7 +48,7 @@ public class Diagnosis implements Serializable {
 
     }
 
-    public Diagnosis(int criticite, String description, Patient patient) {
+    public Diagnosis(float criticite, String description, Patient patient) {
         this.criticity = criticite;
         this.description = description;
         this.patient = patient;
@@ -55,11 +56,11 @@ public class Diagnosis implements Serializable {
 
 
 
-    public int getCriticite() {
+    public float getCriticite() {
         return criticity;
     }
 
-    public void setCriticite(int criticite) {
+    public void setCriticite(float criticite) {
         this.criticity = criticite;
     }
 
