@@ -1,0 +1,11 @@
+version: '3'
+services:
+  schedule:
+    build: ear/
+    ports:
+      - "4848:4848"
+      - "8080:8081"
+  mysql:
+    build:
+    ports:
+      - "3306:3306"

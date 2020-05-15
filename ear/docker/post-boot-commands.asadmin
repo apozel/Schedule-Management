@@ -1,4 +1,4 @@
 add-library /mysql-connector-java-8.0.19.jar
 set server.ejb-container.property.disable-nonportable-jndi-names="true"
-create-jdbc-connection-pool --restype javax.sql.DataSource --datasourceclassname com.mysql.cj.jdbc.MysqlDataSource --property user=app:password=app:DatabaseName=test:ServerName=mysql:port=3306:useSSL=false:zeroDateTimeBehavior=CONVERT_TO_NULL:useUnicode=true:serverTimezone=UTC:characterEncoding=UTF-8:useInformationSchema=true:nullCatalogMeansCurrent=true:nullNamePatternMatchesAll=false:allowPublicKeyRetrieval=true:useSSL=false schedulePool
-create-jdbc-resource --connectionpoolid schedulePool --enabled=true jdbc/scheduleResource
+create-jdbc-connection-pool --ping --restype javax.sql.DataSource --datasourceclassname com.mysql.cj.jdbc.MysqlDataSource --property user=${ENV=BDD_USER_NAME}:password=$BDD_USER_PASSWORD:DatabaseName=${ENV=BDD_DB_NAME}:ServerName=${ENV=BDD_NAME_URL}:port=${ENV=BDD_PORT}:zeroDateTimeBehavior=CONVERT_TO_NULL:useUnicode=true:serverTimezone=UTC:characterEncoding=UTF-8:useInformationSchema=true:nullCatalogMeansCurrent=true:nullNamePatternMatchesAll=false:allowPublicKeyRetrieval=true:useSSL=false schedulePool
+create-jdbc-resource --connectionpoolid schedulePool --enabled=true ${ENV=JDBC_RESOURCE_NAME}

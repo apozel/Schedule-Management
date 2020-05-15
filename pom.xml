@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <profiles>
@@ -45,6 +44,16 @@
     <payara.domainDir>${env.PAYARA_5_HOME}/glassfish/domains</payara.domainDir>
     <payara.domainName>domain1</payara.domainName>
     <project.build.finalName>scheduleManagement-ear</project.build.finalName>
+
+    <jdbc.resourcesName>jdbc/scheduleResource</jdbc.resourcesName>
+    <mysql.name.url>mysql</mysql.name.url>
+    <mysql.port>3306</mysql.port>
+    <mysql.user.name>root</mysql.user.name>
+    <mysql.user.password>password</mysql.user.password>
+    <mysql.db.name>appschedule</mysql.db.name>
+
+    <docker.image.schedule>m1/schedule</docker.image.schedule>
+
   </properties>
 
   <groupId>fr.isen.m1.schedule</groupId>
@@ -72,12 +81,10 @@
   </distributionManagement>
 
 
-
   <dependencyManagement>
     <dependencies>
       <!-- https://mvnrepository.com/artifact/jakarta.ejb/jakarta.ejb-api -->
       <!-- https://mvnrepository.com/artifact/org.glassfish/javax.ejb -->
-
 
 
       <dependency>
@@ -153,7 +160,8 @@
 
   <build>
 
-    <pluginManagement>      <!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+    <pluginManagement>
+      <!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
         <plugin>
           <artifactId>maven-clean-plugin</artifactId>
@@ -283,9 +291,16 @@
             <repository>m1/schedule</repository>
             <buildArgs>
               <JAR_FILE>${project.build.finalName}</JAR_FILE>
+              <JDBC_RESOURCE_NAME_ARG>${jdbc.resourcesName}</JDBC_RESOURCE_NAME_ARG>
+              <BDD_NAME_URL_ARG>${mysql.name.url}</BDD_NAME_URL_ARG>
+              <BDD_PORT_ARG>${mysql.port}</BDD_PORT_ARG>
+              <BDD_USER_NAME_ARG>${mysql.user.name}</BDD_USER_NAME_ARG>
+              <BDD_USER_PASSWORD_ARG>${mysql.user.password}</BDD_USER_PASSWORD_ARG>
+              <BDD_DB_NAME_ARG>${mysql.db.name}</BDD_DB_NAME_ARG>
             </buildArgs>
           </configuration>
         </plugin>
+
       </plugins>
 
     </pluginManagement>

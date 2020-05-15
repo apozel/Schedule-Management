@@ -15,7 +15,8 @@ CREATE TABLE IF NOT EXISTS illness ( id_ill INT(11) UNSIGNED auto_increment NOT 
 CREATE TABLE IF NOT EXISTS symptom ( id_symp INT(11) UNSIGNED auto_increment NOT NULL, name TEXT, spec_value FLOAT, PRIMARY KEY (id_symp) ) engine = innodb;
 CREATE TABLE IF NOT EXISTS numerical ( id_num INT (11) UNSIGNED auto_increment NOT NULL, name VARCHAR (25), value INT, id_diag INT UNSIGNED, PRIMARY KEY (id_num) ) engine = innodb;
 CREATE TABLE IF NOT EXISTS practice ( id_doc INT UNSIGNED NOT NULL, id_prtyp INT UNSIGNED NOT NULL, PRIMARY KEY (id_doc, id_prtyp) ) engine = innodb;
-CREATE TABLE IF NOT EXISTS belong ( id_medsite INT UNSIGNED NOT NULL, id_doc INT UNSIGNED NOT NULL, PRIMARY KEY (id_medsite, id_doc) ) engine = innodb;CREATE TABLE IF NOT EXISTS have_relatives_with ( id_medrec_child INT UNSIGNED NOT NULL, id_medrec_father INT UNSIGNED NOT NULL, PRIMARY KEY (id_medrec_child, id_medrec_father) ) engine = innodb;
+CREATE TABLE IF NOT EXISTS belong ( id_medsite INT UNSIGNED NOT NULL, id_doc INT UNSIGNED NOT NULL, PRIMARY KEY (id_medsite, id_doc) ) engine = innodb;
+CREATE TABLE IF NOT EXISTS have_relatives_with ( id_medrec_child INT UNSIGNED NOT NULL, id_medrec_father INT UNSIGNED NOT NULL, PRIMARY KEY (id_medrec_child, id_medrec_father) ) engine = innodb;
 CREATE TABLE IF NOT EXISTS is_allergy ( id_medrec INT UNSIGNED NOT NULL, id_allergy INT UNSIGNED NOT NULL, PRIMARY KEY (id_medrec, id_allergy) ) engine = innodb;
 CREATE TABLE IF NOT EXISTS is_genetic ( id_medrec INT UNSIGNED NOT NULL, id_gen INT UNSIGNED NOT NULL, PRIMARY KEY (id_medrec, id_gen) ) engine = innodb;
 CREATE TABLE IF NOT EXISTS illness_probability ( id_diag INT UNSIGNED NOT NULL, id_ill INT UNSIGNED NOT NULL, probability FLOAT UNSIGNED, PRIMARY KEY(id_diag, id_ill) ) engine = innodb;
@@ -34,6 +35,10 @@ ALTER TABLE appointement ADD CONSTRAINT fk_appointement_id_diag FOREIGN KEY (id_
 ALTER TABLE appointement ADD CONSTRAINT fk_appointement_id_gpsc FOREIGN KEY (id_gpsc) REFERENCES gps_coordinates(id_gpsc);
 ALTER TABLE appointement ADD CONSTRAINT fk_appointement_id_medrec FOREIGN KEY (id_medrec) REFERENCES patient_medical_record(id_medrec);
 ALTER TABLE appointement ADD CONSTRAINT fk_appointement_id_doc FOREIGN KEY (id_doc) REFERENCES doctor(id_doc);
+ALTER TABLE appointement ADD CONSTRAINT fk_appointement_id_addr FOREIGN KEY (id_addr) REFERENCES address(id_addr);
+ALTER TABLE medical_site ADD CONSTRAINT fk_medical_site_id_addr FOREIGN KEY (id_addr) REFERENCES address(id_addr);
+ALTER TABLE doctor_diagnostic ADD CONSTRAINT fk_doctor_diagnostic_id_medrec FOREIGN KEY (id_medrec) REFERENCES patient_medical_record(id_medrec);
+ALTER TABLE doctor_diagnostic ADD CONSTRAINT fk_doctor_diagnostic_id_doc FOREIGN KEY (id_doc) REFERENCES doctor(id_doc);
 ALTER TABLE imagery ADD CONSTRAINT fk_imagery_id_diag FOREIGN KEY (id_diag) REFERENCES doctor_diagnostic(id_diag);
 ALTER TABLE numerical ADD CONSTRAINT fk_decimalal_id_diag FOREIGN KEY (id_diag) REFERENCES doctor_diagnostic(id_diag);
 ALTER TABLE practice ADD CONSTRAINT fk_practice_id_doc FOREIGN KEY (id_doc) REFERENCES doctor(id_doc);

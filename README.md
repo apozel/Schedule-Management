@@ -2,8 +2,8 @@
 Technical Project M1 Big Data
 
 docker network create schedule-net
-docker run -d --name mysql -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=test -e MYSQL_USER=app -e MYSQL_PASSWORD=app -p 3306:3306 mysql
-docker run --rm -p 4848:4848 --name schedule --network schedule-net  -p 8080:80 schedule
+docker run -d --name mysql -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=appschedule -e MYSQL_USER=app -e MYSQL_PASSWORD=app -p 3306:3306 --network schedule-net mysql
+docker run --rm -p 4848:4848 --name schedule --network schedule-net  -p 8080:80 m1/schedule
 
 log d'un container :
 docker container logs <docker-container-name>
