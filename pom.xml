@@ -31,9 +31,7 @@
 
     <profile>
       <id>payaraLocal</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
+
       <properties>
         <skip.docker.plugin>true</skip.docker.plugin>
         <skip.integration.test>false</skip.integration.test>
@@ -52,6 +50,17 @@
       <id>docker</id>
       <properties>
         <skip.docker.plugin>false</skip.docker.plugin>
+        <skip.integration.test>true</skip.integration.test>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>xTest</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <skip.docker.plugin>true</skip.docker.plugin>
         <skip.integration.test>true</skip.integration.test>
       </properties>
     </profile>
@@ -124,13 +133,6 @@
       <dependency>
         <groupId>fr.isen.m1.schedule</groupId>
         <artifactId>api-rest</artifactId>
-        <version>1.0-SNAPSHOT</version>
-        <type>war</type>
-        <scope>compile</scope>
-      </dependency>
-      <dependency>
-        <groupId>fr.isen.m1.schedule</groupId>
-        <artifactId>gui</artifactId>
         <version>1.0-SNAPSHOT</version>
         <type>war</type>
         <scope>compile</scope>
@@ -232,11 +234,6 @@
                 <groupId>fr.isen.m1.schedule</groupId>
                 <artifactId>api-rest</artifactId>
                 <uri>fr.isen.m1.schedule-api-rest-1.0-SNAPSHOT.war</uri>
-              </webModule>
-              <webModule>
-                <groupId>fr.isen.m1.schedule</groupId>
-                <artifactId>gui</artifactId>
-                <uri>fr.isen.m1.schedule-gui-1.0-SNAPSHOT.war</uri>
               </webModule>
               <jarModule>
                 <groupId>fr.isen.m1.schedule</groupId>
