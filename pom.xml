@@ -48,8 +48,8 @@
     <jdbc.resourcesName>jdbc/scheduleResource</jdbc.resourcesName>
     <mysql.name.url>mysql</mysql.name.url>
     <mysql.port>3306</mysql.port>
-    <mysql.user.name>root</mysql.user.name>
-    <mysql.user.password>password</mysql.user.password>
+    <mysql.user.name>app</mysql.user.name>
+    <mysql.user.password>app</mysql.user.password>
     <mysql.db.name>appschedule</mysql.db.name>
 
     <docker.image.schedule>m1/schedule</docker.image.schedule>
