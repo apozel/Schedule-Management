@@ -19,12 +19,10 @@
     <dependency>
       <groupId>fr.isen.m1.schedule</groupId>
       <artifactId>model</artifactId>
-      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>fr.isen.m1.schedule</groupId>
       <artifactId>marchant</artifactId>
-      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>javax</groupId>
@@ -51,7 +49,6 @@
     <dependency>
       <groupId>fr.isen.m1.schedule</groupId>
       <artifactId>random</artifactId>
-      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>com.sun.xml.bind</groupId>
