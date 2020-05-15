@@ -3,6 +3,30 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <payara.adminPort>4848</payara.adminPort>
+    <payara.username>admin</payara.username>
+    <payara.password></payara.password>
+    <payara.hostname>localhost</payara.hostname>
+    <payara.home>${env.PAYARA_5_HOME}</payara.home>
+    <payara.domainDir>${env.PAYARA_5_HOME}/glassfish/domains</payara.domainDir>
+    <payara.domainName>domain1</payara.domainName>
+    <project.build.finalName>scheduleManagement-ear</project.build.finalName>
+
+    <jdbc.resourcesName>jdbc/scheduleResource</jdbc.resourcesName>
+    <jdbc.action>drop-and-create</jdbc.action>
+    <mysql.name.url>mysql</mysql.name.url>
+    <mysql.port>3306</mysql.port>
+    <mysql.user.name>app</mysql.user.name>
+    <mysql.user.password>app</mysql.user.password>
+    <mysql.db.name>appschedule</mysql.db.name>
+
+    <docker.image.schedule>m1/schedule</docker.image.schedule>
+    <docker.test>false</docker.test>
+
+  </properties>
+
   <profiles>
 
     <profile>
@@ -32,30 +56,9 @@
       </properties>
     </profile>
 
+
   </profiles>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <payara.adminPort>4848</payara.adminPort>
-    <payara.username>admin</payara.username>
-    <payara.password></payara.password>
-    <payara.hostname>localhost</payara.hostname>
-    <payara.home>${env.PAYARA_5_HOME}</payara.home>
-    <payara.domainDir>${env.PAYARA_5_HOME}/glassfish/domains</payara.domainDir>
-    <payara.domainName>domain1</payara.domainName>
-    <project.build.finalName>scheduleManagement-ear</project.build.finalName>
-
-    <jdbc.resourcesName>jdbc/scheduleResource</jdbc.resourcesName>
-    <jdbc.action>drop-and-create</jdbc.action>
-    <mysql.name.url>mysql</mysql.name.url>
-    <mysql.port>3306</mysql.port>
-    <mysql.user.name>app</mysql.user.name>
-    <mysql.user.password>app</mysql.user.password>
-    <mysql.db.name>appschedule</mysql.db.name>
-
-    <docker.image.schedule>m1/schedule</docker.image.schedule>
-
-  </properties>
 
   <groupId>fr.isen.m1.schedule</groupId>
   <artifactId>scheduleManagement</artifactId>
