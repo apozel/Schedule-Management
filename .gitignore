@@ -1,3 +1,7 @@
 
 *.class
 **/target
+.classpath
+**/.projet
+**/*.iml
+**/.settings

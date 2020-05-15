@@ -17,12 +17,15 @@
       <type>ejb</type>
       <scope>compile</scope>
     </dependency>
-
+    <dependency>
+      <groupId>fr.isen.m1.schedule</groupId>
+      <artifactId>gui</artifactId>
+      <type>war</type>
+    </dependency>
     <dependency>
       <groupId>fr.isen.m1.schedule</groupId>
       <artifactId>api-rest</artifactId>
       <type>war</type>
-      <scope>compile</scope>
     </dependency>
 
     <dependency>

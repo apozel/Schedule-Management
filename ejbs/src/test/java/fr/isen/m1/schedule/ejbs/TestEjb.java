@@ -70,7 +70,6 @@ public class TestEjb {
     public void findDoctorByName() {
         Doctor randomDoctor = randombuilder.buildRandomDoctor();
         randomDoctor = crud.createDoctor(randomDoctor);
-        Long idDoc = randomDoctor.getId();
         Doctor resultDoctorId =
                 crud.findDoctorByName(randomDoctor.getNom(), randomDoctor.getPrenom());
         assertEquals(resultDoctorId, randomDoctor);
@@ -134,7 +133,6 @@ public class TestEjb {
     public void findPatientByName() {
         Patient randomPatient = randombuilder.buildRandomPatient();
         randomPatient = crud.createPatient(randomPatient);
-        Long idPatient = randomPatient.getId();
         Patient resultPatientId = crud.findPatientByName(randomPatient.getNom());
         assertEquals(resultPatientId.getPrenom(), randomPatient.getPrenom());
     }

@@ -10,6 +10,12 @@
   <packaging>ejb</packaging>
   <name>enterprise java beans</name>
   <build>
+    <resources>
+      <resource>
+        <filtering>true</filtering>
+        <directory>src/main/resources</directory>
+      </resource>
+    </resources>
     <plugins>
       <plugin>
         <artifactId>maven-ejb-plugin</artifactId>
@@ -29,6 +35,7 @@
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
+          <skip>${skip.integration.test}</skip>
           <systemProperties>
             <adminHttps>true</adminHttps>
           </systemProperties>
@@ -38,6 +45,18 @@
     </plugins>
   </build>
   <dependencies>
+    <dependency>
+      <groupId>fr.isen.m1.schedule</groupId>
+      <artifactId>model</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>fr.isen.m1.schedule</groupId>
+      <artifactId>marchant</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <scope>provided</scope>
+    </dependency>
     <dependency>
       <groupId>javax</groupId>
       <artifactId>javaee-api</artifactId>
@@ -115,6 +134,12 @@
       <artifactId>arquillian-payara-server-4-remote</artifactId>
       <version>1.1</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>fr.isen.m1.schedule</groupId>
+      <artifactId>random</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 </project>
