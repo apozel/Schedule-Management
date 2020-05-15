@@ -11,13 +11,13 @@
     <version>1.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>servlets</artifactId>
+  <artifactId>api-rests</artifactId>
   <packaging>pom</packaging>
 
-  <name>servlets</name>
+  <name>api-rests</name>
 
   <modules>
-    <module>servlet</module>
+    <module>api-rest</module>
   </modules>
 
 </project>

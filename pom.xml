@@ -119,7 +119,7 @@
       </dependency>
       <dependency>
         <groupId>fr.isen.m1.schedule</groupId>
-        <artifactId>servlet</artifactId>
+        <artifactId>api-rest</artifactId>
         <version>1.0-SNAPSHOT</version>
         <type>war</type>
       </dependency>
@@ -199,8 +199,8 @@
               <!-- Web Gui -->
               <webModule>
                 <groupId>fr.isen.m1.schedule</groupId>
-                <artifactId>servlet</artifactId>
-                <uri>fr.isen.m1.schedule-servlet-1.0-SNAPSHOT.war</uri>
+                <artifactId>api-rest</artifactId>
+                <uri>fr.isen.m1.schedule-api-rest-1.0-SNAPSHOT.war</uri>
               </webModule>
               <jarModule>
                 <groupId>fr.isen.m1.schedule</groupId>

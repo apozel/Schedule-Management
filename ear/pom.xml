@@ -20,7 +20,7 @@
 
     <dependency>
       <groupId>fr.isen.m1.schedule</groupId>
-      <artifactId>servlet</artifactId>
+      <artifactId>api-rest</artifactId>
       <type>war</type>
       <scope>compile</scope>
     </dependency>

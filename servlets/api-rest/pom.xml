@@ -10,14 +10,14 @@
 
   <parent>
     <groupId>fr.isen.m1.schedule</groupId>
-    <artifactId>servlets</artifactId>
+    <artifactId>api-rests</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>servlet</artifactId>
+  <artifactId>api-rest</artifactId>
   <packaging>war</packaging>
 
-  <name>servlet</name>
+  <name>api-rest</name>
 
   <dependencies>
     <!-- https://mvnrepository.com/artifact/javax/javaee-api -->
