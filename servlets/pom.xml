@@ -18,6 +18,7 @@
 
   <modules>
     <module>api-rest</module>
+
   </modules>
 
 </project>

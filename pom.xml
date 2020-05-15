@@ -46,6 +46,7 @@
     <project.build.finalName>scheduleManagement-ear</project.build.finalName>
 
     <jdbc.resourcesName>jdbc/scheduleResource</jdbc.resourcesName>
+    <jdbc.action>drop-and-create</jdbc.action>
     <mysql.name.url>mysql</mysql.name.url>
     <mysql.port>3306</mysql.port>
     <mysql.user.name>app</mysql.user.name>
