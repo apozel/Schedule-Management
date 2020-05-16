@@ -22,7 +22,7 @@ import fr.isen.m1.schedule.builder.SocialDetailsBuilder;
  * docteur
  */
 @Entity
-@Table(name = "Doctor")
+@Table(name = "doctor")
 @NamedQueries({@NamedQuery(name = "Doctor.findAll", query = "SELECT doctor FROM Doctor doctor"),
         @NamedQuery(name = "Doctor.findByName",
                 query = "SELECT doctor FROM Doctor doctor INNER JOIN doctor.socialDetails socialDetails WHERE socialDetails.lastName = :lastName AND socialDetails.firstName = :firstName")})

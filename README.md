@@ -5,7 +5,7 @@ docker run -d --name watchtower  -v /var/run/docker.sock:/var/run/docker.sock  c
 
 docker network create schedule-net
 docker run -d --name mysql -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=appschedule -e MYSQL_USER=app -e MYSQL_PASSWORD=app -p 3306:3306 --network schedule-net mysql
-docker run --rm -p 4848:4848 --name schedule --network schedule-net  -p 8080:80 m1/schedule
+docker run --rm -p 4848:4848 --name schedule --network schedule-net  -p 80:8080 m1/schedule
 
 log d'un container :
 docker container logs <docker-container-name>
