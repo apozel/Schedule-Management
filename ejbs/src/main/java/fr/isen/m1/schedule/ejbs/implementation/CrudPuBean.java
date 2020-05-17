@@ -15,7 +15,7 @@ import fr.isen.m1.schedule.utilities.SocialDetails;
 
 @Stateless
 
-public class CrudPuBean  {
+public class CrudPuBean {
 
     @PersistenceContext(unitName = "schedulePU")
     EntityManager em;
@@ -44,9 +44,9 @@ public class CrudPuBean  {
         return em.find(Doctor.class, id);
     }
 
-    public Doctor findDoctorByName(String lastName,String firstName) {
-        Query query = em.createNamedQuery("Doctor.findByName", Doctor.class).setParameter("lastName",
-                lastName).setParameter("firstName", firstName);
+    public Doctor findDoctorByName(String lastName, String firstName) {
+        Query query = em.createNamedQuery("Doctor.findByName", Doctor.class).setParameter("lastName", lastName)
+                .setParameter("firstName", firstName);
         return (Doctor) query.getResultList().get(0);
     }
 
@@ -78,8 +78,7 @@ public class CrudPuBean  {
     }
 
     public Patient findPatientByName(String lastName) {
-        Query query = em.createNamedQuery("Patient.findByName", Patient.class).setParameter("name",
-                lastName);
+        Query query = em.createNamedQuery("Patient.findByName", Patient.class).setParameter("name", lastName);
         return (Patient) query.getSingleResult();
     }
 
@@ -118,8 +117,7 @@ public class CrudPuBean  {
     }
 
     public List<Appointement> findAppointementByDoctor(Doctor doctor) {
-        Query query = em.createNamedQuery("Appointement.findByDoctor", Appointement.class)
-                .setParameter("doc", doctor);
+        Query query = em.createNamedQuery("Appointement.findByDoctor", Appointement.class).setParameter("doc", doctor);
         @SuppressWarnings("unchecked")
         List<Appointement> appointements = query.getResultList();
         return appointements;
@@ -176,6 +174,18 @@ public class CrudPuBean  {
         return em.find(Position.class, id);
     }
 
+    public void modifyPosition(Position position) {
+        em.merge(position);
+        em.flush();
+    }
+
+    public List<Position> findAllPosition() {
+        Query query = em.createNamedQuery("Position.findAll", Position.class);
+        @SuppressWarnings("unchecked")
+        List<Position> positions = query.getResultList();
+        return positions;
+    }
+
     public List<Appointement> findAppointementByDayDoctor(LocalDate day, Doctor doctor) {
         Query query = em.createNamedQuery("Appointement.findByDayDoctor", Appointement.class)
                 .setParameter("doctor", doctor).setParameter("day", day);
@@ -192,15 +202,15 @@ public class CrudPuBean  {
     }
 
     public Appointement findAppointementByDiagnosis(Diagnosis diagnosis) {
-        Query query = em.createNamedQuery("Appointement.findByDiagnosis", Appointement.class)
-                .setParameter("diagnosis", diagnosis);
+        Query query = em.createNamedQuery("Appointement.findByDiagnosis", Appointement.class).setParameter("diagnosis",
+                diagnosis);
         Appointement appointement = (Appointement) query.getSingleResult();
         // logger.debug(appointements);
         return appointement;
     }
 
     public Appointement updateAppointement(Appointement appointement) {
-     return em.merge(appointement);
+        return em.merge(appointement);
     }
 
 }

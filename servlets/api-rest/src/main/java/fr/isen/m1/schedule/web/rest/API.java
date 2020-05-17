@@ -1,17 +1,23 @@
 package fr.isen.m1.schedule.web.rest;
 
 import java.util.List;
+
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
+import javax.ws.rs.core.Response.Status;
+
 import fr.isen.m1.schedule.ejbs.implementation.AlgorithmBean;
 import fr.isen.m1.schedule.ejbs.implementation.CrudPuBean;
 import fr.isen.m1.schedule.random.RandomBuilder;
@@ -25,6 +31,12 @@ import fr.isen.m1.schedule.utilities.Request;
 @Path("API")
 @RequestScoped
 @Produces(MediaType.APPLICATION_JSON)
+/*
+ * GET /entity for getting the entity, GET /entity/<id> for getting a single
+ * product by id, POST /entity for creating a new product, PUT /entity/<id> for
+ * updating a product by id, PATCH /entity/<id> for partially updating a product
+ * by id, DELETE /entity/<id> for deleting a product by id.
+ */
 
 public class API {
 
@@ -34,133 +46,40 @@ public class API {
     @EJB
     CrudPuBean crud;
 
-    @PUT
-    @Path("addAppointement/{idDiagnosis}")
-    public void addAppointement(@PathParam("idDiagnosis") Long idDiagnosis) {
+    // APPOINTEMENT CRUD :
+
+    @POST
+    @Path("addAppointement")
+    public Response addAppointement(@QueryParam("x") Long idDiagnosis) {
+        ResponseBuilder response = Response.status(Status.ACCEPTED);
         Diagnosis diagnosis = crud.findDiagnosisById(idDiagnosis);
-        if (diagnosis != null)
-            algo.addAppointementSchedule(new Request(diagnosis, diagnosis.getPatientConserne()));
+        // on verifie que le diagnostic existe
+        if (diagnosis != null) {
+            if (crud.findAppointementByDiagnosis(diagnosis) == null) {
+                algo.addAppointementSchedule(new Request(diagnosis, diagnosis.getPatientConserne()));
+                response = Response.ok(crud.findAppointementByDiagnosis(diagnosis));
 
-    }
-
-
-
-    @GET
-    @Path("putDoctorRandom")
-    public void putDoctorRandom() {
-        crud.createDoctor(new RandomBuilder().buildRandomDoctor());
-    }
-
-    @GET
-    @Path("putPatientRandom")
-    public void putPatientRandom() {
-        crud.createPatient(new RandomBuilder().buildRandomPatient());
-    }
-
-    @GET
-    @Path("findAllDoctor")
-    public List<Doctor> findAllDoctor() {
-
-        return crud.findAllDoctor();
-    }
-
-    @PUT
-    @Path("createDoctor")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response createDoctor(Doctor newDoc) {
-        crud.createDoctor(newDoc);
-        return Response.ok().build();
-    }
-
-    @GET
-    @Path(" findDoctorById/{id}")
-    public Response findDoctorById(@PathParam("id") Long id) {
-        Response response;
-        Doctor doctor = crud.findDoctorById(id);
-        response = (doctor != null) ? Response.ok(doctor).build() : Response.noContent().build();
-        return response;
-    }
-
-    @GET
-    @Path("findDoctorByName/{firstname}/{lastName}")
-    public Response findDoctorByName(@PathParam("firstName") String firstName,
-            @PathParam("lastName") String lastName) {
-        Response response;
-        Doctor doctor = crud.findDoctorByName(lastName, firstName);
-        response = (doctor != null) ? Response.ok(doctor).build() : Response.noContent().build();
-        return response;
-
-    }
-
-    @DELETE
-    @Path("suppressDoctor/{id}")
-    public Response suppressDoctor(@PathParam("id") Long id) {
-        Response response;
-        Doctor doctor = crud.findDoctorById(id);
-
-        response = (doctor != null) ? Response.ok(doctor).build() : Response.noContent().build();
-        if (doctor != null) {
-            crud.suppressDoctor(doctor);
+            } else {
+                response = Response.status(Status.CONFLICT);
+            }
+        } else {
+            response = Response.status(Status.NOT_FOUND);
         }
-
-        return response;
+        return response.build();
 
     }
 
     @GET
-    @Path("findAllPatient")
-    public List<Patient> findAllPatient() {
-
-        return crud.findAllPatient();
-    }
-
-    @PUT
-    @Path("createPatient")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response createPatient(Patient patient) {
-        return Response.ok(crud.createPatient(patient)).build();
-    }
-
-    @GET
-    @Path("findPatientById/{id}")
-    public Response findPatientById(@PathParam("id") Long id) {
+    @Path("Appointements")
+    public Response findAllAppointement() {
         Response response;
-        Patient patient = crud.findPatientById(id);
-        response = (patient != null) ? Response.ok(patient).build() : Response.noContent().build();
+        List<Appointement> appointements = crud.findAllAppointement();
+        response = (appointements != null) ? Response.ok(appointements).build() : Response.noContent().build();
         return response;
     }
 
-    @GET
-    @Path("findPatientByName/{name}")
-    public Response findPatientByName(@PathParam("name") String name) {
-        Response response;
-        Patient patient = crud.findPatientByName(name);
-        response = (patient != null) ? Response.ok(patient).build() : Response.noContent().build();
-        return response;
-    }
-
-    @DELETE
-    @Path("suppressPatient/{id}")
-    public Response suppressPatient(@PathParam("id") Long idPatientSuppress) {
-        Response response;
-        Patient patient = crud.findPatientById(idPatientSuppress);
-
-        response = (patient != null) ? Response.ok(patient).build() : Response.noContent().build();
-        if (patient != null) {
-            crud.suppressPatient(patient);
-        }
-
-        return response;
-    }
-
-    @GET
-    @Path("findAllAppointement")
-    public List<Appointement> findAllAppointement() {
-        return crud.findAllAppointement();
-    }
-
-    @GET
-    @Path("createRandomAppointement")
+    @POST
+    @Path("Appointements")
     public Response createRandomAppointement() {
         RandomBuilder randombuilder = new RandomBuilder();
         Doctor doctor = randombuilder.buildRandomDoctor();
@@ -195,23 +114,21 @@ public class API {
     }
 
     @GET
-    @Path("findAppointementById/{id}")
+    @Path("Appointements/{id}")
     public Response findAppointementById(@PathParam("id") Long id) {
         Response response;
         Appointement appointement = crud.findAppointementById(id);
-        response = (appointement != null) ? Response.ok(appointement).build()
-                : Response.noContent().build();
+        response = (appointement != null) ? Response.ok(appointement).build() : Response.noContent().build();
         return response;
     }
 
     @DELETE
-    @Path("suppressAppointement/{id}")
+    @Path("Appointements/{id}")
     public Response suppressAppointement(@PathParam("id") Long id) {
         Response response;
         Appointement appointement = crud.findAppointementById(id);
 
-        response = (appointement != null) ? Response.ok(appointement).build()
-                : Response.noContent().build();
+        response = (appointement != null) ? Response.ok(appointement).build() : Response.noContent().build();
         if (appointement != null) {
             crud.suppressAppointement(appointement);
         }
@@ -220,7 +137,7 @@ public class API {
     }
 
     @GET
-    @Path("findAppointementByDoctor/{idDoctor}")
+    @Path("Appointements/Doctors/{id}")
     public List<Appointement> findAppointementByDoctor(@PathParam("id") Long idDoctor) {
 
         Doctor doctor = crud.findDoctorById(idDoctor);
@@ -230,39 +147,155 @@ public class API {
         return null;
     }
 
-    @GET
-    @Path("findAllDiagnosis")
-    public List<Diagnosis> findAllDiagnosis() {
-        return crud.findAllDiagnosis();
+    // DOCTOR CRUD :
+
+    @POST
+    @Path("putDoctorRandom")
+    public void putDoctorRandom() {
+        crud.createDoctor(new RandomBuilder().buildRandomDoctor());
     }
 
-    @PUT
-    @Path("createDiagnosis")
+    @POST
+    @Path("putPatientRandom")
+    public void putPatientRandom() {
+        crud.createPatient(new RandomBuilder().buildRandomPatient());
+    }
+
+    @GET
+    @Path("Doctors")
+    public Response findAllDoctor() {
+        Response response;
+        List<Doctor> doctors = crud.findAllDoctor();
+        response = (doctors != null) ? Response.ok(doctors).build() : Response.noContent().build();
+        return response;
+    }
+
+    @POST
+    @Path("Doctors")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createDoctor(Doctor newDoc) {
+        crud.createDoctor(newDoc);
+        return Response.ok().build();
+    }
+
+    @GET
+    @Path("Doctors/{id}")
+    public Response findDoctorById(@PathParam("id") Long id) {
+        Response response;
+        Doctor doctor = crud.findDoctorById(id);
+        response = (doctor != null) ? Response.ok(doctor).build() : Response.noContent().build();
+        return response;
+    }
+
+    @GET
+    @Path("Doctors/{firstname}/{lastName}")
+    public Response findDoctorByName(@PathParam("firstName") String firstName, @PathParam("lastName") String lastName) {
+        Response response;
+        Doctor doctor = crud.findDoctorByName(lastName, firstName);
+        response = (doctor != null) ? Response.ok(doctor).build() : Response.noContent().build();
+        return response;
+
+    }
+
+    @DELETE
+    @Path("Doctors/{id}")
+    public Response suppressDoctor(@PathParam("id") Long id) {
+        Response response;
+        Doctor doctor = crud.findDoctorById(id);
+
+        response = (doctor != null) ? Response.ok(doctor).build() : Response.noContent().build();
+        if (doctor != null) {
+            crud.suppressDoctor(doctor);
+        }
+
+        return response;
+
+    }
+
+    // PATIENT CRUD :
+
+    @GET
+    @Path("Patients")
+    public Response findAllPatient() {
+        Response response;
+        List<Patient> patients = crud.findAllPatient();
+        response = (patients != null) ? Response.ok(patients).build() : Response.noContent().build();
+        return response;
+    }
+
+    @POST
+    @Path("Patients")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createPatient(Patient patient) {
+        return Response.ok(crud.createPatient(patient)).build();
+    }
+
+    @GET
+    @Path("Patients/{id}")
+    public Response findPatientById(@PathParam("id") Long id) {
+        Response response;
+        Patient patient = crud.findPatientById(id);
+        response = (patient != null) ? Response.ok(patient).build() : Response.noContent().build();
+        return response;
+    }
+
+    @GET
+    @Path("Patients/{name}/{firstName}")
+    public Response findPatientByName(@PathParam("name") String name, @PathParam("firstName") String firstName) {
+        Response response;
+        Patient patient = crud.findPatientByName(name);
+        response = (patient != null) ? Response.ok(patient).build() : Response.noContent().build();
+        return response;
+    }
+
+    @DELETE
+    @Path("Patients/{id}")
+    public Response suppressPatient(@PathParam("id") Long idPatientSuppress) {
+        Response response;
+        Patient patient = crud.findPatientById(idPatientSuppress);
+
+        response = (patient != null) ? Response.ok(patient).build() : Response.noContent().build();
+        if (patient != null) {
+            crud.suppressPatient(patient);
+        }
+
+        return response;
+    }
+
+    // DIAGNOSIS CRUD :
+
+    @GET
+    @Path("Diagnosis")
+    public Response findAllDiagnosis() {
+        Response response;
+        List<Diagnosis> diagnosis = crud.findAllDiagnosis();
+        response = (diagnosis != null) ? Response.ok(diagnosis).build() : Response.noContent().build();
+        return response;
+    }
+
+    @POST
+    @Path("Diagnosis")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createDiagnosis(Diagnosis diagnosis) {
         return Response.ok(crud.createDiagnosis(diagnosis)).build();
     }
 
     @GET
-    @Path("findDiagnosisById/{id}")
+    @Path("Diagnosis/{id}")
     public Response findDiagnosisById(@PathParam("id") Long id) {
         Response response;
         Diagnosis diagnosis = crud.findDiagnosisById(id);
-        response =
-                (diagnosis != null) ? Response.ok(diagnosis).build() : Response.noContent().build();
+        response = (diagnosis != null) ? Response.ok(diagnosis).build() : Response.noContent().build();
         return response;
     }
 
-
-
     @DELETE
-    @Path("suppressDiagnosis/{id}")
+    @Path("Diagnosis/{id}")
     public Response suppressDiagnosis(@PathParam("id") Long id) {
         Response response;
         Diagnosis diagnosis = crud.findDiagnosisById(id);
 
-        response =
-                (diagnosis != null) ? Response.ok(diagnosis).build() : Response.noContent().build();
+        response = (diagnosis != null) ? Response.ok(diagnosis).build() : Response.noContent().build();
         if (diagnosis != null) {
             crud.suppressDiagnosis(diagnosis);
         }
@@ -271,14 +304,15 @@ public class API {
 
     }
 
+    // POSITIONS CRUD :
+
     @DELETE
-    @Path("suppressPosition/{id}")
+    @Path("Positions/{id}")
     public Response suppressPosition(@PathParam("id") Long id) {
         Response response;
         Position position = crud.findPositionById(id);
 
-        response =
-                (position != null) ? Response.ok(position).build() : Response.noContent().build();
+        response = (position != null) ? Response.ok(position).build() : Response.noContent().build();
         if (position != null) {
             crud.suppressPosition(position);
         }
@@ -287,22 +321,42 @@ public class API {
 
     }
 
+    @POST
+    @Path("Positions")
+    public Response createPosition(@QueryParam("x") Double x, @QueryParam("y") Double y) {
+        if (x == null || y == null)
+            return Response.status(Status.BAD_REQUEST).build();
+        return Response.status(Status.CREATED).entity(crud.createPosition(new Position(x, y))).build();
+    }
+
     @PUT
-    @Path("createPosition")
+    @Path("Positions")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createPosition(Position newPosition) {
-        return Response.ok(crud.createPosition(newPosition)).build();
+    public Response modifyPosition(Position position) {
+        if (position == null )
+            return Response.status(Status.BAD_REQUEST).build();
+        if (crud.findPositionById(position.getId()) == null)
+            return Response.status(Status.NO_CONTENT).build();
+        crud.modifyPosition(position);
+        return Response.ok(crud.findPositionById(position.getId())).build();
     }
 
     @GET
-    @Path("findPositionById/{id}")
+    @Path("Positions/{id}")
     public Response findPositionById(@PathParam("id") Long id) {
         Response response;
         Position position = crud.findPositionById(id);
-        response =
-                (position != null) ? Response.ok(position).build() : Response.noContent().build();
+        response = (position != null) ? Response.ok(position).build() : Response.noContent().build();
         return response;
     }
 
+    @GET
+    @Path("Positions")
+    public Response findAllPosition() {
+        Response response;
+        List<Position> position = crud.findAllPosition();
+        response = (position != null) ? Response.ok(position).build() : Response.noContent().build();
+        return response;
+    }
 
 }

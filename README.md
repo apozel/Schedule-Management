@@ -1,6 +1,8 @@
 # Algorithm.Schedule-Management
 Technical Project M1 Big Data
 
+ Get-Content -Path "D:\payara5\glassfish\domains\domain1\logs\server.log" -Wait
+
 docker run -d --name watchtower  -v /var/run/docker.sock:/var/run/docker.sock  containrrr/watchtower
 
 docker network create schedule-net

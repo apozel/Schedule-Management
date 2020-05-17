@@ -1,6 +1,7 @@
 package fr.isen.m1.schedule.utilities;
 
 import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -8,8 +9,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 import fr.isen.m1.schedule.converter.PositionConverter;
 
 
@@ -18,6 +22,8 @@ import fr.isen.m1.schedule.converter.PositionConverter;
  */
 @Entity
 @Table(name = "gps_coordinates")
+@NamedQueries({ @NamedQuery(name = "Position.findAll", query = "SELECT pos FROM Position pos"),
+        })
 public class Position implements Serializable{
 
 
