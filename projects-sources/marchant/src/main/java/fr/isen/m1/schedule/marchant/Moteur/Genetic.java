@@ -2,6 +2,10 @@ package fr.isen.m1.schedule.marchant.moteur;
 
 import fr.isen.m1.schedule.utilities.Diagnosis;
 import fr.isen.m1.schedule.utilities.Doctor;
+import testProjetBigData.Map;
+import testProjetBigData.Path;
+import testProjetBigData.Utilities;
+import testProjetBigData.Genetic.SelectionMode;
 
 public abstract class Genetic
 {
@@ -10,7 +14,9 @@ public abstract class Genetic
 		Uniform,
 		Probabilistic;
 	}
-	// Searching the worst path, i.e the one with higher total length:
+	/**
+	 * Searching the worst path, i.e the one with higher total length
+	 */
 	private static int indexWorstPath(double pathLength_array[])
 	{
 		double worst_pathLength = pathLength_array[0];
@@ -29,7 +35,9 @@ public abstract class Genetic
 	}
 
 
-	// Searching the best path, i.e the one with lower total length:
+	/**
+	 * Searching the best path, i.e the one with lower total length:
+	 */
 	private static int indexBestPath(double pathLength_array[])
 	{
 		double best_pathLength = pathLength_array[0];
@@ -48,7 +56,9 @@ public abstract class Genetic
 	}
 
 
-	// Selection a path in the population to evolve:
+	/**
+	 * Selection a path in the population to evolve:
+	 */
 	private static int selection(double pathLength_array[], double sum_inv_pathLength, SelectionMode selMode)
 	{
 		if (selMode == SelectionMode.Uniform)
@@ -89,8 +99,10 @@ public abstract class Genetic
 	}
 
 
-	// Mutates the new path by swaping cities randomly. The last city
-	// must be left untouched. Requires citiesNumber >= 3.
+	/**
+	 * Mutates the new path by swaping cities randomly. The last city
+	   must be left untouched. Requires citiesNumber >= 1.
+	 */
 	private static void mutation(int new_path[])
 	{
 		int city_1, city_2;
@@ -126,8 +138,10 @@ public abstract class Genetic
 	}
 
 
-	// Replacing the worst path by a new one, if the latter is better,
-	// and return the (eventually) modified 'sum_inv_pathLength':
+	/**
+	 * Replacing the worst path by a new one, if the latter is better,
+	 * and return the (eventually) modified 'sum_inv_pathLength':
+	 */
 	private static double replace(Map map, int population[][], double pathLength_array[],
 		int new_path[], double sum_inv_pathLength)
 	{
@@ -154,9 +168,14 @@ public abstract class Genetic
 	}
 
 
-	// Genetic search (kinda, has no crossover). A small path length is being seeked by evolving from
-	// a starting path. Last city of any path is keeped fixed, as it is set to be the starting/end point.
-	// Best found path is returned.
+	/**
+	 * Genetic search (kinda, has no crossover). A small path length is being seeked by evolving from
+	 * a starting path. Last city of any path is keeped fixed, as it is set to be the starting/end point.
+	 * @param map : the map of distance between points.
+	 * @return Best found path.
+	 */
+	// 
+	// 
 	public static int[] geneticSearch(Map map, int populationSize, int epochsNumber, SelectionMode selMode)
 	{
 		long startTime = System.nanoTime();
@@ -174,7 +193,7 @@ public abstract class Genetic
 
 		if (citiesNumber < 1)
 		{
-			System.out.println("Number of cities must be at least 3. is : " + citiesNumber);
+			System.out.println("\nNumber of appointments must be at least 1.\n");
 			throw new RuntimeException();
 		}
 
@@ -251,9 +270,12 @@ public abstract class Genetic
 		return best_path;
 	}
 
-	// Genetic search (kinda, has no crossover). A small path length is being seeked by evolving from
-		// a starting path. Last city of any path is keeped fixed, as it is set to be the starting/end point.
-		// Best found path is returned counting on criticity.
+	/**
+	 * Genetic search (kinda, has no crossover). A small path length is being seeked by evolving from
+	 * a starting path. Last city of any path is keeped fixed, as it is set to be the starting/end point.
+	 * @param map : the map of distance between points taking in account criticality.
+	 * @return Best found path.
+	 */
 		public static int[] geneticSearchWithCriticity(Map map, int populationSize, int epochsNumber, SelectionMode selMode)
 		{
 			long startTime = System.nanoTime();
@@ -396,31 +418,4 @@ public abstract class Genetic
 			return lstGagnante;
 		}
 
-
-
-	/*public static void main(String[] args)
-	{
-		int citiesNumber = 50;
-		System.out.printf("Cities number: %d\n", citiesNumber);
-
-		Graphe gr = new Graphe();
-		Position[] ListeNoeuds = new Position[citiesNumber];
-	    ListeNoeuds = gr.generationNoeud(citiesNumber);
-
-		Map map = new Map(ListeNoeuds);
-
-		// Those settings should work for all 'citiesNumber':
-		int populationSize = 64;
-		int epochsNumber = 10000 * citiesNumber;
-		SelectionMode selMode = SelectionMode.Uniform;
-
-		// Finding a good path (hopefully):
-		int[] best_path = geneticSearch(map, populationSize, epochsNumber, selMode);
-		Position[] listeGagnante = new Position[citiesNumber];
-		for (int i = 0; i<citiesNumber; i++) {
-			listeGagnante[i] = ListeNoeuds[best_path[i]];
-		}
-		System.out.print("\nBest found path:\n");
-		Path.print(best_path);
-	}*/
 }

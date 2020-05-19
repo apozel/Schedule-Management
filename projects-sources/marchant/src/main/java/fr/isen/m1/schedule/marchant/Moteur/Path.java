@@ -1,9 +1,12 @@
 package fr.isen.m1.schedule.marchant.moteur;
 
+import testProjetBigData.Map;
 
 public abstract class Path
 {
-	// Euclidean distance between (x1, y1) and (x2, y2).
+	/**
+	 * @return Euclidean distance between (x1, y1) and (x2, y2).
+	 */
 	public static double distance(double x1, double y1, double x2, double y2)
 	{
 		double delta_x = x1 - x2, delta_y = y1 - y2;
@@ -11,14 +14,18 @@ public abstract class Path
 		return (double) Math.sqrt(delta_x * delta_x + delta_y * delta_y);
 	}
 
-	// Euclidean distance between (x1, y1) and (x2, y2) using criticity.
-		public static double distanceCriticite(double x1, double y1, double x2, double y2, double criticite)
+	/**
+	 * @return Euclidean distance between (x1, y1) and (x2, y2) with criticality.
+	 */
+	public static double distanceCriticite(double x1, double y1, double x2, double y2, double criticite)
 		{
 			double delta_x = x1 - x2, delta_y = y1 - y2;
 			return (double) ((Math.sqrt(delta_x * delta_x + delta_y * delta_y))*criticite);
 		}
 
-	// Total length of the path, coming back to the start:
+	/**
+	 * @return Total length of the path, coming back to the start
+	 */
 	public static double totalLength(Map map, int path[])
 	{
 		int n = path.length;
@@ -37,7 +44,9 @@ public abstract class Path
 		return totalLength;
 	}
 
-	//Total lenght of the path with criticity.
+	/**
+	 * @return Total lenght of the path with criticality.
+	 */
 	public static double totalLengthCriticity(Map map, int path[])
 	{
 		int n = path.length;
@@ -55,7 +64,9 @@ public abstract class Path
 
 		return totalLength;
 	}
-
+	/**
+	 * print a Path.
+	 */
 	public static void print(int path[])
 	{
 		for (int i = 0; i < path.length; ++i)
@@ -64,6 +75,9 @@ public abstract class Path
 		System.out.println();
 	}
 
+	/**
+	 * swap places between to int in the path.
+	 */
 	public static void swap(int path[], int i, int j)
 	{
 		int temp = path[i];
@@ -73,7 +87,9 @@ public abstract class Path
 		path[j] = temp;
 	}
 
-	// Mirror the values between start and end. Needed: start <= end.
+	/**
+	 * Mirror the values between start and end. Needed: start <= end.
+	 */
 	public static void mirror(int path[], int start, int end)
 	{
 		int midpoint = (end - start + 1) / 2; // central value isn't swapped if the number of value is odd.
@@ -82,17 +98,4 @@ public abstract class Path
 			swap(path, start + i, end - i);
 	}
 
-	/*public static void main(String[] args)
-	{
-		int citiesNumber = 10;
-
-		int path[] = new int[citiesNumber];
-
-		for (int i = 0; i < citiesNumber; ++i)
-			path[i] = i;
-
-		mirror(path, 1, 8); // first and last values untouched.
-
-		print(path);
-	}*/
 }

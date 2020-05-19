@@ -1,6 +1,7 @@
 package fr.isen.m1.schedule.marchant.moteur;
 
 import fr.isen.m1.schedule.utilities.Diagnosis;
+import testProjetBigData.Path;
 
 public class Map {
 	// private final static double distBound = 20; // 20 km. Arbitrary.
@@ -18,23 +19,38 @@ public class Map {
 
 		this.init(); // A map must be initialized.
 	}
-
+	
+	/**
+	 * @return the number of Diagnosis in the list
+	 */
 	public int citiesNumber() {
 		return this.citiesNumber;
 	}
 
+	/**
+	 * @return the list of Diagnosis
+	 */
 	public Diagnosis[] locations() {
 		return this.listDiag;
 	}
 
+	/**
+	 * @return the map of distance calculated
+	 */
 	public double[][] net() {
 		return this.net;
 	}
 
+	/**
+	 * @return the map of distance calculated with criticality
+	 */
 	public double[][] netCriticity() {
 		return this.netCriticity;
 	}
 
+	/**
+	 * initialize the map by calculating all distances with and without criticality.
+	 */
 	public void init() {
 		for (int i = 0; i < this.citiesNumber; ++i) {
 			for (int j = i + 1; j < this.citiesNumber; ++j) {
@@ -54,6 +70,9 @@ public class Map {
 		}
 	}
 
+	/**
+	 * print the map.
+	 */
 	public void print() {
 		System.out.printf("\nCities number: %d\n", this.citiesNumber);
 
@@ -71,26 +90,5 @@ public class Map {
 			System.out.println();
 		}
 	}
-
-	/*public static void main(String[] args) {
-		int citiesNumber = 5;
-
-		Graphe gr = new Graphe();
-		Position[] ListeNoeuds = new Position[citiesNumber];
-		ListeNoeuds = gr.generationNoeud(citiesNumber);
-
-		Map map = new Map(ListeNoeuds);
-
-		map.print();
-
-		int path[] = new int[citiesNumber];
-
-		for (int i = 0; i < citiesNumber; ++i)
-			path[i] = i;
-
-		System.out.print("\nA path:\n");
-		Path.print(path);
-
-		System.out.printf("\nIts length: %.3f km\n", Path.totalLength(map, path));
-	}*/
 }
+
