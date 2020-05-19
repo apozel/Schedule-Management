@@ -134,7 +134,7 @@ public class API {
                 Long id = Long.valueOf(mapQueryParams.getFirst("id"));
                 return findAppointementById(id);
             } catch (Exception e) {
-
+                return Response.status(Status.BAD_REQUEST).build();
             }
 
         } else if (mapQueryParams.containsKey("doctorID")) {
