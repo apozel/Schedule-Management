@@ -13,10 +13,13 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.UriInfo;
 
 import fr.isen.m1.schedule.ejbs.implementation.AlgorithmBean;
 import fr.isen.m1.schedule.ejbs.implementation.CrudPuBean;
@@ -46,17 +49,55 @@ public class API {
     @EJB
     CrudPuBean crud;
 
-    // APPOINTEMENT CRUD :
+    // test fonction :
+    @POST
+    @Path("putDoctorRandom")
+    public void putDoctorRandom() {
+        crud.createDoctor(new RandomBuilder().buildRandomDoctor());
+    }
 
     @POST
-    @Path("addAppointement")
-    public Response addAppointement(@QueryParam("x") Long idDiagnosis) {
+    @Path("putPatientRandom")
+    public void putPatientRandom() {
+        crud.createPatient(new RandomBuilder().buildRandomPatient());
+    }
+
+    // APPOINTEMENT CRUD :
+
+    // todo: rajouter une fonction pour avoir les rendez vous de la journee
+
+    @POST
+    @Path("Appointements")
+    public Response postAppointement(@Context UriInfo ui) {
+        MultivaluedMap<String, String> mapQueryParams = ui.getQueryParameters();
+        Response response = Response.status(Status.BAD_REQUEST).build();
+        if (mapQueryParams.containsKey("random")) {
+            response = Response.accepted(createRandomAppointement()).build();
+        } else if (mapQueryParams.containsKey("diagnosisID")) {
+            try {
+                Diagnosis diagnosis = crud.findDiagnosisById(Long.valueOf(mapQueryParams.getFirst("diagnosisID")));
+                if (diagnosis != null) {
+                    response = Response.accepted(addAppointement(diagnosis.getId())).build();
+                } else {
+                    response = Response.noContent().build();
+                }
+            } catch (Exception e) {
+                response = Response.status(Status.BAD_REQUEST).entity(e).build();
+            }
+        }
+        return response;
+    }
+
+    public Response addAppointement(Long idDiagnosis) {
         ResponseBuilder response = Response.status(Status.ACCEPTED);
         Diagnosis diagnosis = crud.findDiagnosisById(idDiagnosis);
+        System.out.println("diagnosis add appointement : " + diagnosis);
         // on verifie que le diagnostic existe
         if (diagnosis != null) {
             if (crud.findAppointementByDiagnosis(diagnosis) == null) {
+                System.out.println("il y a n'a pas deja de rendezvous");
                 algo.addAppointementSchedule(new Request(diagnosis, diagnosis.getPatientConserne()));
+                System.out.println(crud.findAppointementByDiagnosis(diagnosis));
                 response = Response.ok(crud.findAppointementByDiagnosis(diagnosis));
 
             } else {
@@ -69,17 +110,6 @@ public class API {
 
     }
 
-    @GET
-    @Path("Appointements")
-    public Response findAllAppointement() {
-        Response response;
-        List<Appointement> appointements = crud.findAllAppointement();
-        response = (appointements != null) ? Response.ok(appointements).build() : Response.noContent().build();
-        return response;
-    }
-
-    @POST
-    @Path("Appointements")
     public Response createRandomAppointement() {
         RandomBuilder randombuilder = new RandomBuilder();
         Doctor doctor = randombuilder.buildRandomDoctor();
@@ -89,37 +119,59 @@ public class API {
         Diagnosis diagnosis = randombuilder.buildRandomDiagnosis();
         diagnosis.setPatientConserne(patient);
         diagnosis = crud.createDiagnosis(diagnosis);
-        Appointement appointement = randombuilder.buildRandomAppointement();
-        appointement.setMedecinAffecte(doctor);
-        appointement.setDiag(diagnosis);
-        appointement.setMalade(patient);
-        appointement.setLieu(patient.getLieuDeVie());
-        Appointement appointement2 = new Appointement();
-        appointement2.setMedecinAffecte(doctor);
-        appointement2.setDiag(diagnosis);
-        appointement2.setMalade(patient);
-        appointement2.setLieu(patient.getLieuDeVie());
-        appointement2.setDate(appointement.getDate().minusDays(1));
-        Appointement appointement3 = new Appointement();
-        appointement3.setMedecinAffecte(doctor);
-        appointement3.setDiag(diagnosis);
-        appointement3.setMalade(patient);
-        appointement3.setLieu(patient.getLieuDeVie());
-        appointement3.setDate(appointement.getDate().plusDays(1));
-        System.out.println("appointementDate  1 : " + appointement.getDate());
-        appointement = crud.createAppointement(appointement);
-        appointement2 = crud.createAppointement(appointement2);
-        appointement3 = crud.createAppointement(appointement3);
-        return Response.ok(appointement).build();
+        System.out.println(diagnosis);
+        System.out.println(crud.findDiagnosisById(diagnosis.getId()));
+        return addAppointement(diagnosis.getId());
     }
 
     @GET
-    @Path("Appointements/{id}")
-    public Response findAppointementById(@PathParam("id") Long id) {
+    @Path("/Appointements")
+    public Response getAppointements(@Context UriInfo ui) {
+        MultivaluedMap<String, String> mapQueryParams = ui.getQueryParameters();
+
+        if (mapQueryParams.containsKey("id")) {
+            try {
+                Long id = Long.valueOf(mapQueryParams.getFirst("id"));
+                return findAppointementById(id);
+            } catch (Exception e) {
+
+            }
+
+        } else if (mapQueryParams.containsKey("doctorID")) {
+            try {
+                Long id = Long.valueOf(mapQueryParams.getFirst("doctorID"));
+                if (crud.findDoctorById(id) != null) {
+                    return Response.ok(findAppointementByDoctor(id)).build();
+                }
+
+            } catch (Exception e) {
+                return Response.status(Status.BAD_REQUEST).entity(e).build();
+            }
+        }
+        return findAllAppointement();
+    }
+
+    public Response findAllAppointement() {
+        Response response;
+        List<Appointement> appointements = crud.findAllAppointement();
+        response = (appointements != null) ? Response.ok(appointements).build() : Response.noContent().build();
+        return response;
+    }
+
+    public Response findAppointementById(Long id) {
         Response response;
         Appointement appointement = crud.findAppointementById(id);
         response = (appointement != null) ? Response.ok(appointement).build() : Response.noContent().build();
         return response;
+    }
+
+    public List<Appointement> findAppointementByDoctor(Long idDoctor) {
+
+        Doctor doctor = crud.findDoctorById(idDoctor);
+        if (doctor != null) {
+            return crud.findAppointementByDoctor(doctor);
+        }
+        return null;
     }
 
     @DELETE
@@ -136,36 +188,12 @@ public class API {
         return response;
     }
 
-    @GET
-    @Path("Appointements/Doctors/{id}")
-    public List<Appointement> findAppointementByDoctor(@PathParam("id") Long idDoctor) {
-
-        Doctor doctor = crud.findDoctorById(idDoctor);
-        if (doctor != null) {
-            return crud.findAppointementByDoctor(doctor);
-        }
-        return null;
-    }
-
     // DOCTOR CRUD :
 
-    @POST
-    @Path("putDoctorRandom")
-    public void putDoctorRandom() {
-        crud.createDoctor(new RandomBuilder().buildRandomDoctor());
-    }
-
-    @POST
-    @Path("putPatientRandom")
-    public void putPatientRandom() {
-        crud.createPatient(new RandomBuilder().buildRandomPatient());
-    }
-
-    @GET
-    @Path("Doctors")
     public Response findAllDoctor() {
         Response response;
         List<Doctor> doctors = crud.findAllDoctor();
+        System.out.println("docteurs : " + doctors);
         response = (doctors != null) ? Response.ok(doctors).build() : Response.noContent().build();
         return response;
     }
@@ -174,25 +202,51 @@ public class API {
     @Path("Doctors")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createDoctor(Doctor newDoc) {
-        crud.createDoctor(newDoc);
-        return Response.ok().build();
+
+        return Response.accepted(crud.createDoctor(newDoc)).build();
     }
 
     @GET
-    @Path("Doctors/{id}")
-    public Response findDoctorById(@PathParam("id") Long id) {
+    @Path("/Doctors")
+    public Response getDoctor(@Context UriInfo ui) {
+        MultivaluedMap<String, String> mapQueryParams = ui.getQueryParameters();
+
+        if (mapQueryParams.getFirst("id") != null) {
+            try {
+                Long id = Long.valueOf(mapQueryParams.getFirst("id"));
+                return findDoctorById(id);
+            } catch (Exception e) {
+                return Response.status(Status.BAD_REQUEST).build();
+            }
+
+        } else if (mapQueryParams.getFirst("firstname") != null || mapQueryParams.getFirst("lastname") != null) {
+            if (mapQueryParams.getFirst("firstname") != null && mapQueryParams.getFirst("lastname") != null) {
+                String firstname = mapQueryParams.getFirst("firstname");
+                String lastname = mapQueryParams.getFirst("lastname");
+                return findDoctorByName(firstname, lastname);
+            }
+            return Response.status(Status.BAD_REQUEST).build();
+        }
+        return findAllDoctor();
+    }
+
+    public Response findDoctorById(Long id) {
         Response response;
         Doctor doctor = crud.findDoctorById(id);
         response = (doctor != null) ? Response.ok(doctor).build() : Response.noContent().build();
         return response;
     }
 
-    @GET
-    @Path("Doctors/{firstname}/{lastName}")
-    public Response findDoctorByName(@PathParam("firstName") String firstName, @PathParam("lastName") String lastName) {
+    public Response findDoctorByName(String firstName, String lastName) {
         Response response;
-        Doctor doctor = crud.findDoctorByName(lastName, firstName);
-        response = (doctor != null) ? Response.ok(doctor).build() : Response.noContent().build();
+        System.out.println("firstname : " + firstName + " lastname : " + lastName);
+        if (firstName != null && lastName != null) {
+            Doctor doctor = crud.findDoctorByName(lastName, firstName);
+            response = (doctor != null) ? Response.ok(doctor).build() : Response.noContent().build();
+        } else {
+            response = Response.status(Status.BAD_REQUEST).build();
+        }
+
         return response;
 
     }
@@ -205,7 +259,13 @@ public class API {
 
         response = (doctor != null) ? Response.ok(doctor).build() : Response.noContent().build();
         if (doctor != null) {
-            crud.suppressDoctor(doctor);
+            try {
+                crud.suppressDoctor(doctor);
+            } catch (Exception e) {
+                response = Response.status(Status.CONFLICT).entity("l'entité est utiliser par une autre ressource")
+                        .build();
+            }
+
         }
 
         return response;
@@ -215,7 +275,44 @@ public class API {
     // PATIENT CRUD :
 
     @GET
-    @Path("Patients")
+    @Path("/Patients")
+    public Response getPatient(@Context UriInfo ui) {
+        MultivaluedMap<String, String> mapQueryParams = ui.getQueryParameters();
+
+        if (mapQueryParams.getFirst("id") != null) {
+            try {
+                Long id = Long.valueOf(mapQueryParams.getFirst("id"));
+                return findPatientById(id);
+            } catch (Exception e) {
+                return Response.status(Status.BAD_REQUEST).build();
+            }
+
+        } else if (mapQueryParams.getFirst("firstname") != null || mapQueryParams.getFirst("lastname") != null) {
+            if (mapQueryParams.getFirst("firstname") != null && mapQueryParams.getFirst("lastname") != null) {
+                String firstname = mapQueryParams.getFirst("firstname");
+                String lastname = mapQueryParams.getFirst("lastname");
+                return findPatientByName(lastname, firstname);
+            }
+            return Response.status(Status.BAD_REQUEST).build();
+        }
+        return findAllPatient();
+    }
+
+    public Response findPatientById(Long id) {
+        Response response;
+        Patient patient = crud.findPatientById(id);
+        response = (patient != null) ? Response.ok(patient).build() : Response.noContent().build();
+        return response;
+    }
+
+    public Response findPatientByName(String lastname, String firstName) {
+        Response response;
+
+        Patient patient = crud.findPatientByName(lastname, firstName);
+        response = (patient != null) ? Response.ok(patient).build() : Response.noContent().build();
+        return response;
+    }
+
     public Response findAllPatient() {
         Response response;
         List<Patient> patients = crud.findAllPatient();
@@ -227,25 +324,7 @@ public class API {
     @Path("Patients")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createPatient(Patient patient) {
-        return Response.ok(crud.createPatient(patient)).build();
-    }
-
-    @GET
-    @Path("Patients/{id}")
-    public Response findPatientById(@PathParam("id") Long id) {
-        Response response;
-        Patient patient = crud.findPatientById(id);
-        response = (patient != null) ? Response.ok(patient).build() : Response.noContent().build();
-        return response;
-    }
-
-    @GET
-    @Path("Patients/{name}/{firstName}")
-    public Response findPatientByName(@PathParam("name") String name, @PathParam("firstName") String firstName) {
-        Response response;
-        Patient patient = crud.findPatientByName(name);
-        response = (patient != null) ? Response.ok(patient).build() : Response.noContent().build();
-        return response;
+        return Response.accepted(crud.createPatient(patient)).build();
     }
 
     @DELETE
@@ -265,7 +344,21 @@ public class API {
     // DIAGNOSIS CRUD :
 
     @GET
-    @Path("Diagnosis")
+    @Path("/Diagnosis")
+    public Response getDiagnosis(@Context UriInfo ui) {
+        MultivaluedMap<String, String> mapQueryParams = ui.getQueryParameters();
+
+        if (mapQueryParams.getFirst("id") != null) {
+            try {
+                Long id = Long.valueOf(mapQueryParams.getFirst("id"));
+                return findDiagnosisById(id);
+            } catch (Exception e) {
+                return Response.status(Status.BAD_REQUEST).build();
+            }
+        }
+        return findAllDiagnosis();
+    }
+
     public Response findAllDiagnosis() {
         Response response;
         List<Diagnosis> diagnosis = crud.findAllDiagnosis();
@@ -273,19 +366,51 @@ public class API {
         return response;
     }
 
-    @POST
-    @Path("Diagnosis")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response createDiagnosis(Diagnosis diagnosis) {
-        return Response.ok(crud.createDiagnosis(diagnosis)).build();
-    }
-
-    @GET
-    @Path("Diagnosis/{id}")
-    public Response findDiagnosisById(@PathParam("id") Long id) {
+    public Response findDiagnosisById(Long id) {
         Response response;
         Diagnosis diagnosis = crud.findDiagnosisById(id);
         response = (diagnosis != null) ? Response.ok(diagnosis).build() : Response.noContent().build();
+        return response;
+    }
+
+    @POST
+    @Path("/Diagnosis")
+    public Response postDiagnosis(@Context UriInfo ui) {
+        MultivaluedMap<String, String> mapQueryParams = ui.getQueryParameters();
+        Response response = Response.status(Status.BAD_REQUEST).build();
+
+        if (mapQueryParams.containsKey("random")) {
+            RandomBuilder randombuilder = new RandomBuilder();
+            Patient patient = randombuilder.buildRandomPatient();
+            patient = crud.createPatient(patient);
+            Diagnosis diagnosis = randombuilder.buildRandomDiagnosis();
+            diagnosis.setPatientConserne(patient);
+            diagnosis = crud.createDiagnosis(diagnosis);
+            return Response.accepted(diagnosis).build();
+
+        } else if (mapQueryParams.containsKey("criticality") && mapQueryParams.containsKey("patientID")
+                && mapQueryParams.containsKey("description")) {
+            try {
+                Patient patient = crud.findPatientById(Long.valueOf(mapQueryParams.getFirst("patientID")));
+                float criticality = Float.parseFloat(mapQueryParams.getFirst("criticality"));
+                if (patient != null) {
+                    Diagnosis diagnosis = new Diagnosis(criticality, mapQueryParams.getFirst("description"), patient);
+                    response = Response.accepted(crud.createDiagnosis(diagnosis)).build();
+                }
+            } catch (Exception e) {
+                response = Response.status(Status.BAD_REQUEST).entity(e).build();
+            }
+        }
+        return response;
+    }
+
+    public Response createDiagnosis(Diagnosis diagnosis) {
+        Response response;
+        try {
+            response = Response.ok(crud.createDiagnosis(diagnosis)).build();
+        } catch (Exception e) {
+            response = Response.notAcceptable(null).build();
+        }
         return response;
     }
 
@@ -314,7 +439,14 @@ public class API {
 
         response = (position != null) ? Response.ok(position).build() : Response.noContent().build();
         if (position != null) {
-            crud.suppressPosition(position);
+            try {
+                crud.suppressPosition(position);
+                response = Response.ok(position).build();
+            } catch (Exception e) {
+                response = Response.status(Status.CONFLICT).entity("l'entité est utiliser par une autre ressource")
+                        .build();
+            }
+
         }
 
         return response;
@@ -333,7 +465,7 @@ public class API {
     @Path("Positions")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response modifyPosition(Position position) {
-        if (position == null )
+        if (position == null)
             return Response.status(Status.BAD_REQUEST).build();
         if (crud.findPositionById(position.getId()) == null)
             return Response.status(Status.NO_CONTENT).build();

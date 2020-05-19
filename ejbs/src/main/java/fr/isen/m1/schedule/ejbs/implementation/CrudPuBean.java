@@ -47,7 +47,14 @@ public class CrudPuBean {
     public Doctor findDoctorByName(String lastName, String firstName) {
         Query query = em.createNamedQuery("Doctor.findByName", Doctor.class).setParameter("lastName", lastName)
                 .setParameter("firstName", firstName);
-        return (Doctor) query.getResultList().get(0);
+        Doctor doctor;
+        try {
+            doctor = (Doctor) query.getSingleResult();
+        } catch (Exception e) {
+            System.out.println(e);
+            doctor = null;
+        }
+        return doctor;
     }
 
     public void suppressDoctor(Doctor doctor) {
@@ -77,9 +84,15 @@ public class CrudPuBean {
         return em.find(Patient.class, id);
     }
 
-    public Patient findPatientByName(String lastName) {
-        Query query = em.createNamedQuery("Patient.findByName", Patient.class).setParameter("name", lastName);
-        return (Patient) query.getSingleResult();
+    public Patient findPatientByName(String lastName, String firstName) {
+        System.out.println("patient first name : " + firstName + " patient last name : " + lastName);
+        Query query = em.createNamedQuery("Patient.findByName", Patient.class).setParameter("lastname", lastName).setParameter("firstname", firstName);
+        try {
+            return (Patient) query.getSingleResult();
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
     }
 
     public void suppressPatient(Patient patientSuppress) {
@@ -204,9 +217,12 @@ public class CrudPuBean {
     public Appointement findAppointementByDiagnosis(Diagnosis diagnosis) {
         Query query = em.createNamedQuery("Appointement.findByDiagnosis", Appointement.class).setParameter("diagnosis",
                 diagnosis);
-        Appointement appointement = (Appointement) query.getSingleResult();
-        // logger.debug(appointements);
-        return appointement;
+                try {
+                    Appointement appointement = (Appointement) query.getSingleResult();
+                    return appointement;
+                } catch (Exception e) {
+                    return null;
+                }
     }
 
     public Appointement updateAppointement(Appointement appointement) {

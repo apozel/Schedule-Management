@@ -1,6 +1,7 @@
 package fr.isen.m1.schedule.ejbs;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import java.util.List;
@@ -57,7 +58,7 @@ public class TestEjb {
         randomDoctor = crud.createDoctor(randomDoctor);
         Long idDoc = randomDoctor.getId();
         Doctor resultDoctorId = crud.findDoctorById(idDoc);
-        assertEquals(resultDoctorId.getPrenom(), randomDoctor.getPrenom());
+        assertEquals(resultDoctorId.getFirstname(), randomDoctor.getFirstname());
         crud.createDoctor(randombuilder.buildRandomDoctor());
         List<Doctor> docList = crud.findAllDoctor();
         assertTrue(!docList.isEmpty());
@@ -71,7 +72,7 @@ public class TestEjb {
         Doctor randomDoctor = randombuilder.buildRandomDoctor();
         randomDoctor = crud.createDoctor(randomDoctor);
         Doctor resultDoctorId =
-                crud.findDoctorByName(randomDoctor.getNom(), randomDoctor.getPrenom());
+                crud.findDoctorByName(randomDoctor.getLastname(), randomDoctor.getFirstname());
         assertEquals(resultDoctorId, randomDoctor);
     }
 
@@ -133,8 +134,8 @@ public class TestEjb {
     public void findPatientByName() {
         Patient randomPatient = randombuilder.buildRandomPatient();
         randomPatient = crud.createPatient(randomPatient);
-        Patient resultPatientId = crud.findPatientByName(randomPatient.getNom());
-        assertEquals(resultPatientId.getPrenom(), randomPatient.getPrenom());
+        Patient resultPatientId = crud.findPatientByName(randomPatient.getNom(), randomPatient.getPrenom());
+        assertEquals(resultPatientId, randomPatient);
     }
 
     @Test
@@ -329,6 +330,7 @@ public class TestEjb {
         System.out.println("first");
         algo.addAppointementSchedule(newRequest, doctor);
         assertEquals(1, crud.findAppointementByDoctor(doctor).size());
+        assertNotNull(crud.findAppointementByDiagnosis(diagnosis));
         Patient patient2 = randombuilder.buildRandomPatient();
         patient2 = crud.createPatient(patient2);
         Diagnosis diagnosis2 = randombuilder.buildRandomDiagnosis();
@@ -338,6 +340,7 @@ public class TestEjb {
         System.out.println("second");
         algo.addAppointementSchedule(newRequest2, doctor);
         assertEquals(2, crud.findAppointementByDoctor(doctor).size());
+        assertNotNull(crud.findAppointementByDiagnosis(diagnosis2));
         Patient patient3 = randombuilder.buildRandomPatient();
         patient3 = crud.createPatient(patient3);
         Diagnosis diagnosis3 = randombuilder.buildRandomDiagnosis();
@@ -346,6 +349,7 @@ public class TestEjb {
         Request newRequest3 = new Request(diagnosis3, patient3);
         System.out.println("third : ");
         algo.addAppointementSchedule(newRequest3, doctor);
+        assertNotNull(crud.findAppointementByDiagnosis(diagnosis3));
         assertEquals(3, crud.findAppointementByDoctor(doctor).size());
     }
 

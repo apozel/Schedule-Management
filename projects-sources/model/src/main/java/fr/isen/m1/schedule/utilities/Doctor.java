@@ -62,7 +62,7 @@ public class Doctor implements Serializable {
     }
 
 
-    public String getNom() {
+    public String getLastname() {
         return this.socialDetails.getLastName();
     }
 
@@ -70,7 +70,7 @@ public class Doctor implements Serializable {
         this.socialDetails.setLastName(nom);
     }
 
-    public String getPrenom() {
+    public String getFirstname() {
         return this.socialDetails.getFirstName();
     }
 
@@ -98,7 +98,7 @@ public class Doctor implements Serializable {
 
     @Override
     public String toString() {
-        return "Docteur " + this.getNom() + " " + this.getPrenom();
+        return "Docteur " + this.getLastname() + " " + this.getFirstname();
     }
 
     public Position getEmplacement() {

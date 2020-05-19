@@ -5,6 +5,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -19,6 +20,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
 import fr.isen.m1.schedule.converter.LocalDateConverter;
 import fr.isen.m1.schedule.converter.LocalTimeConverter;
 
@@ -49,6 +51,7 @@ public class Appointement implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_appoi")
     private Long id;
+    //FIXME: changer la date en sql date
     @Column(name = "date_appoi")
     @Convert(converter = LocalDateConverter.class)
     private LocalDate date;

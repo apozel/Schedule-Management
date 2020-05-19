@@ -3,8 +3,10 @@ package fr.isen.m1.schedule.ejbs.implementation;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+
 import fr.isen.m1.schedule.builder.AppointementBuilder;
 import fr.isen.m1.schedule.marchant.moteur.MarchantDistanceCriticity;
 import fr.isen.m1.schedule.utilities.Appointement;
@@ -27,11 +29,13 @@ public class AlgorithmBean {
         this.now = LocalDateTime.now();
         List<Appointement> returnAppointements = new ArrayList<Appointement>();
         this.chooseDoctor = chooseDoctor();
+        System.out.println("add appointement diag from quest"+newQuest.getDiag());
         Appointement appointementFromNewQuest = new AppointementBuilder().setDate(now.toLocalDate())
                 .setDiagnosis(newQuest.getDiag()).setStartTime(now.toLocalTime()).build();
         appointementFromNewQuest = crud.createAppointement(appointementFromNewQuest);
+        System.out.println("appointement add schedule "+appointementFromNewQuest);
         openHours();
-
+        System.out.println("doctor choose : " + chooseDoctor);
         dayAppointements = avoirLesRendezVousDejaDonnee(now, chooseDoctor);
         checkSiLaJourneeEstPleine();
         dayAppointements.add(appointementFromNewQuest);
@@ -51,6 +55,7 @@ public class AlgorithmBean {
         System.out.println("heure avant : " + now);
         for (Diagnosis diagnosis2 : diagnosis) {
             Appointement appointementInOrder = crud.findAppointementByDiagnosis(diagnosis2);
+            System.out.println(appointementInOrder);
             appointementInOrder.setDate(now.toLocalDate());
             appointementInOrder.setHeureDebut(now.toLocalTime());
             appointementInOrder.setMedecinAffecte(chooseDoctor);

@@ -24,7 +24,7 @@ import fr.isen.m1.schedule.builder.SocialDetailsBuilder;
 @NamedQueries({
     @NamedQuery(name = "Patient.findAll", query = "SELECT patient FROM Patient patient"),
         @NamedQuery(name = "Patient.findByName",
-                query = "SELECT patient FROM Patient patient INNER JOIN patient.socialDetails socialDetails WHERE socialDetails.lastName = :name")})
+                query = "SELECT patient FROM Patient patient INNER JOIN patient.socialDetails socialDetails WHERE socialDetails.lastName = :lastname AND socialDetails.firstName = :firstname")})
 public class Patient implements Serializable {
 
     /**

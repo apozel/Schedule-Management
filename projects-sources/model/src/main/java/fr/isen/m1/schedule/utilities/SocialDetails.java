@@ -1,8 +1,9 @@
 package fr.isen.m1.schedule.utilities;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -12,8 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
 import fr.isen.m1.schedule.converter.BooleanConverter;
 
 /**
@@ -44,7 +44,6 @@ public class SocialDetails implements Serializable {
     @Column(name = "birthZipCode")
     private String birthZipCode;
     @Column(name = "birthDate")
-    @Temporal(TemporalType.DATE)
     private Date birthDate;
     @Column(name = "phoneNumber")
     private String phoneNumber;

@@ -1,6 +1,6 @@
 package fr.isen.m1.schedule.builder;
 
-import java.util.Date;
+import java.sql.Date;
 import fr.isen.m1.schedule.utilities.SocialDetails;
 
 /**
@@ -66,8 +66,8 @@ public class SocialDetailsBuilder {
         return birthDate;
     }
 
-    public SocialDetailsBuilder setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
+    public SocialDetailsBuilder setBirthDate(java.util.Date birthDate) {
+        this.birthDate = new Date( birthDate.getTime());
         return this;
     }
 
