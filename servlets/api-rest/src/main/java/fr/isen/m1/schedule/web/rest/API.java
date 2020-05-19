@@ -72,12 +72,12 @@ public class API {
         MultivaluedMap<String, String> mapQueryParams = ui.getQueryParameters();
         Response response = Response.status(Status.BAD_REQUEST).build();
         if (mapQueryParams.containsKey("random")) {
-            response = Response.accepted(createRandomAppointement()).build();
+            return createRandomAppointement();
         } else if (mapQueryParams.containsKey("diagnosisID")) {
             try {
                 Diagnosis diagnosis = crud.findDiagnosisById(Long.valueOf(mapQueryParams.getFirst("diagnosisID")));
                 if (diagnosis != null) {
-                    response = Response.accepted(addAppointement(diagnosis.getId())).build();
+                    return addAppointement(diagnosis.getId());
                 } else {
                     response = Response.noContent().build();
                 }
