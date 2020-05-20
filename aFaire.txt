@@ -1,2 +1,0 @@
-entity manager piur parler avec la base de donnees 
-annuaire jndi pour la configuration des parametres pour glassfish mais aussi la base de donnees qui doit etre changer a la fin
