@@ -1,0 +1,2843 @@
+{
+	"info": {
+		"_postman_id": "fa594e43-04ad-4607-a536-e613339c9c2a",
+		"name": "schedule",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "API",
+			"item": [
+				{
+					"name": "Positions",
+					"item": [
+						{
+							"name": "modifyPosition",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "8d341eee-fd12-4221-b4b1-1620949b41ee",
+										"exec": [
+											"let jsonPosition = JSON.parse(pm.globals.get(\"positions\"));\r",
+											"let countPositions = jsonPosition.length;\r",
+											"let index = Math.floor(Math.random() * Math.floor(countPositions));\r",
+											"let position = jsonPosition[index];\r",
+											"position.x = 12;\r",
+											"pm.variables.set(\"indexPositionModif\", index);\r",
+											"pm.variables.set(\"positionModi.x\", position.x);\r",
+											"pm.variables.set(\"positionModi.y\", position.y);\r",
+											"pm.variables.set(\"positionModi.id\", position.id);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "595e738c-29ff-4b4d-8f72-50c37d11734c",
+										"exec": [
+											"pm.test(\"test modify\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.x).to.eql(12);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"id\" : {{positionModi.id}},\n\t\"x\" : {{positionModi.x}},\n\t\"y\": {{positionModi.y}}\n}",
+									"options": {
+										"raw": {}
+									}
+								},
+								"url": {
+									"raw": "{{url.base}}/api-rest/schedule/API/Positions",
+									"host": [
+										"{{url.base}}"
+									],
+									"path": [
+										"api-rest",
+										"schedule",
+										"API",
+										"Positions"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "\"<object>\""
+										},
+										"url": {
+											"raw": "http://localhost:8080/api-rest/schedule/API/Positions",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api-rest",
+												"schedule",
+												"API",
+												"Positions"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "\"<object>\""
+								}
+							]
+						},
+						{
+							"name": "createPosition",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "d5678a10-4215-4065-8af6-c4a4c93e9da7",
+										"exec": [
+											"pm.test(\"Successful POST request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+											"});\r",
+											"\r",
+											"let jsonPosition = JSON.parse(pm.globals.get(\"positions\"));\r",
+											"let countPositions = jsonPosition.length;\r",
+											"console.log('count test : ')\r",
+											"console.log(countPositions);\r",
+											"pm.test(\"test si c'est le bon nombre\", function () {\r",
+											"    pm.expect(countPositions).to.eql(pm.variables.get(\"count\") + 1);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "27b1f9af-af79-4ee8-b565-1bcec152a802",
+										"exec": [
+											"let jsonPosition = JSON.parse(pm.globals.get(\"positions\"));\r",
+											"let countPositions = jsonPosition.length;\r",
+											"let index = Math.floor(Math.random() * Math.floor(countPositions));\r",
+											"let position = jsonPosition[index];\r",
+											"console.log(\"count : \");\r",
+											"console.log(countPositions);\r",
+											"pm.variables.set(\"index\", position.id);\r",
+											"pm.variables.set(\"count\", countPositions);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{url.base}}/api-rest/schedule/API/Positions?x={{$randomInt}}&y={{$randomInt}}",
+									"host": [
+										"{{url.base}}"
+									],
+									"path": [
+										"api-rest",
+										"schedule",
+										"API",
+										"Positions"
+									],
+									"query": [
+										{
+											"key": "x",
+											"value": "{{$randomInt}}"
+										},
+										{
+											"key": "y",
+											"value": "{{$randomInt}}"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/api-rest/schedule/API/Positions?x=<double>&y=<double>",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api-rest",
+												"schedule",
+												"API",
+												"Positions"
+											],
+											"query": [
+												{
+													"key": "x",
+													"value": "<double>"
+												},
+												{
+													"key": "y",
+													"value": "<double>"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "\"<object>\""
+								}
+							]
+						},
+						{
+							"name": "findPositionById",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "2bbbda2a-4c59-4726-8545-85b963d810c0",
+										"exec": [
+											"console.log(pm.globals.get(\"positions\"));\r",
+											"let jsonPosition = JSON.parse(pm.globals.get(\"positions\"));\r",
+											"let countPositions = jsonPosition.length;\r",
+											"let index = Math.floor(Math.random() * Math.floor(countPositions - 1));\r",
+											"let position = jsonPosition[index];\r",
+											"console.log('position : ');\r",
+											"console.log(position)\r",
+											"pm.variables.set(\"id\", position.id);\r",
+											"pm.variables.set(\"index\", index);\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "872fdc70-5882-4d9c-8a91-1afac2838d52",
+										"exec": [
+											"\r",
+											"console.log(pm.globals.get(\"positions\"));\r",
+											"let jsonPosition = JSON.parse(pm.globals.get(\"positions\"));\r",
+											"let countPositions = jsonPosition.length;\r",
+											"\r",
+											"pm.test(\"test number of positions\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.id).to.eql(jsonPosition[pm.variables.get(\"index\")].id);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url.base}}/api-rest/schedule/API/Positions/:id",
+									"host": [
+										"{{url.base}}"
+									],
+									"path": [
+										"api-rest",
+										"schedule",
+										"API",
+										"Positions",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{id}}",
+											"type": "string",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/api-rest/schedule/API/Positions/:id",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api-rest",
+												"schedule",
+												"API",
+												"Positions",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "\"<object>\""
+								}
+							]
+						},
+						{
+							"name": "findAllPosition",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "16f47d31-e792-4782-ac3d-533db08bd7a1",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url.base}}/api-rest/schedule/API/Positions",
+									"host": [
+										"{{url.base}}"
+									],
+									"path": [
+										"api-rest",
+										"schedule",
+										"API",
+										"Positions"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/api-rest/schedule/API/Positions",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api-rest",
+												"schedule",
+												"API",
+												"Positions"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "\"<object>\""
+								}
+							]
+						},
+						{
+							"name": "suppressPosition",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "47783ba5-6059-4b61-aa89-1bde0b909688",
+										"exec": [
+											"console.log(pm.globals.get(\"positions\"));\r",
+											"let jsonPosition = JSON.parse(pm.globals.get(\"positions\"));\r",
+											"let countPositions = jsonPosition.length;\r",
+											"let index = Math.floor(Math.random() * Math.floor(countPositions));\r",
+											"let position = jsonPosition[index];\r",
+											"pm.variables.set(\"index\", position.id);\r",
+											"pm.variables.set(\"count\", countPositions);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "2c9bb688-5c3d-43b9-a189-7886f6202f81",
+										"exec": [
+											"pm.test(\"Successful request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 409]);\r",
+											"});\r",
+											"\r",
+											"var skipTest = false;\r",
+											"if (pm.response.code == 409) {\r",
+											"    skipTest = true;\r",
+											"    console.log('skip')\r",
+											"}\r",
+											"\r",
+											"console.log(pm.globals.get(\"positions\"));\r",
+											"let jsonPosition = JSON.parse(pm.globals.get(\"positions\"));\r",
+											"let countPositions = jsonPosition.length;\r",
+											"console.log('count test : ')\r",
+											"console.log(countPositions);\r",
+											"(skipTest ? pm.test.skip : pm.test)(\"test si c'est le bon nombre\", function () {\r",
+											"    pm.expect(countPositions).to.eql(pm.variables.get(\"count\") - 1);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url.base}}/api-rest/schedule/API/Positions/:id",
+									"host": [
+										"{{url.base}}"
+									],
+									"path": [
+										"api-rest",
+										"schedule",
+										"API",
+										"Positions",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{index}}",
+											"type": "string",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/api-rest/schedule/API/Positions/:id",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api-rest",
+												"schedule",
+												"API",
+												"Positions",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "\"<object>\""
+								}
+							]
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "b1949b48-1909-48d4-95a7-244dcc77a050",
+								"type": "text/javascript",
+								"exec": [
+									"pm.sendRequest(\"http://localhost:8080/api-rest/schedule/API/Positions\", function (err, response) {",
+									"    console.log(response.json());",
+									"    pm.globals.set(\"positions\", JSON.stringify(response.json()));",
+									"});",
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "ada85335-7a22-4f64-9f0a-63017f53ddb6",
+								"type": "text/javascript",
+								"exec": [
+									"pm.sendRequest(\"http://localhost:8080/api-rest/schedule/API/Positions\", function (err, response) {",
+									"    pm.globals.set(\"positions\", JSON.stringify(response.json()));",
+									"",
+									"});"
+								]
+							}
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Doctors",
+					"item": [
+						{
+							"name": "putDoctorRandom",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{url.base}}/api-rest/schedule/API/putDoctorRandom",
+									"host": [
+										"{{url.base}}"
+									],
+									"path": [
+										"api-rest",
+										"schedule",
+										"API",
+										"putDoctorRandom"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/api-rest/schedule/API/putDoctorRandom",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api-rest",
+												"schedule",
+												"API",
+												"putDoctorRandom"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "createDoctor",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "028fdc98-3539-4536-ba4c-875c666fc01b",
+										"exec": [
+											"var firstname = pm.variables.replaceIn('{{$randomFirstName}}');\r",
+											"var lastname = pm.variables.replaceIn('{{$randomLastName}}');\r",
+											"var randIntx = pm.variables.replaceIn('{{$randomInt}}');\r",
+											"var randInty =pm.variables.replaceIn('{{$randomInt}}');\r",
+											"\r",
+											"let doctor = {\r",
+											"    \"cdhp\": pm.variables.replaceIn('{{$randomPassword}}'),\r",
+											"    \"details\": {\r",
+											"        \"birthAddress\": pm.variables.replaceIn('{{$randomCity}}'),\r",
+											"        \"birthDate\": \"2020-05-11\",\r",
+											"        \"birthZipCode\": pm.variables.replaceIn('{{$randomInt}}'),\r",
+											"        \"firstName\": firstname,\r",
+											"        \"gender\": pm.variables.replaceIn('{{$randomBoolean}}'),\r",
+											"        \"id\": 0,\r",
+											"        \"lastName\": lastname,\r",
+											"        \"phoneNumber\": pm.variables.replaceIn('{{$randomInt}}')\r",
+											"    },\r",
+											"    \"emplacement\": {\r",
+											"        \"x\": randIntx,\r",
+											"        \"y\": randInty\r",
+											"    },\r",
+											"    \"id\": 0,\r",
+											"    \"lieuDeDepart\": {\r",
+											"        \"id\": 0,\r",
+											"        \"x\": randIntx,\r",
+											"        \"y\": randInty\r",
+											"    },\r",
+											"    \"nom\": lastname,\r",
+											"    \"firstname\":firstname\r",
+											"};\r",
+											"\r",
+											"pm.variables.set(\"doctor\",JSON.stringify(doctor));\r",
+											"pm.variables.set(\"doctorCount\",JSON.parse(pm.globals.get(\"doctors\")).length);\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "55fea8d3-27bb-42a7-a3c4-9056da99df22",
+										"exec": [
+											"pm.test(\"Successful POST request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([201,202]);\r",
+											"    pm.expect(JSON.parse(pm.globals.get(\"doctors\")).length).to.eql(pm.variables.get(\"doctorCount\")+1);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{{doctor}}",
+									"options": {
+										"raw": {}
+									}
+								},
+								"url": {
+									"raw": "{{url.base}}/api-rest/schedule/API/Doctors",
+									"host": [
+										"{{url.base}}"
+									],
+									"path": [
+										"api-rest",
+										"schedule",
+										"API",
+										"Doctors"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "\"<object>\""
+										},
+										"url": {
+											"raw": "http://localhost:8080/api-rest/schedule/API/Doctors",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api-rest",
+												"schedule",
+												"API",
+												"Doctors"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "\"<object>\""
+								}
+							]
+						},
+						{
+							"name": "findDoctorById",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "8064d0b0-5cfc-42d3-96f3-101cf92247e7",
+										"exec": [
+											"let jsonEntity = JSON.parse(pm.globals.get(\"doctors\"));\r",
+											"let countEntity = jsonEntity.length;\r",
+											"let index = Math.floor(Math.random() * Math.floor(countEntity - 1));\r",
+											"let entity = jsonEntity[index];\r",
+											"console.log('entity : ');\r",
+											"console.log(entity)\r",
+											"pm.variables.set(\"id\", entity.id);\r",
+											"pm.variables.set(\"index\", index);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "ea8275da-2bb0-49aa-9f7a-bd2c5ba26059",
+										"exec": [
+											"let jsonEntity = JSON.parse(pm.globals.get(\"doctors\"));\r",
+											"let countEntity = jsonEntity.length;\r",
+											"\r",
+											"pm.test(\"test number of entity\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.id).to.eql(jsonEntity[pm.variables.get(\"index\")].id);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url.base}}/api-rest/schedule/API/Doctors?id={{id}}",
+									"host": [
+										"{{url.base}}"
+									],
+									"path": [
+										"api-rest",
+										"schedule",
+										"API",
+										"Doctors"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "{{id}}"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/api-rest/schedule/API/Doctors/:id",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api-rest",
+												"schedule",
+												"API",
+												"Doctors",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "\"<object>\""
+								}
+							]
+						},
+						{
+							"name": "findDoctorByName",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "90239e5a-415e-4d9a-ad5c-0bbb2e95f4cc",
+										"exec": [
+											"let jsonEntity = JSON.parse(pm.globals.get(\"doctors\"));\r",
+											"let countEntity = jsonEntity.length;\r",
+											"let index = Math.floor(Math.random() * Math.floor(countEntity - 1));\r",
+											"let entity = jsonEntity[index];\r",
+											"console.log('entity : ');\r",
+											"console.log(entity)\r",
+											"pm.variables.set(\"firstname\", entity.firstname);\r",
+											"pm.variables.set(\"lastname\", entity.lastname);\r",
+											"pm.variables.set(\"index\", index);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "31824a93-6f4d-454e-b6ec-cb1664e93311",
+										"exec": [
+											"let jsonEntity = JSON.parse(pm.globals.get(\"doctors\"));\r",
+											"let countEntity = jsonEntity.length;\r",
+											"\r",
+											"pm.test(\"test number of entity\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.nom).to.eql(jsonEntity[pm.variables.get(\"index\")].nom);\r",
+											"     pm.expect(jsonData.prenom).to.eql(jsonEntity[pm.variables.get(\"index\")].prenom);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url.base}}/api-rest/schedule/API/Doctors?firstname={{firstname}}&lastname={{lastname}}",
+									"host": [
+										"{{url.base}}"
+									],
+									"path": [
+										"api-rest",
+										"schedule",
+										"API",
+										"Doctors"
+									],
+									"query": [
+										{
+											"key": "firstname",
+											"value": "{{firstname}}",
+											"description": "(Required) "
+										},
+										{
+											"key": "lastname",
+											"value": "{{lastname}}",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/api-rest/schedule/API/Doctors/:firstname/:lastName",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api-rest",
+												"schedule",
+												"API",
+												"Doctors",
+												":firstname",
+												":lastName"
+											],
+											"variable": [
+												{
+													"key": "firstname"
+												},
+												{
+													"key": "lastName"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "\"<object>\""
+								}
+							]
+						},
+						{
+							"name": "findAllDoctor",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "f418784b-99f0-4bb0-8a1b-9797c5faf41c",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "4d2a789d-90ac-4ca5-9ff0-97537f7ac83f",
+										"exec": [
+											"pm.test(\"Successful POST request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200,204]);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url.base}}/api-rest/schedule/API/Doctors",
+									"host": [
+										"{{url.base}}"
+									],
+									"path": [
+										"api-rest",
+										"schedule",
+										"API",
+										"Doctors"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/api-rest/schedule/API/Doctors",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api-rest",
+												"schedule",
+												"API",
+												"Doctors"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "\"<object>\""
+								}
+							]
+						},
+						{
+							"name": "suppressDoctor",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "d01bb79c-f300-4420-8793-bf673f652851",
+										"exec": [
+											"let jsonEntity = JSON.parse(pm.globals.get(\"doctors\"));\r",
+											"let countEntity = jsonEntity.length;\r",
+											"let index = Math.floor(Math.random() * Math.floor(countEntity-1));\r",
+											"let entity = jsonEntity[index];\r",
+											"pm.variables.set(\"id\", entity.id);\r",
+											"pm.variables.set(\"count\", countEntity);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "04b9610c-a8d9-4b83-aed4-0b14311d010e",
+										"exec": [
+											"pm.test(\"Successful DELETE request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200,409]);\r",
+											"});\r",
+											"\r",
+											"var skipTest = false;\r",
+											"if (pm.response.code == 409) {\r",
+											"    skipTest = true;\r",
+											"    console.log('skip')\r",
+											"}\r",
+											"\r",
+											"\r",
+											"let jsonEntity = JSON.parse(pm.globals.get(\"doctors\"));\r",
+											"let countEntity = jsonEntity.length;\r",
+											"console.log('count test : ')\r",
+											"console.log(countEntity);\r",
+											"(skipTest ? pm.test.skip : pm.test)(\"test si c'est le bon nombre\", function () {\r",
+											"    pm.expect(countEntity).to.eql(pm.variables.get(\"count\") - 1);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url.base}}/api-rest/schedule/API/Doctors/:id",
+									"host": [
+										"{{url.base}}"
+									],
+									"path": [
+										"api-rest",
+										"schedule",
+										"API",
+										"Doctors",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{id}}",
+											"type": "string",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/api-rest/schedule/API/Doctors/:id",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api-rest",
+												"schedule",
+												"API",
+												"Doctors",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "\"<object>\""
+								}
+							]
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "0dfc0403-fe17-4c4d-b5a9-66a194be6706",
+								"type": "text/javascript",
+								"exec": [
+									"console.log('preFolder');",
+									"pm.sendRequest(\"http://localhost:8080/api-rest/schedule/API/Doctors\", function (err, response) {",
+									"    console.log(response.json());",
+									"    pm.globals.set(\"doctors\", JSON.stringify(response.json()));",
+									"});",
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "3b4856df-a9b8-468f-ac05-52472148d847",
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"pm.sendRequest(\"http://localhost:8080/api-rest/schedule/API/Doctors\", function (err, response) {",
+									"    console.log('postFolder');",
+									"    console.log(response.json());",
+									"    pm.globals.set(\"doctors\", JSON.stringify(response.json()));",
+									"});",
+									""
+								]
+							}
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Patients",
+					"item": [
+						{
+							"name": "putPatientRandom",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{url.base}}/api-rest/schedule/API/putPatientRandom",
+									"host": [
+										"{{url.base}}"
+									],
+									"path": [
+										"api-rest",
+										"schedule",
+										"API",
+										"putPatientRandom"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/api-rest/schedule/API/putPatientRandom",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api-rest",
+												"schedule",
+												"API",
+												"putPatientRandom"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "createPatient",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "66893386-903d-4f57-a433-2d6afa8d27a5",
+										"exec": [
+											"var firstname = pm.variables.replaceIn('{{$randomFirstName}}');\r",
+											"var lastname = pm.variables.replaceIn('{{$randomLastName}}');\r",
+											"var randIntx = pm.variables.replaceIn('{{$randomInt}}');\r",
+											"var randInty = pm.variables.replaceIn('{{$randomInt}}');\r",
+											"\r",
+											"let patient = {\r",
+											"    \"details\": {\r",
+											"        \"birthAddress\": pm.variables.replaceIn('{{$randomCity}}'),\r",
+											"        \"birthDate\": \"2020-05-11\",\r",
+											"        \"birthZipCode\": pm.variables.replaceIn('{{$randomInt}}'),\r",
+											"        \"firstName\": firstname,\r",
+											"        \"gender\": pm.variables.replaceIn('{{$randomBoolean}}'),\r",
+											"        \"id\": 0,\r",
+											"        \"lastName\": lastname,\r",
+											"        \"phoneNumber\": pm.variables.replaceIn('{{$randomInt}}')\r",
+											"    },\r",
+											"    \"id\": 0,\r",
+											"    \"lieuDeVie\": {\r",
+											"        \"id\": 0,\r",
+											"        \"x\": randIntx,\r",
+											"        \"y\": randInty\r",
+											"    },\r",
+											"    \"nom\": lastname,\r",
+											"    \"prenom\": firstname\r",
+											"};\r",
+											"\r",
+											"\r",
+											"\r",
+											"pm.variables.set(\"patient\", JSON.stringify(patient));\r",
+											"pm.variables.set(\"entityCount\", JSON.parse(pm.globals.get(\"patients\")).length);\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "730594c3-fd31-4805-8a68-0af290c151b5",
+										"exec": [
+											"pm.test(\"Successful POST request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([201,202]);\r",
+											"    pm.expect(JSON.parse(pm.globals.get(\"patients\")).length).to.eql(pm.variables.get(\"entityCount\")+1);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{{patient}}",
+									"options": {
+										"raw": {}
+									}
+								},
+								"url": {
+									"raw": "{{url.base}}/api-rest/schedule/API/Patients",
+									"host": [
+										"{{url.base}}"
+									],
+									"path": [
+										"api-rest",
+										"schedule",
+										"API",
+										"Patients"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "\"<object>\""
+										},
+										"url": {
+											"raw": "http://localhost:8080/api-rest/schedule/API/Patients",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api-rest",
+												"schedule",
+												"API",
+												"Patients"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "\"<object>\""
+								}
+							]
+						},
+						{
+							"name": "findPatientById",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "af278ad2-902b-4baf-ac54-df8444c8cb9e",
+										"exec": [
+											"let jsonEntity = JSON.parse(pm.globals.get(\"patients\"));\r",
+											"let countEntity = jsonEntity.length;\r",
+											"let index = Math.floor(Math.random() * Math.floor(countEntity - 1));\r",
+											"let entity = jsonEntity[index];\r",
+											"console.log('entity : ');\r",
+											"console.log(entity)\r",
+											"pm.variables.set(\"id\", entity.id);\r",
+											"pm.variables.set(\"index\", index);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "b76c9ac2-aa6d-4464-a99c-3d93bce4736f",
+										"exec": [
+											"let jsonEntity = JSON.parse(pm.globals.get(\"patients\"));\r",
+											"let countEntity = jsonEntity.length;\r",
+											"\r",
+											"pm.test(\"test number of entity\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.id).to.eql(jsonEntity[pm.variables.get(\"index\")].id);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url.base}}/api-rest/schedule/API/Patients?id={{id}}",
+									"host": [
+										"{{url.base}}"
+									],
+									"path": [
+										"api-rest",
+										"schedule",
+										"API",
+										"Patients"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "{{id}}"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/api-rest/schedule/API/Patients/:id",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api-rest",
+												"schedule",
+												"API",
+												"Patients",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "\"<object>\""
+								}
+							]
+						},
+						{
+							"name": "findAllPatient",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "8d1e7d94-1d31-474c-85e0-016a218ce0b7",
+										"exec": [
+											"pm.test(\"Successful request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200,204]);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url.base}}/api-rest/schedule/API/Patients",
+									"host": [
+										"{{url.base}}"
+									],
+									"path": [
+										"api-rest",
+										"schedule",
+										"API",
+										"Patients"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/api-rest/schedule/API/Patients",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api-rest",
+												"schedule",
+												"API",
+												"Patients"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "\"<object>\""
+								}
+							]
+						},
+						{
+							"name": "findPatientByName",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "15b10ef5-c74f-4c90-a0f0-8103d0a7a77e",
+										"exec": [
+											"let jsonEntity = JSON.parse(pm.globals.get(\"patients\"));\r",
+											"let countEntity = jsonEntity.length;\r",
+											"let index = Math.floor(Math.random() * Math.floor(countEntity - 1));\r",
+											"console.log('index : ' + index);\r",
+											"let entity = jsonEntity[index];\r",
+											"console.log('entity : ');\r",
+											"console.log(entity)\r",
+											"pm.variables.set(\"firstname\", entity.prenom);\r",
+											"pm.variables.set(\"lastname\", entity.nom);\r",
+											"pm.variables.set(\"index\", index);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "2945b33e-278a-4fc5-b852-c8ab8fc1b31c",
+										"exec": [
+											"let jsonEntity = JSON.parse(pm.globals.get(\"patients\"));\r",
+											"let countEntity = jsonEntity.length;\r",
+											"\r",
+											"pm.test(\"test number of entity\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.nom).to.eql(jsonEntity[pm.variables.get(\"index\")].nom);\r",
+											"    pm.expect(jsonData.prenom).to.eql(jsonEntity[pm.variables.get(\"index\")].prenom);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url.base}}/api-rest/schedule/API/Patients?firstname={{firstname}}&lastname={{lastname}}",
+									"host": [
+										"{{url.base}}"
+									],
+									"path": [
+										"api-rest",
+										"schedule",
+										"API",
+										"Patients"
+									],
+									"query": [
+										{
+											"key": "firstname",
+											"value": "{{firstname}}"
+										},
+										{
+											"key": "lastname",
+											"value": "{{lastname}}"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/api-rest/schedule/API/Patients/:name/:firstName",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api-rest",
+												"schedule",
+												"API",
+												"Patients",
+												":name",
+												":firstName"
+											],
+											"variable": [
+												{
+													"key": "name"
+												},
+												{
+													"key": "firstName"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "\"<object>\""
+								}
+							]
+						},
+						{
+							"name": "suppressPatient",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "2f0a1ccd-533d-42d5-8a3d-26116295c863",
+										"exec": [
+											"let jsonEntity = JSON.parse(pm.globals.get(\"patients\"));\r",
+											"let countEntity = jsonEntity.length;\r",
+											"let index = Math.floor(Math.random() * Math.floor(countEntity - 1));\r",
+											"let entity = jsonEntity[index];\r",
+											"console.log('post countentity test : '+ countEntity);\r",
+											"pm.variables.set(\"id\", entity.id);\r",
+											"pm.variables.set(\"count\", countEntity);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "1631f859-cd6c-4da9-b3fc-7cdd810e2423",
+										"exec": [
+											"pm.test(\"Successful DELETE request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 409]);\r",
+											"});\r",
+											"\r",
+											"var skipTest = false;\r",
+											"if (pm.response.code == 409) {\r",
+											"    skipTest = true;\r",
+											"    console.log('skip')\r",
+											"}\r",
+											"\r",
+											"\r",
+											"let jsonEntity = JSON.parse(pm.globals.get(\"patients\"));\r",
+											"let countEntity = jsonEntity.length;\r",
+											"console.log('post countentity test : '+ countEntity);\r",
+											"console.log('variable count ' +pm.variables.get(\"count\"));\r",
+											"(skipTest ? pm.test.skip : pm.test)(\"test si c'est le bon nombre\", function () {\r",
+											"    pm.expect(countEntity).to.eql(pm.variables.get(\"count\") - 1);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url.base}}/api-rest/schedule/API/Patients/:id",
+									"host": [
+										"{{url.base}}"
+									],
+									"path": [
+										"api-rest",
+										"schedule",
+										"API",
+										"Patients",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{id}}",
+											"type": "string",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/api-rest/schedule/API/Patients/:id",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api-rest",
+												"schedule",
+												"API",
+												"Patients",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "\"<object>\""
+								}
+							]
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "6a4ebd2d-7f28-48e5-9c9b-b57b7e62e83b",
+								"type": "text/javascript",
+								"exec": [
+									"console.log('preFolder');",
+									"pm.sendRequest(\"http://localhost:8080/api-rest/schedule/API/Patients\", function (err, response) {",
+									"    console.log(response.json());",
+									"    pm.globals.set(\"patients\", JSON.stringify(response.json()));",
+									"});",
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "8e7f3250-dc0c-48e1-8617-4250fc286fbd",
+								"type": "text/javascript",
+								"exec": [
+									"pm.sendRequest(\"http://localhost:8080/api-rest/schedule/API/Patients\", function (err, response) {",
+									"    console.log('postFolder');",
+									"    console.log(response.json());",
+									"    pm.globals.set(\"patients\", JSON.stringify(response.json()));",
+									"});"
+								]
+							}
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Diagnosis",
+					"item": [
+						{
+							"name": "createDiagnosis",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "cda77f70-8015-486f-8749-805749826b5a",
+										"exec": [
+											"    var firstname = pm.variables.replaceIn('{{$randomFirstName}}');\r",
+											"var lastname = pm.variables.replaceIn('{{$randomLastName}}');\r",
+											"var randIntx = pm.variables.replaceIn('{{$randomInt}}');\r",
+											"var randInty = pm.variables.replaceIn('{{$randomInt}}');\r",
+											"\r",
+											"let diagnosis = {\r",
+											"        \"criticite\": Math.floor(Math.random() * Math.floor(10)),\r",
+											"        \"description\": \"maladie\",\r",
+											"        \"id\": 0,\r",
+											"        \"patientConserne\":  {\r",
+											"    \"details\": {\r",
+											"        \"birthAddress\": pm.variables.replaceIn('{{$randomCity}}'),\r",
+											"        \"birthDate\": \"2020-05-11\",\r",
+											"        \"birthZipCode\": pm.variables.replaceIn('{{$randomInt}}'),\r",
+											"        \"firstName\": firstname,\r",
+											"        \"gender\": pm.variables.replaceIn('{{$randomBoolean}}'),\r",
+											"        \"id\": 0,\r",
+											"        \"lastName\": lastname,\r",
+											"        \"phoneNumber\": pm.variables.replaceIn('{{$randomInt}}')\r",
+											"    },\r",
+											"    \"id\": 0,\r",
+											"    \"lieuDeVie\": {\r",
+											"        \"id\": 0,\r",
+											"        \"x\": randIntx,\r",
+											"        \"y\": randInty\r",
+											"    },\r",
+											"    \"nom\": lastname,\r",
+											"    \"prenom\": firstname\r",
+											"}\r",
+											"           \r",
+											"        };\r",
+											"    \r",
+											"\r",
+											"\r",
+											"\r",
+											"pm.variables.set(\"diagnosis\", JSON.stringify(diagnosis));\r",
+											"pm.variables.set(\"entityCount\", JSON.parse(pm.globals.get(\"diagnosis\")).length);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "bdec3d5f-03e5-4375-b60e-c2edfbf594e1",
+										"exec": [
+											"pm.test(\"Successful POST request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+											"    pm.expect(JSON.parse(pm.globals.get(\"diagnosis\")).length).to.eql(pm.variables.get(\"entityCount\") + 1);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{url.base}}/api-rest/schedule/API/Diagnosis?random",
+									"host": [
+										"{{url.base}}"
+									],
+									"path": [
+										"api-rest",
+										"schedule",
+										"API",
+										"Diagnosis"
+									],
+									"query": [
+										{
+											"key": "criticality",
+											"value": null,
+											"disabled": true
+										},
+										{
+											"key": "random",
+											"value": null
+										},
+										{
+											"key": "patientID",
+											"value": null,
+											"disabled": true
+										},
+										{
+											"key": "description",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "\"<object>\""
+										},
+										"url": {
+											"raw": "http://localhost:8080/api-rest/schedule/API/Diagnosis",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api-rest",
+												"schedule",
+												"API",
+												"Diagnosis"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "\"<object>\""
+								}
+							]
+						},
+						{
+							"name": "findAllDiagnosis",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "34a19d43-93cd-4e79-809d-d6cfb89b5e35",
+										"exec": [
+											"pm.test(\"Successful request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 204]);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url.base}}/api-rest/schedule/API/Diagnosis",
+									"host": [
+										"{{url.base}}"
+									],
+									"path": [
+										"api-rest",
+										"schedule",
+										"API",
+										"Diagnosis"
+									],
+									"query": [
+										{
+											"key": "criticality",
+											"value": null,
+											"disabled": true
+										},
+										{
+											"key": "description",
+											"value": null,
+											"disabled": true
+										},
+										{
+											"key": "patientID",
+											"value": null,
+											"disabled": true
+										},
+										{
+											"key": "random",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/api-rest/schedule/API/Diagnosis",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api-rest",
+												"schedule",
+												"API",
+												"Diagnosis"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "\"<object>\""
+								}
+							]
+						},
+						{
+							"name": "findDiagnosisById",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "9de69a3e-17f2-4923-af2e-1d5469c6c906",
+										"exec": [
+											"let jsonEntity = JSON.parse(pm.globals.get(\"diagnosis\"));\r",
+											"let countEntity = jsonEntity.length;\r",
+											"let index = Math.floor(Math.random() * Math.floor(countEntity - 1));\r",
+											"let entity = jsonEntity[index];\r",
+											"console.log('entity : ');\r",
+											"console.log(entity)\r",
+											"pm.variables.set(\"id\", entity.id);\r",
+											"pm.variables.set(\"index\", index);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "ba60a089-cc85-430c-abd9-8c390335f461",
+										"exec": [
+											"let jsonEntity = JSON.parse(pm.globals.get(\"diagnosis\"));\r",
+											"let countEntity = jsonEntity.length;\r",
+											"\r",
+											"pm.test(\"test number of entity\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.id).to.eql(jsonEntity[pm.variables.get(\"index\")].id);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url.base}}/api-rest/schedule/API/Diagnosis?id={{id}}",
+									"host": [
+										"{{url.base}}"
+									],
+									"path": [
+										"api-rest",
+										"schedule",
+										"API",
+										"Diagnosis"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "{{id}}"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/api-rest/schedule/API/Diagnosis/:id",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api-rest",
+												"schedule",
+												"API",
+												"Diagnosis",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "\"<object>\""
+								}
+							]
+						},
+						{
+							"name": "suppressDiagnosis",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "46fa9c62-02ab-4914-8272-89b88a4ff7b9",
+										"exec": [
+											"let jsonEntity = JSON.parse(pm.globals.get(\"diagnosis\"));\r",
+											"let countEntity = jsonEntity.length;\r",
+											"let index = Math.floor(Math.random() * Math.floor(countEntity - 1));\r",
+											"let entity = jsonEntity[index];\r",
+											"pm.variables.set(\"id\", entity.id);\r",
+											"pm.variables.set(\"count\", countEntity);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "12c6ef7d-52dc-4850-8a55-1cd8e07e6657",
+										"exec": [
+											"pm.test(\"Successful DELETE request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 409]);\r",
+											"});\r",
+											"\r",
+											"var skipTest = false;\r",
+											"if (pm.response.code == 409) {\r",
+											"    skipTest = true;\r",
+											"    console.log('skip')\r",
+											"}\r",
+											"\r",
+											"\r",
+											"let jsonEntity = JSON.parse(pm.globals.get(\"diagnosis\"));\r",
+											"let countEntity = jsonEntity.length;\r",
+											"console.log('count test : ')\r",
+											"console.log(countEntity);\r",
+											"(skipTest ? pm.test.skip : pm.test)(\"test si c'est le bon nombre\", function () {\r",
+											"    pm.expect(countEntity).to.eql(pm.variables.get(\"count\") - 1);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url.base}}/api-rest/schedule/API/Diagnosis/:id",
+									"host": [
+										"{{url.base}}"
+									],
+									"path": [
+										"api-rest",
+										"schedule",
+										"API",
+										"Diagnosis",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{id}}",
+											"type": "string",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/api-rest/schedule/API/Diagnosis/:id",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api-rest",
+												"schedule",
+												"API",
+												"Diagnosis",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "\"<object>\""
+								}
+							]
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "e585c7dc-277f-4664-bdd2-c1bd54306879",
+								"type": "text/javascript",
+								"exec": [
+									"console.log('preFolder');",
+									"pm.sendRequest(\"http://localhost:8080/api-rest/schedule/API/Diagnosis\", function (err, response) {",
+									"    console.log(response.json());",
+									"    pm.globals.set(\"diagnosis\", JSON.stringify(response.json()));",
+									"});"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "d203084f-943b-4ae7-b64d-8b653d0202a4",
+								"type": "text/javascript",
+								"exec": [
+									"pm.sendRequest(\"http://localhost:8080/api-rest/schedule/API/Diagnosis\", function (err, response) {",
+									"    console.log('postFolder');",
+									"    console.log(response.json());",
+									"    pm.globals.set(\"diagnosis\", JSON.stringify(response.json()));",
+									"});"
+								]
+							}
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Appointements",
+					"item": [
+						{
+							"name": "createRandomAppointement",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{url.base}}/api-rest/schedule/API/Appointements?random",
+									"host": [
+										"{{url.base}}"
+									],
+									"path": [
+										"api-rest",
+										"schedule",
+										"API",
+										"Appointements"
+									],
+									"query": [
+										{
+											"key": "random",
+											"value": null
+										},
+										{
+											"key": "diagnosisID",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/api-rest/schedule/API/Appointements",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api-rest",
+												"schedule",
+												"API",
+												"Appointements"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "\"<object>\""
+								}
+							]
+						},
+						{
+							"name": "findAppointementByDoctor",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "e25d8826-6531-4f7f-86ac-83f821dc62c0",
+										"exec": [
+											"let jsonEntity = JSON.parse(pm.globals.get(\"appointements\"));\r",
+											"let countEntity = jsonEntity.length;\r",
+											"let index = Math.floor(Math.random() * Math.floor(countEntity - 1));\r",
+											"let entity = jsonEntity[index];\r",
+											"console.log('entity : ');\r",
+											"console.log(entity)\r",
+											"pm.variables.set(\"id\", entity.medecinAffecte.id);\r",
+											"pm.variables.set(\"index\", index);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "ad415a8f-f169-4c03-bac7-f43df28a42cf",
+										"exec": [
+											"let jsonEntity = JSON.parse(pm.globals.get(\"appointements\"));\r",
+											"let countEntity = jsonEntity.length;\r",
+											"\r",
+											"pm.test(\"test number of entity\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData[0].medecinAffecte.id).to.eql(jsonEntity[pm.variables.get(\"index\")].medecinAffecte.id);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url.base}}/api-rest/schedule/API/Appointements?doctorID={{id}}",
+									"host": [
+										"{{url.base}}"
+									],
+									"path": [
+										"api-rest",
+										"schedule",
+										"API",
+										"Appointements"
+									],
+									"query": [
+										{
+											"key": "doctorID",
+											"value": "{{id}}"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/api-rest/schedule/API/Appointements/Doctors/:id",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api-rest",
+												"schedule",
+												"API",
+												"Appointements",
+												"Doctors",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "\"<object>\""
+								}
+							]
+						},
+						{
+							"name": "findAppointementById",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "e69488a3-1f35-4987-ba6f-a5132c41fc77",
+										"exec": [
+											"let jsonEntity = JSON.parse(pm.globals.get(\"appointements\"));\r",
+											"let countEntity = jsonEntity.length;\r",
+											"let index = Math.floor(Math.random() * Math.floor(countEntity - 1));\r",
+											"console.log('index  : ' + index);\r",
+											"let entity = jsonEntity[index];\r",
+											"console.log('entity : ');\r",
+											"console.log(entity);\r",
+											"console.log('id : '+entity.id);\r",
+											"pm.variables.set(\"id\", entity.id);\r",
+											"pm.variables.set(\"index\", index);\r",
+											"console.log('variable id : '+pm.variables.get(\"id\"));"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "f91249c7-6f4e-41eb-a7ab-5a5566d84611",
+										"exec": [
+											"let jsonEntity = JSON.parse(pm.globals.get(\"appointements\"));\r",
+											"let countEntity = jsonEntity.length;\r",
+											"\r",
+											"pm.test(\"test number of entity\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    console.log('id return : ' + jsonData.id);\r",
+											"    pm.expect(jsonData.id).to.eql(jsonEntity[pm.variables.get(\"index\")].id);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url.base}}/api-rest/schedule/API/Appointements?id={{id}}",
+									"host": [
+										"{{url.base}}"
+									],
+									"path": [
+										"api-rest",
+										"schedule",
+										"API",
+										"Appointements"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "{{id}}"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/api-rest/schedule/API/Appointements/:id",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api-rest",
+												"schedule",
+												"API",
+												"Appointements",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "\"<object>\""
+								}
+							]
+						},
+						{
+							"name": "findAllAppointement",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5ba786f3-b028-49ba-8361-7427fbf205ca",
+										"exec": [
+											"pm.test(\"Successful POST request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200,204]);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url.base}}/api-rest/schedule/API/Appointements",
+									"host": [
+										"{{url.base}}"
+									],
+									"path": [
+										"api-rest",
+										"schedule",
+										"API",
+										"Appointements"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/api-rest/schedule/API/Appointements",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api-rest",
+												"schedule",
+												"API",
+												"Appointements"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "\"<object>\""
+								}
+							]
+						},
+						{
+							"name": "suppressAppointement",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "55aa193b-ba37-450e-8b29-bc6adebca5ff",
+										"exec": [
+											"let jsonEntity = JSON.parse(pm.globals.get(\"appointements\"));\r",
+											"let countEntity = jsonEntity.length;\r",
+											"let index = Math.floor(Math.random() * Math.floor(countEntity - 1));\r",
+											"console.log('index  : ' + index);\r",
+											"let entity = jsonEntity[index];\r",
+											"console.log('entity : ');\r",
+											"console.log(entity);\r",
+											"console.log('id : ' + entity.id);\r",
+											"pm.variables.set(\"id\", entity.id);\r",
+											"pm.variables.set(\"count\", countEntity);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "45ba0fd6-1dde-45b0-8ad2-7b49ee9377e4",
+										"exec": [
+											"pm.test(\"Successful DELETE request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200, 409]);\r",
+											"});\r",
+											"\r",
+											"var skipTest = false;\r",
+											"if (pm.response.code == 409) {\r",
+											"    skipTest = true;\r",
+											"    console.log('skip')\r",
+											"}\r",
+											"\r",
+											"\r",
+											"let jsonEntity = JSON.parse(pm.globals.get(\"appointements\"));\r",
+											"let countEntity = jsonEntity.length;\r",
+											"console.log('count test : ')\r",
+											"console.log(countEntity);\r",
+											"(skipTest ? pm.test.skip : pm.test)(\"test si c'est le bon nombre\", function () {\r",
+											"    pm.expect(countEntity).to.eql(pm.variables.get(\"count\") - 1);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url.base}}/api-rest/schedule/API/Appointements/:id",
+									"host": [
+										"{{url.base}}"
+									],
+									"path": [
+										"api-rest",
+										"schedule",
+										"API",
+										"Appointements",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{id}}",
+											"type": "string",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:8080/api-rest/schedule/API/Appointements/:id",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api-rest",
+												"schedule",
+												"API",
+												"Appointements",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "\"<object>\""
+								}
+							]
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "306688c6-4b7b-4636-8faa-32f233d0ae06",
+								"type": "text/javascript",
+								"exec": [
+									"console.log('preFolder');",
+									"pm.sendRequest(\"http://localhost:8080/api-rest/schedule/API/Appointements\", function (err, response) {",
+									"    console.log(response.json());",
+									"    pm.globals.set(\"appointements\", JSON.stringify(response.json()));",
+									"});"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "a4872caa-bdab-4c6b-bf62-9792a15619e6",
+								"type": "text/javascript",
+								"exec": [
+									"pm.sendRequest(\"http://localhost:8080/api-rest/schedule/API/Appointements\", function (err, response) {",
+									"    console.log('postFolder');",
+									"    console.log(response.json());",
+									"    pm.globals.set(\"appointements\", JSON.stringify(response.json()));",
+									"});"
+								]
+							}
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"variable": [
+		{
+			"id": "baseUrl",
+			"key": "baseUrl",
+			"value": "http://localhost:8080/api-rest/schedule",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}

@@ -182,7 +182,14 @@ public class API {
 
         response = (appointement != null) ? Response.ok(appointement).build() : Response.noContent().build();
         if (appointement != null) {
-            crud.suppressAppointement(appointement);
+            try {
+                crud.suppressAppointement(appointement);
+                response = Response.ok(appointement).build();
+            } catch (Exception e) {
+                response = Response.status(Status.CONFLICT).entity("l'entité est utiliser par une autre ressource")
+                        .build();
+            }
+
         }
 
         return response;
@@ -261,6 +268,7 @@ public class API {
         if (doctor != null) {
             try {
                 crud.suppressDoctor(doctor);
+                response = Response.ok(doctor).build();
             } catch (Exception e) {
                 response = Response.status(Status.CONFLICT).entity("l'entité est utiliser par une autre ressource")
                         .build();
@@ -335,7 +343,14 @@ public class API {
 
         response = (patient != null) ? Response.ok(patient).build() : Response.noContent().build();
         if (patient != null) {
-            crud.suppressPatient(patient);
+            try {
+                crud.suppressPatient(patient);
+                response = Response.ok(patient).build();
+            } catch (Exception e) {
+                response = Response.status(Status.CONFLICT).entity("l'entité est utiliser par une autre ressource")
+                        .build();
+            }
+
         }
 
         return response;
@@ -422,7 +437,14 @@ public class API {
 
         response = (diagnosis != null) ? Response.ok(diagnosis).build() : Response.noContent().build();
         if (diagnosis != null) {
-            crud.suppressDiagnosis(diagnosis);
+            try {
+                crud.suppressDiagnosis(diagnosis);
+                response = Response.ok(diagnosis).build();
+            } catch (Exception e) {
+                response = Response.status(Status.CONFLICT).entity("l'entité est utiliser par une autre ressource")
+                        .build();
+            }
+
         }
 
         return response;
