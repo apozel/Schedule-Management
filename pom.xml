@@ -98,13 +98,6 @@
     <dependencies>
       <!-- https://mvnrepository.com/artifact/jakarta.ejb/jakarta.ejb-api -->
       <!-- https://mvnrepository.com/artifact/org.glassfish/javax.ejb -->
-
-
-      <dependency>
-        <groupId>log4j</groupId>
-        <artifactId>log4j</artifactId>
-        <version>1.2.17</version>
-      </dependency>
       <dependency>
         <groupId>fr.isen.m1.schedule</groupId>
         <artifactId>projects-sources</artifactId>
