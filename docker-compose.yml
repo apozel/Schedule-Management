@@ -1,11 +1,45 @@
 version: '3'
 services:
   schedule:
-    build: ear/
-    ports:
-      - "4848:4848"
-      - "8080:8081"
-  mysql:
+    env_file: .env
     build:
+      context: ./ear
+      dockerfile: Dockerfile
+      args:
+        JDBC_RESOURCE_NAME_ARG : ${JDBC_RESOURCE_NAME}
+        BDD_NAME_URL_ARG : ${BDD_NAME_URL}
+        BDD_PORT_ARG : ${BDD_PORT}
+        BDD_USER_NAME_ARG : ${BDD_USER_NAME}
+        BDD_USER_PASSWORD_ARG : ${BDD_USER_PASSWORD}
+        BDD_DB_NAME_ARG : ${BDD_DB_NAME}
+        JAR_FILE : ${JAR_FILE}
     ports:
-      - "3306:3306"
+        - '4848:4848'
+        - '8080:8080'
+    expose:
+    # Opens port 3306 on the container
+      - '8080'
+    links:
+      - mysql:mysql
+    depends_on:
+      - mysql
+
+  mysql:
+    env_file: .env
+    container_name: ${BDD_NAME_URL}
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${BDD_DB_NAME}
+      # So you don't have to use root, but you can if you like
+      MYSQL_USER: 'app'
+      # You can use whatever password you like
+      MYSQL_PASSWORD: 'app'
+      # Password for root access
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      # <Port exposed> : < MySQL Port running inside container>
+      - ${BDD_PORT}:3306
+    expose:
+      # Opens port 3306 on the container
+      - '3306'

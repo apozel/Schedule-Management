@@ -12,6 +12,12 @@ pipeline {
             }
         }
 
+        stage('Build avec test') {
+            steps {
+                sh 'mvn -B clean package'
+            }
+        }
+
         stages {
             def app
 	currentBuild.result = "SUCCESS"

@@ -3,10 +3,8 @@ package fr.isen.m1.schedule.ejbs.implementation;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-
 import fr.isen.m1.schedule.builder.AppointementBuilder;
 import fr.isen.m1.schedule.marchant.moteur.MarchantDistanceCriticity;
 import fr.isen.m1.schedule.utilities.Appointement;
