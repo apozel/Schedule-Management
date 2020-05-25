@@ -18,10 +18,39 @@ import fr.isen.m1.schedule.utilities.SocialDetails;
 import fr.isen.m1.schedule.builder.AppointementBuilder;
 import fr.isen.m1.schedule.builder.SocialDetailsBuilder;
 
+/**
+ * <b>RandomBuilder est la classe qui renvoie des entitées aleatoire</b>
+ * <p>
+ * il peut renvoyer toute ces classes :
+ * <ul>
+ * <li>appointement</li>
+ * <li>doctor.</li>
+ * <li>socialDetails.</li>
+ * <li>Patient.</li>
+ * <li>position.</li>
+ * <li>diagnosis.</li>
+ * </ul>
+ *
+ * <p>
+ * Un RandomBuilder est caractérisé par les attributs suivants :
+ * <ul>
+ * <li>list @see #firstNameList</li>
+ * <li>list @see #lastNameList</li>
+ * <li>random @see #rand</li>
+ * </ul>
+ *
+ *
+ * @see fr.isen.m1.schedule.utilities
+ *
+ *
+ * @author apozel
+ * @version 1.0
+ */
+
 public class RandomBuilder {
 
     Random rand = new Random();
-    List<String> fisrtNamesList = new ArrayList<String>(Arrays.asList("thomas", "marie", "xavier",
+    List<String> firstNamesList = new ArrayList<String>(Arrays.asList("thomas", "marie", "xavier",
             "jule", "flavien", "david", "antoine", "johan", "lucien", "benjamin", "julien", "Aaren",
             "Aarika", "Abagael", "Abagail", "Abbe", "Abbey", "Abbi", "Abbie", "Abby", "Abbye",
             "Abigael", "Abigail", "Abigale", "Abra", "Ada", "Adah", "Adaline", "Adan", "Adara",
@@ -182,9 +211,11 @@ public class RandomBuilder {
             "Stafford", "Orozco", "Barry", "English", "Shannon", "Kline", "Jacobson"));
 
     /**
-     * the position of the appointement is randomly generated
+     * the position of the appointement is randomly generated using the AppointementBuilder
      *
-     * @return random Appointement
+     * @return Appointement
+     * @see Appointement
+     * @see AppointementBuilder
      */
     public Appointement buildRandomAppointement() {
         AppointementBuilder appointement = new AppointementBuilder();
@@ -193,9 +224,15 @@ public class RandomBuilder {
                 .setConsultTime(Duration.ofMinutes(rand.nextInt(60)))
                 .setStartTime(LocalTime.of(rand.nextInt(24), rand.nextInt(60)))
                 .setLocation(buildRandomPosition())
-                .setDate(LocalDate.of(2020, (rand.nextInt(12) + 1), (rand.nextInt(28)+1))).build();
+                .setDate(LocalDate.of(2020, (rand.nextInt(12) + 1), (rand.nextInt(28) + 1)))
+                .build();
     }
 
+
+    /**
+     * @return Diagnosis with a random Patient
+     * @see Diagnosis
+     */
     public Diagnosis buildRandomDiagnosis() {
         Diagnosis diagnosis = new Diagnosis();
         diagnosis.setCriticite(rand.nextInt(10));
@@ -204,6 +241,11 @@ public class RandomBuilder {
         return diagnosis;
     }
 
+
+    /**
+     * @return Doctor
+     * @see Doctor
+     */
     public Doctor buildRandomDoctor() {
         Doctor doctor = new Doctor();
         doctor.setDetails(buildRandomSocialDetails());
@@ -213,6 +255,11 @@ public class RandomBuilder {
         return doctor;
     }
 
+
+    /**
+     * @return Patient
+     * @see Patient
+     */
     public Patient buildRandomPatient() {
         Patient patient = new Patient();
         patient.setLieuDeVie(buildRandomPosition());
@@ -220,17 +267,27 @@ public class RandomBuilder {
         return patient;
     }
 
+
+    /**
+     * @return Position
+     * @see Position
+     */
     public Position buildRandomPosition() {
         return new Position(rand.nextDouble(), rand.nextDouble());
     }
 
+
+    /**
+     * @return SocialDetails
+     * @see SocialDetails
+     */
     public SocialDetails buildRandomSocialDetails() {
         return new SocialDetailsBuilder().setGender(rand.nextBoolean())
                 .setBirthZipCode(Integer.toString(rand.nextInt(10000)))
                 .setBirthDate(
                         Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()))
                 .setBirthAddress("aix").setPhoneNumber(Integer.toString(rand.nextInt(9000000)))
-                .setFirstName(fisrtNamesList.get(rand.nextInt(fisrtNamesList.size())))
+                .setFirstName(firstNamesList.get(rand.nextInt(firstNamesList.size())))
                 .setLastName(lastNamesList.get(rand.nextInt(lastNamesList.size()))).build();
     }
 

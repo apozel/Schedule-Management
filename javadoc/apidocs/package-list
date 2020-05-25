@@ -1,0 +1,8 @@
+fr.isen.m1.schedule.builder
+fr.isen.m1.schedule.converter
+fr.isen.m1.schedule.ejbs.implementation
+fr.isen.m1.schedule.error
+fr.isen.m1.schedule.marchant.moteur
+fr.isen.m1.schedule.random
+fr.isen.m1.schedule.utilities
+fr.isen.m1.schedule.web.rest

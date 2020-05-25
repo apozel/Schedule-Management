@@ -20,6 +20,10 @@ public class AppointementBuilder {
     private Patient patient;
     private Diagnosis diagnosis;
 
+
+    /**
+     * @return Appointement
+     */
     public Appointement build() {
         Appointement newAppointement = new Appointement();
         newAppointement.setDate(date);
@@ -38,7 +42,11 @@ public class AppointementBuilder {
     }
 
     /**
+     * add a date to the builder
+     *
      * @param date the date to set
+     * @see LocalDate
+     * @return AppointementBuilder
      */
     public AppointementBuilder setDate(LocalDate date) {
         this.date = date;
@@ -46,7 +54,11 @@ public class AppointementBuilder {
     }
 
     /**
+     * add a StartTime to the builder
+     *
      * @param startTime the startTime to set
+     * @see LocalTime
+     * @return AppointementBuilder
      */
     public AppointementBuilder setStartTime(LocalTime startTime) {
         this.startTime = startTime;
@@ -54,7 +66,11 @@ public class AppointementBuilder {
     }
 
     /**
+     * add a consultTime to the builder
+     *
      * @param consultTime the consultTime to set
+     * @see Duration
+     * @return AppointementBuilder
      */
     public AppointementBuilder setConsultTime(Duration consultTime) {
         this.consultTime = consultTime;
@@ -62,7 +78,11 @@ public class AppointementBuilder {
     }
 
     /**
+     * add a Position to the builder
+     *
      * @param location the location to set
+     * @see Position
+     * @return AppointementBuilder
      */
     public AppointementBuilder setLocation(Position location) {
         this.location = (this.location != null) ? this.location : location;
@@ -70,7 +90,11 @@ public class AppointementBuilder {
     }
 
     /**
+     * add a Doctor to the builder
+     *
      * @param doctor the doctor to set
+     * @see Doctor
+     * @return AppointementBuilder
      */
     public AppointementBuilder setDoctor(Doctor doctor) {
         this.doctor = (this.doctor != null) ? this.doctor : doctor;
@@ -78,7 +102,11 @@ public class AppointementBuilder {
     }
 
     /**
+     * add a Patient to the builder
+     *
      * @param patient the patient to set
+     * @see Patient
+     * @return AppointementBuilder
      */
     public AppointementBuilder setPatient(Patient patient) {
         this.patient = (this.patient != null) ? this.patient : patient;
@@ -87,7 +115,11 @@ public class AppointementBuilder {
     }
 
     /**
+     * add a Diagnosis to the builder
+     *
      * @param diagnosis the diagnosis to set
+     * @see Diagnosis
+     * @return AppointementBuilder
      */
     public AppointementBuilder setDiagnosis(Diagnosis diagnosis) {
         this.diagnosis = diagnosis;

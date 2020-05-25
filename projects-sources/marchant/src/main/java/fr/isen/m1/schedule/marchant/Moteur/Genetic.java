@@ -351,8 +351,8 @@ public abstract class Genetic
 
 		/**
 		 *
-		 * @param lstPositions The list of position in disorder
-		 * @param Doctor the doctor that have to reach all positions
+		 * @param listeDiag The list of position in disorder
+		 * @param doctor the doctor that have to reach all positions
 		 * @return List of Position. First element of the list : doc position. Then the path to follow after the Doctor Positon.
 		 */
 		public static Diagnosis[] givePathToFollowWithDoctor(Diagnosis[] listeDiag, Doctor doctor) {
