@@ -24,7 +24,7 @@ il existe differents profils pour la compilation avec maven :
  la troisieme autorise les test et le deployment direct du projet sur le serveur (actif par defaut)
 
 ## payara et mysql Local :
-s'utilise avec le profile payaraLocal (actif par defaut).
+s'utilise avec le profile payaraLocal (actif par defaut). ce mode de fonctionnement a besoin du driver jdbc pour fonctionner, il ce trouve dans le dossier /ear/docker (voir Installation local).
 
 ## docker :
 docker permet de faciliter le deploiement du projet. en effet il suffit de d'activer le bon profile lors de la compilation pour qu'une image ce creer dans le repository local docker.
@@ -32,6 +32,7 @@ on utilise pour cela un plugin maven creer par SPOTIFY.
 une fois dans le repository il deviens tres simple de creer un contaigneur a partir de celui ci.
 le dockerfile de l'image ce trouve dans le dossier /ear.
 l'image generer a besoin de plusieurs arguments pour etre build. les arguments sont donnés a la compilation par le plugin lui meme a partir des proprieties donner dans le pom de maven.
+cette image contient deja le driver pour la bdd.
 
 ## JavaDoc :
 
@@ -46,13 +47,13 @@ il ne reste plus qu'a ce rendre dans "project reports" situé dans le volet de g
 la javadoc rassemble les explications de code, le nom des classe et leurs methodes.
 
 # jenkins :
-jenkins est un serveur de build a configurer. il peut etre interressant de l'integrer au projet pour une raison il peut build chaque partie du projet M1
+jenkins est un serveur de build a configurer. il peut etre interressant de l'integrer au projet pour une raison il peut build chaque partie du projet M1 et ensuite les assemblés pour creer un projet unique. on peut ensuiter envisager un deploiement. il utilise pour build un projet un jenkins file. une fois celui ci trouver il peut creer une pipeline qui suit les instructions de ce fichier.
 
 # API :
 l'api permet de communiquer avec ce projet au travers de l'url 'serverUrl/api-rest/schedule/API' on doit encore rajouter le endpoint qu'on veut. on peut voir la documentation de l'api sur postman dans le dossier api disponible a la racine. il suffit d'importer le fichier .json. on auras ainsi acces a la doc mais aussi au tests unitaires
 
 ## postman :
-postman est un outil qui permet de tester et documenter son api. il permet ici d'acceder facilement a la documentation de l'api qui ce trouve dans le dossier api disponible a la racine du projet.
+postman est un outil qui permet de tester et documenter son api. il permet ici d'acceder facilement a la documentation de l'api qui ce trouve dans le dossier api disponible a la racine du projet. une fois cette outils en votre possesion vous pouvez importer la collection disponible.
 
 # Explications :
 
