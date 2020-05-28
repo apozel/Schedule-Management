@@ -24,8 +24,6 @@ ENV BDD_USER_NAME=${BDD_USER_NAME_ARG}
 ENV BDD_USER_PASSWORD=${BDD_USER_PASSWORD_ARG}
 ENV BDD_DB_NAME=${BDD_DB_NAME_ARG}
 
-RUN echo ${BDD_DB_NAME_ARG} && echo ${BDD_NAME_URL_ARG} && echo ${JAR_FILE}
-
 COPY ./target/${JAR_FILE}.ear $DEPLOY_DIR
 COPY ./docker/mysql-connector-java-8.0.19.jar /
 COPY  ./docker/post-boot-commands.asadmin $POSTBOOT_COMMANDS
