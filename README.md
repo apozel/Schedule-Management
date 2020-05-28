@@ -27,7 +27,11 @@ il existe differents profils pour la compilation avec maven :
 s'utilise avec le profile payaraLocal (actif par defaut).
 
 ## docker :
-
+docker permet de faciliter le deploiement du projet. en effet il suffit de d'activer le bon profile lors de la compilation pour qu'une image ce creer dans le repository local docker.
+on utilise pour cela un plugin maven creer par SPOTIFY.
+une fois dans le repository il deviens tres simple de creer un contaigneur a partir de celui ci.
+le dockerfile de l'image ce trouve dans le dossier /ear.
+l'image generer a besoin de plusieurs arguments pour etre build. les arguments sont donnés a la compilation par le plugin lui meme a partir des proprieties donner dans le pom de maven.
 
 ## JavaDoc :
 
@@ -39,14 +43,16 @@ pour pouvoir les lires il suffit de les mettres sur un serveur web.
 (je recommande si node est installé sur votre ordinateur de le lancer avec live-server (package node)).
 une fois sur le site tous les sous projets sont detaillés.
 il ne reste plus qu'a ce rendre dans "project reports" situé dans le volet de gauche pour trouver la javadoc.
+la javadoc rassemble les explications de code, le nom des classe et leurs methodes.
 
 # jenkins :
+jenkins est un serveur de build a configurer. il peut etre interressant de l'integrer au projet pour une raison il peut build chaque partie du projet M1
 
 # API :
 l'api permet de communiquer avec ce projet au travers de l'url 'serverUrl/api-rest/schedule/API' on doit encore rajouter le endpoint qu'on veut. on peut voir la documentation de l'api sur postman dans le dossier api disponible a la racine. il suffit d'importer le fichier .json. on auras ainsi acces a la doc mais aussi au tests unitaires
 
 ## postman :
-
+postman est un outil qui permet de tester et documenter son api. il permet ici d'acceder facilement a la documentation de l'api qui ce trouve dans le dossier api disponible a la racine du projet.
 
 # Explications :
 
@@ -59,7 +65,10 @@ les tests remplissent la bdd donc ils doivent etre skip pour un doployement en p
 
 ## Algorithme :
 ## EJB :
+les ejbs sont des classes java qui peuvent etre injecter dans la plupart des autres classes. l'injection est réalisé par le serveur lui meme.
+il y en a deux dans le projet : le crud et celui pour l'algorithme. le crud lui utilise le driver jdbc pour pouvoir aller chercher dans la bdd toute les informations utiles. l'algorithme quand a lui utilise ce premier pour avoir les informations et les utilisent pour generer des rendezvous.
 ## API :
+l'api permet la communications avec l'exterieur. elle renvoie des objets en json. les objets sont generer par l'implementation au sein du serveur payara d'un parseur json. si on veut changer la valeur des champs renvoyer pour un objet, il suffit de changer le nom de ses getters.
 
 # Installation :
 
