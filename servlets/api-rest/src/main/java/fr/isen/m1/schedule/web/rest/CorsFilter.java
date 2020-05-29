@@ -16,12 +16,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 // Enable it for Servlet 3.x implementations
 @WebFilter(asyncSupported = true, urlPatterns = {"/*"})
-public class CORSFilter implements Filter {
+public class CorsFilter implements Filter {
 
         /**
          * Default constructor.
          */
-        public CORSFilter() {
+        public CorsFilter() {
                 // TODO Auto-generated constructor stub
         }
 
