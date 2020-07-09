@@ -8,7 +8,9 @@ public class PositionConverter implements AttributeConverter<Double, String> {
 
     @Override
     public String convertToDatabaseColumn(Double aDouble) {
-        return Double.toString(aDouble);
+        String string = Double.toString(aDouble);
+        System.out.println(string);
+        return string;
     }
 
 
