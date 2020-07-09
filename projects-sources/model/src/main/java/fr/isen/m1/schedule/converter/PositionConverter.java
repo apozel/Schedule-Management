@@ -18,6 +18,12 @@ public class PositionConverter implements AttributeConverter<Double, String> {
 
     @Override
     public Double convertToEntityAttribute(String value) {
-        return Double.valueOf(value);
+        Double valueOf = 0d;
+        try {
+            valueOf = Double.valueOf(value);
+        } catch (Exception e) {
+            value.replaceAll(",", ".");
+        }
+        return valueOf;
     }
 }
