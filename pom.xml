@@ -36,7 +36,7 @@
       </activation>
       <properties>
         <skip.docker.plugin>true</skip.docker.plugin>
-        <skip.integration.test>true</skip.integration.test>
+        <skip.integration.test>false</skip.integration.test>
       </properties>
     </profile>
 
