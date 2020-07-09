@@ -29,7 +29,7 @@ import fr.isen.m1.schedule.converter.LocalTimeConverter;
  */
 
 @Entity
-@Table(name = "appointement")
+@Table(name = "appointment")
 @NamedQueries({
         @NamedQuery(name = "Appointement.findByDoctor",
                 query = "SELECT appointement FROM Appointement appointement WHERE appointement.doctor = :doc"),
