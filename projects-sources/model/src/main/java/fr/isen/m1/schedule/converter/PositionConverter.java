@@ -11,8 +11,11 @@ public class PositionConverter implements AttributeConverter<Double, String> {
         return Double.toString(aDouble);
     }
 
+
+
+
     @Override
     public Double convertToEntityAttribute(String value) {
-        return Double.parseDouble(value);
+        return Double.valueOf(value);
     }
 }

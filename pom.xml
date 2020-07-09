@@ -43,7 +43,7 @@
     <profile>
       <id>payaraServer</id>
       <properties>
-        <skip.docker.plugin>false</skip.docker.plugin>
+        <skip.docker.plugin>true</skip.docker.plugin>
         <skip.integration.test>false</skip.integration.test>
         <mysql.name.url>localhost</mysql.name.url>
         <mysql.port>3306</mysql.port>
