@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
@@ -15,7 +15,7 @@
     <project.build.finalName>scheduleManagement-ear</project.build.finalName>
 
     <jdbc.resourcesName>jdbc/scheduleResource</jdbc.resourcesName>
-    <jdbc.action>drop-and-create</jdbc.action>
+    <jdbc.action>none</jdbc.action>
     <mysql.name.url>mysql</mysql.name.url>
     <mysql.port>3306</mysql.port>
     <mysql.user.name>app</mysql.user.name>
@@ -39,6 +39,20 @@
         <skip.integration.test>false</skip.integration.test>
       </properties>
     </profile>
+
+    <profile>
+      <id>payaraServer</id>
+      <properties>
+        <skip.docker.plugin>false</skip.docker.plugin>
+        <skip.integration.test>false</skip.integration.test>
+        <mysql.name.url>localhost</mysql.name.url>
+        <mysql.port>3306</mysql.port>
+        <mysql.user.name>non-root</mysql.user.name>
+        <mysql.user.password>mAMz4O6xotKdwwLeFFnA</mysql.user.password>
+        <mysql.db.name>projet</mysql.db.name>
+      </properties>
+    </profile>
+
 
     <profile>
       <id>payaraRemote</id>
